@@ -54,6 +54,29 @@ static func debug_build(blueprint_string: String, offset: Vector2, scale: float)
 
     return ShipGrid.new(ModuleMatrix.new(modules), ConnectionMatrix.new(connections))
 
+static func build(bp: ShipGridBlueprint, offset: Vector2, scale: float) -> ShipGrid:
+    var modules = []
+    var connections = []
+    for y in bp.height:
+        var module_row = []
+        var connection_row1 = []
+        var connection_row2 = []
+        for x in bp.width:
+            var pair = bp.matrix.at(x, y)
+            module_row.push_back(Module.new(bp.module_type_at(x, y), position_from_index(Vector2(x, y), scale) + offset))
+
+            var cons: Array[bool] = bp.connections_at(x, y)
+            connection_row1.push_back(null if not cons[0] else Connection.basic_spring(scale))
+            connection_row1.push_back(null if not cons[1] else Connection.basic_spring(scale))
+            connection_row2.push_back(null if not cons[3] else Connection.basic_spring(scale))
+            connection_row2.push_back(null if not cons[2] else Connection.basic_spring(scale))
+
+        modules.push_back(module_row)
+        connections.push_back(connection_row1)
+        connections.push_back(connection_row2)
+
+    return ShipGrid.new(ModuleMatrix.new(modules), ConnectionMatrix.new(connections))
+
 static func position_from_index(index: Vector2i, scale: float) -> Vector2:
     return Vector2(index.x * scale, index.y * scale)
 

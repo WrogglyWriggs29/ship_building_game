@@ -12,7 +12,7 @@ var grid: ShipGrid
 var dragger: UserVelocityApplicator
 
 func _init() -> void:
-	var test_bp = "ddd\nddd\nddd"
+	var test_bp = "dddd\ndddd\ndddd\ndddd"
 
 	grid = ShipGridBuilder.debug_build(test_bp, OFFSET, SCALE)
 	grid.soft_body.modules.add_modules_as_children_to(self)

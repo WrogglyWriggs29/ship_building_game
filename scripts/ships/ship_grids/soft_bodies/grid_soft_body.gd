@@ -1,9 +1,8 @@
 class_name GridSoftBody
 extends Node2D
 
-# note that this object is not a Node2D, as it does not have a position in the world
-# it is a data structure that holds the modules and connections of a soft body grid
-# and runs its physics simulation
+# GridSoftBody holds the information needed to run the ShipGrid's physics simulation
+# Step the physics simulation forward by one tick by calling manual_physics_process()
 
 var modules: ModuleMatrix
 var connections: ConnectionMatrix
@@ -15,9 +14,9 @@ var debug_draw: bool = false
 class LineCoords:
 	var start: Vector2
 	var end: Vector2
-	func _init(start: Vector2, end: Vector2) -> void:
-		self.start = start
-		self.end = end
+	func _init(_start: Vector2, _end: Vector2) -> void:
+		self.start = _start
+		self.end = _end
 
 class VisitedMatrix:
 	var matrix: Matrix
