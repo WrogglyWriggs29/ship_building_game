@@ -16,18 +16,28 @@ class UICoord:
 
 var grid_top_left: UICoord = UICoord.new(Vector2(0.2, 0.2), self)
 var grid_bottom_right: UICoord = UICoord.new(Vector2(1.0, 1.0), self)
-var tool_palette_top_left: UICoord = UICoord.new(Vector2(0.2, 0.0), self)
+var tool_palette_top_left: UICoord = UICoord.new(Vector2(0.2, 0.05), self)
 var tool_palette_bottom_right: UICoord = UICoord.new(Vector2(1.0, 0.2), self)
 
 enum Layer {STRUCTURE, FACTORY}
 
+var editor: BlueprintEditor
 var grid: BlueprintGrid
 var palette: ToolPalette
 
-var tool_actions: Array[Callable]
+func place_module(index: Vector2i) -> void:
+	var current = StructureBlueprint.Type.DEBUG # palette.selected_module_type()
+	editor.set_type(index, current)
+
+func remove_module(index: Vector2i) -> void:
+	editor.set_type(index, StructureBlueprint.Type.EMPTY)
+
+var tool_actions: Array[Callable] = [Callable(place_module), Callable(remove_module)]
 
 func _init() -> void:
-	grid = BlueprintGrid.new(ShipGridBlueprint.blank(4, 4))
+	var blueprint = ShipGridBlueprint.blank(10, 10)
+	editor = BlueprintEditor.new(blueprint)
+	grid = BlueprintGrid.new(editor)
 	palette = ToolPalette.new()
 
 func _ready() -> void:

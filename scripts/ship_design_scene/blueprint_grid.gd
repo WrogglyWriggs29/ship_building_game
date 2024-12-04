@@ -10,7 +10,7 @@ extends Node2D
 const GRID_SIZE = 100
 
 # the blueprint to display
-@export var blueprint: ShipGridBlueprint
+@export var editor: BlueprintEditor
 
 # the grid gets scaled first, then offset
 var draw_scale: float = 1.0
@@ -19,8 +19,8 @@ var offset: Vector2 = Vector2.ZERO
 # whether the user is dragging the grid
 var dragging: bool = false
 
-func _init(_blueprint: ShipGridBlueprint) -> void:
-	blueprint = _blueprint
+func _init(_editor: BlueprintEditor) -> void:
+	editor = _editor
 	draw_scale = 1.0
 	offset = Vector2.ZERO
 
@@ -28,15 +28,16 @@ func _process(_delta: float) -> void:
 	queue_redraw()
 
 func _draw() -> void:
-	for x in range(first_visible_x() - 1, blueprint.matrix.width):
-		for y in range(first_visible_y() - 1, blueprint.matrix.height):
+	var blueprint_size = editor.read_dims()
+	for x in range(first_visible_x() - 1, blueprint_size.x):
+		for y in range(first_visible_y() - 1, blueprint_size.y):
 			if x < 0 or y < 0:
 				continue
 
 			var index = Vector2i(x, y)
-			var pair = blueprint.matrix.at(x, y)
+			var type = editor.read_type(index)
 
-			draw_sliced_placeholder_square(index, Vector2.ZERO, pair.structure.type)
+			draw_sliced_placeholder_square(index, Vector2.ZERO, type)
 			#draw_placeholder_square(index, pair.structure.type)
 
 	draw_grid()
@@ -113,10 +114,12 @@ func draw_grid() -> void:
 		draw_line(top_left, Vector2(top_left.x, screen_dims.y), LINE_COLOR)
 	
 	# draw the bottom and right edges of the blueprint
-	var bottom_right = top_left_corner(Vector2i(blueprint.matrix.width, blueprint.matrix.height))
+	var dims = editor.read_dims()
+
+	var bottom_right = top_left_corner(Vector2i(dims.x, dims.y))
 	if bottom_right.x >= 0 and bottom_right.y >= 0:
-		draw_dashed_line(top_left_or_zero(Vector2i(0, blueprint.matrix.height)), bottom_right, HIGHTLIGHT_COLOR)
-		draw_dashed_line(top_left_or_zero(Vector2i(blueprint.matrix.width, 0)), bottom_right, HIGHTLIGHT_COLOR)
+		draw_dashed_line(top_left_or_zero(Vector2i(0, dims.y)), bottom_right, HIGHTLIGHT_COLOR)
+		draw_dashed_line(top_left_or_zero(Vector2i(dims.x, 0)), bottom_right, HIGHTLIGHT_COLOR)
 
 # really stupid approach, but im lazy
 func first_visible_x() -> int:
@@ -178,3 +181,7 @@ func top_left_or_zero(index: Vector2i) -> Vector2:
 
 func top_left_corner(index: Vector2i) -> Vector2:
 	return draw_scale * Vector2(index.x * GRID_SIZE, index.y * GRID_SIZE) + offset
+
+func index_at(pos: Vector2) -> Vector2i:
+	var index_float = (pos - offset) / (draw_scale * GRID_SIZE)
+	return Vector2i(floor(index_float.x), floor(index_float.y))

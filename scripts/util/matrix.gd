@@ -35,6 +35,9 @@ func at_index(index: Vector2i) -> Variant:
 func set_at_index(index: Vector2i, value: Variant) -> void:
 	set_at(index.x, index.y, value)
 
+func in_range(index: Vector2i) -> bool:
+	return index.x >= 0 and index.x < width and index.y >= 0 and index.y < height
+
 static func make_array(width: int, height: int, default_value: Variant = null) -> Array:
 	var array = []
 	for y in range(height):
