@@ -42,7 +42,7 @@ func _draw() -> void:
 	draw_grid()
 
 
-func _input(event: InputEvent) -> void:
+func process_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		var mouse_event = event as InputEventMouseButton
 		if mouse_event.button_index == MOUSE_BUTTON_MIDDLE:
@@ -64,11 +64,24 @@ func _input(event: InputEvent) -> void:
 			if top_left_corner(Vector2i(0, 0)).y > 0:
 				offset.y = 0
 
+func zoom_in() -> void:
+	draw_scale *= 1.1
+
+func zoom_out() -> void:
+	draw_scale /= 1.1
+
 func start_drag() -> void:
 	dragging = true
 
 func end_drag() -> void:
 	dragging = false
+
+func drag_by(relative: Vector2) -> void:
+	offset += relative
+	if top_left_corner(Vector2i(0, 0)).x > 0:
+		offset.x = 0
+	if top_left_corner(Vector2i(0, 0)).y > 0:
+		offset.y = 0
 
 func draw_grid() -> void:
 	const LINE_COLOR = Color.CADET_BLUE
