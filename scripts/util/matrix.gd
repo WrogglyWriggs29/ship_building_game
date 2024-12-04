@@ -1,6 +1,9 @@
 class_name Matrix
 extends Node
 
+var width: int
+var height: int
+
 class Row extends Node:
 	var members: Array[Variant]
 	func _init(array = []):
@@ -9,6 +12,9 @@ class Row extends Node:
 var rows: Array[Row]
 
 func _init(array = []):
+	width = array[0].size()
+	height = array.size()
+
 	rows = []
 	if array.size() > 0:
 		var row_length = array[0].size()

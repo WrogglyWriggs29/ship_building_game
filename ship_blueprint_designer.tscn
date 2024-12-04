@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bogbnlgb5w6o6"]
+
+[ext_resource type="Script" path="res://scripts/ship_design_scene/ship_blueprint_designer.gd" id="1_1dvyb"]
+
+[node name="ShipBlueprintDesigner" type="Node2D"]
+script = ExtResource("1_1dvyb")
