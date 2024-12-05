@@ -3,7 +3,7 @@ extends Node2D
 
 # The part of the ship designer scene that allows tool (and tool parameter) selection
 
-enum ToolType {NONE, PLACE_STRUCTURE, REMOVE_STRUCTURE, PLACE_FACTORY, REMOVE_FACTORY}
+enum ToolType {NONE, PLACE_STRUCTURE, REMOVE_STRUCTURE, PLACE_FACTORY, REMOVE_FACTORY, CONFIGURE_SELECT}
 
 class SelectionOptions:
 	var options: Array[Rect2]
@@ -37,7 +37,7 @@ var selected: int = 0
 var width: float
 var height: float
 
-var placeholder_text = ["Place", "Remove"]
+var placeholder_text = ["Place", "Remove", "Select"]
 
 func _process(_delta: float) -> void:
 	if width == 0 or height == 0:
@@ -91,5 +91,9 @@ static func type(index: int, _layer: ShipBlueprintDesigner.Layer) -> ToolType:
 					return ToolType.PLACE_FACTORY
 				1:
 					return ToolType.REMOVE_FACTORY
+	
+	match index:
+		2:
+			return ToolType.CONFIGURE_SELECT
 	
 	return ToolType.NONE

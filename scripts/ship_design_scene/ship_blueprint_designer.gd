@@ -14,19 +14,31 @@ class UICoord:
 		var size = parent.get_viewport().size
 		return Vector2(coord.x * size.x, coord.y * size.y)
 
-var layer_selector_top_left: UICoord = UICoord.new(Vector2(0.2, 0.0), self)
+const EXPECTED_RATIO = 16.0 / 9.0
+const H_SPLIT = 0.2
+var layer_selector_top_left: UICoord = UICoord.new(Vector2(H_SPLIT, 0.0), self)
 var layer_selector_bottom_right: UICoord = UICoord.new(Vector2(1.0, 0.03), self)
-var tool_palette_top_left: UICoord = UICoord.new(Vector2(0.2, 0.03), self)
+
+var tool_palette_top_left: UICoord = UICoord.new(Vector2(H_SPLIT, 0.03), self)
 var tool_palette_bottom_right: UICoord = UICoord.new(Vector2(1.0, 0.2), self)
-var grid_top_left: UICoord = UICoord.new(Vector2(0.2, 0.2), self)
+
+var grid_top_left: UICoord = UICoord.new(Vector2(H_SPLIT, 0.2), self)
 var grid_bottom_right: UICoord = UICoord.new(Vector2(1.0, 1.0), self)
+
+const BOX_WIDTH = H_SPLIT
+const BOX_HEIGHT = H_SPLIT * EXPECTED_RATIO
+var config_panel_top_left: UICoord = UICoord.new(Vector2(0.0, 1 - BOX_HEIGHT), self)
+var config_panel_bottom_right: UICoord = UICoord.new(Vector2(H_SPLIT, 1.0), self)
 
 enum Layer {STRUCTURE, FACTORY}
 
 var editor: BlueprintEditor
+
 var layer_selector: LayerSelector
 var palette: ToolPalette
 var grid: BlueprintGrid
+
+var config: ConfigPanel
 
 # needs to exist for the none tool
 func do_nothing(_index: Vector2i) -> void:
@@ -46,7 +58,15 @@ func place_part(index: Vector2i) -> void:
 func remove_part(index: Vector2i) -> void:
 	editor.set_part_type(index, FactoryPartBlueprint.Type.EMPTY)
 
-var tool_actions: Array[Callable] = [Callable(do_nothing), Callable(place_module), Callable(remove_module), Callable(place_part), Callable(remove_part)]
+func configure_select(index: Vector2i) -> void:
+	config.select(index)
+
+var tool_actions: Array[Callable] = [Callable(do_nothing),
+									 Callable(place_module),
+									 Callable(remove_module),
+									 Callable(place_part),
+									 Callable(remove_part),
+									 Callable(configure_select)]
 
 func _init() -> void:
 	var blueprint = ShipGridBlueprint.blank(10, 10)
@@ -54,14 +74,17 @@ func _init() -> void:
 	layer_selector = LayerSelector.new()
 	grid = BlueprintGrid.new(editor)
 	palette = ToolPalette.new()
+	config = ConfigPanel.new(editor)
 
 func _ready() -> void:
 	layer_selector.position = layer_selector_top_left.to_px()
 	palette.position = tool_palette_top_left.to_px()
 	grid.position = grid_top_left.to_px()
+	config.position = config_panel_top_left.to_px()
 	add_child(layer_selector)
 	add_child(palette)
 	add_child(grid)
+	add_child(config)
 
 func _process(_delta: float) -> void:
 	layer_selector.position = layer_selector_top_left.to_px()
@@ -76,16 +99,30 @@ func _process(_delta: float) -> void:
 	grid.width = grid_bottom_right.to_px().x - grid_top_left.to_px().x
 	grid.height = grid_bottom_right.to_px().y - grid_top_left.to_px().y
 
+	config.position = config_panel_top_left.to_px()
+	config.width = config_panel_bottom_right.to_px().x - config_panel_top_left.to_px().x
+	config.height = config_panel_bottom_right.to_px().y - config_panel_top_left.to_px().y
+
+	# tell the grid and the config which layer is selected
 	grid.layer = layer_selector.selected
+	config.layer = layer_selector.selected
+
+	# tell the grid which position is being configured
+	if config.is_selected:
+		grid.select(config.selected)
+	else:
+		grid.deselect()
 
 func _input(event: InputEvent) -> void:
 	var layer_selector_rect = Rect2(layer_selector.position, Vector2(layer_selector.width, layer_selector.height))
 	var palette_rect = Rect2(palette.position, Vector2(palette.width, palette.height))
 	var grid_rect = Rect2(grid.position, Vector2(grid.width, grid.height))
+	var config_rect = Rect2(config.position, Vector2(config.width, config.height))
 
 	var on_layer_selector: bool = layer_selector_rect.has_point(event.position)
 	var on_palette: bool = palette_rect.has_point(event.position)
 	var on_grid: bool = grid_rect.has_point(event.position)
+	var on_config: bool = config_rect.has_point(event.position)
 
 	if event is InputEventMouseButton:
 		var mouse_event = event as InputEventMouseButton
@@ -100,13 +137,15 @@ func _input(event: InputEvent) -> void:
 			grid.zoom_in()
 		elif mouse_event.button_index == MOUSE_BUTTON_WHEEL_DOWN && on_grid:
 			grid.zoom_out()
-		elif mouse_event.button_index == MOUSE_BUTTON_LEFT:
+		elif mouse_event.button_index == MOUSE_BUTTON_LEFT && mouse_event.pressed:
 			if on_layer_selector:
 				layer_selector.select_at(mouse_event.position - layer_selector.position)
 			elif on_palette:
 				palette.select_at(mouse_event.position - palette.position)
 			elif on_grid:
 				tool_actions[ToolPalette.type(palette.selected, layer_selector.selected)].call(grid.index_at(mouse_event.position - grid.position))
+			elif on_config:
+				config.click_at(mouse_event.position - config.position)
 
 	if event is InputEventMouseMotion:
 		if on_grid:

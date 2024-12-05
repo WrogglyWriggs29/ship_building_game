@@ -24,6 +24,9 @@ var dragging: bool = false
 
 var layer: ShipBlueprintDesigner.Layer = ShipBlueprintDesigner.Layer.STRUCTURE
 
+var is_selected: bool = false
+var selected: Vector2i
+
 func _init(_editor: BlueprintEditor) -> void:
 	editor = _editor
 	draw_scale = 1.0
@@ -53,7 +56,24 @@ func _draw() -> void:
 			#draw_placeholder_square(index, pair.structure.type)
 
 	draw_grid()
+	draw_connections()
 
+	if is_selected:
+		draw_selection_circle(selected)
+
+func select(index: Vector2i) -> void:
+	is_selected = true
+	selected = index
+
+func deselect() -> void:
+	is_selected = false
+
+func draw_selection_circle(index: Vector2i) -> void:
+	var top_left = top_left_corner(index)
+	var bottom_right = top_left_corner(Vector2i(index.x + 1, index.y + 1))
+	var center = (top_left + bottom_right) / 2
+	var radius = draw_scale * GRID_SIZE / 2 * sqrt(2)
+	draw_circle(center, radius, Color.RED, false)
 
 func process_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
@@ -98,7 +118,7 @@ func drag_by(relative: Vector2) -> void:
 
 func draw_grid() -> void:
 	const LINE_COLOR = Color.CADET_BLUE
-	const HIGHTLIGHT_COLOR = Color.RED
+	const HIGHLIGHT_COLOR = Color.RED
 	var x = first_visible_x()
 	var y = first_visible_y()
 	while true:
@@ -128,11 +148,34 @@ func draw_grid() -> void:
 
 	var bottom_right = top_left_corner(Vector2i(dims.x, dims.y))
 	if bottom_right.x >= 0 and bottom_right.y >= 0:
-		draw_dashed_line(top_left_or_zero(Vector2i(0, dims.y)), bottom_right, HIGHTLIGHT_COLOR)
-		draw_dashed_line(top_left_or_zero(Vector2i(dims.x, 0)), bottom_right, HIGHTLIGHT_COLOR)
+		draw_dashed_line(top_left_or_zero(Vector2i(0, dims.y)), bottom_right, HIGHLIGHT_COLOR)
+		draw_dashed_line(top_left_or_zero(Vector2i(dims.x, 0)), bottom_right, HIGHLIGHT_COLOR)
 	
 	draw_line(Vector2.ZERO, Vector2(width, 0), Color.BLACK)
 	draw_line(Vector2.ZERO, Vector2(0, height), Color.BLACK)
+
+func draw_connections() -> void:
+	var dims = editor.read_dims()
+	for x in range(dims.x):
+		for y in range(dims.y):
+			var index = Vector2i(x, y)
+			var type = editor.read_structure_type(index)
+			if type == StructureBlueprint.Type.EMPTY:
+				continue
+			
+			for dir in Dir.MAX:
+				if editor.connected_to(index, dir):
+					draw_connected_line(index, dir)
+
+func draw_connected_line(index: Vector2i, dir: int) -> void:
+	var top_left = top_left_corner(index)
+	var bottom_right = top_left_corner(Vector2i(index.x + 1, index.y + 1))
+	var center = (top_left + bottom_right) / 2
+	
+	var end = center + Dir.to_vector(dir) * (bottom_right.x - center.x)
+	var start = (center - end) / 4 + end
+	draw_dashed_line(start, end, Color.CADET_BLUE, 4.0)
+
 
 # really stupid approach, but im lazy
 func first_visible_x() -> int:

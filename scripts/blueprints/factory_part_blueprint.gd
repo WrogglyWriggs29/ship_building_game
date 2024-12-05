@@ -14,3 +14,12 @@ func _init(_type: Type, _orientation: int, _inventory: Inventory) -> void:
     type = _type
     orientation = _orientation
     starting_inventory = _inventory
+
+static func type_name(_type: Type) -> String:
+    match _type:
+        Type.EMPTY:
+            return "Empty"
+        Type.DEBUG:
+            return "Debug"
+        _:
+            return "Unknown"
