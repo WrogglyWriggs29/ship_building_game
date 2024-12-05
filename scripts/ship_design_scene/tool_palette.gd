@@ -1,7 +1,9 @@
 class_name ToolPalette
 extends Node2D
 
-enum ToolType {PLACE, REMOVE}
+# The part of the ship designer scene that allows tool (and tool parameter) selection
+
+enum ToolType {NONE, PLACE_STRUCTURE, REMOVE_STRUCTURE, PLACE_FACTORY, REMOVE_FACTORY}
 
 class SelectionOptions:
 	var options: Array[Rect2]
@@ -59,12 +61,15 @@ func _draw() -> void:
 		if i == selected:
 			var color = Color.CADET_BLUE
 			draw_rect(rect, color)
-		draw_line(rect.position, rect.position + Vector2(0, rect.size.y), Color.CADET_BLUE)
+		draw_line(rect.position, rect.position + Vector2(0, rect.size.y), Color.BLACK)
 		draw_string(ThemeDB.fallback_font, Vector2(rect.position.x + rect.size.x / 4, rect.position.y + rect.size.y / 2), placeholder_text[i])
 	
 	if sel_options.count() > 0:
 		var end = sel_options.at(sel_options.count() - 1)
-		draw_line(end.position + Vector2(end.size.x, 0), end.position + end.size, Color.CADET_BLUE)
+		draw_line(end.position + Vector2(end.size.x, 0), end.position + end.size, Color.BLACK)
+
+	draw_line(Vector2(0, 0), Vector2(width, 0), Color.BLACK)
+	draw_line(Vector2(0, height), Vector2(width, height), Color.BLACK)
 
 func select_at(point: Vector2) -> void:
 	var index = sel_options.check_selected(point)
@@ -72,19 +77,19 @@ func select_at(point: Vector2) -> void:
 		selected = index
 		queue_redraw()
 
-static func type(index: int, layer: ShipBlueprintDesigner.Layer) -> ToolType:
-	match layer:
+static func type(index: int, _layer: ShipBlueprintDesigner.Layer) -> ToolType:
+	match _layer:
 		ShipBlueprintDesigner.Layer.STRUCTURE:
 			match index:
 				0:
-					return ToolType.PLACE
+					return ToolType.PLACE_STRUCTURE
 				1:
-					return ToolType.REMOVE
+					return ToolType.REMOVE_STRUCTURE
 		ShipBlueprintDesigner.Layer.FACTORY:
 			match index:
 				0:
-					return ToolType.PLACE
+					return ToolType.PLACE_FACTORY
 				1:
-					return ToolType.REMOVE
+					return ToolType.REMOVE_FACTORY
 	
-	return ToolType.PLACE
+	return ToolType.NONE

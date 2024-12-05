@@ -22,10 +22,12 @@ func connections_at(x, y) -> Array[bool]:
     return matrix.at(x, y).structure.connections
 
 static func blank(width: int, height: int) -> ShipGridBlueprint:
-    var matrix = []
+    var _matrix = []
     for y in range(height):
         var row = []
         for x in range(width):
-            row.push_back(BlueprintPair.new(StructureBlueprint.new(StructureBlueprint.Type.EMPTY), null))
-        matrix.push_back(row)
-    return ShipGridBlueprint.new(matrix)
+            var structure = StructureBlueprint.new(StructureBlueprint.Type.EMPTY)
+            var part = FactoryPartBlueprint.new(FactoryPartBlueprint.Type.EMPTY, Dir.UP, Inventory.new())
+            row.push_back(BlueprintPair.new(structure, part))
+        _matrix.push_back(row)
+    return ShipGridBlueprint.new(_matrix)

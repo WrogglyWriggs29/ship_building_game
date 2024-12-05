@@ -9,8 +9,11 @@ extends Node2D
 # side length of each square in the grid when scale is 1.0
 const GRID_SIZE = 100
 
-# the blueprint to display
-@export var editor: BlueprintEditor
+var width: float
+var height: float
+
+# blueprint editor allows access to the blueprint the grid displays
+var editor: BlueprintEditor
 
 # the grid gets scaled first, then offset
 var draw_scale: float = 1.0
@@ -19,12 +22,16 @@ var offset: Vector2 = Vector2.ZERO
 # whether the user is dragging the grid
 var dragging: bool = false
 
+var layer: ShipBlueprintDesigner.Layer = ShipBlueprintDesigner.Layer.STRUCTURE
+
 func _init(_editor: BlueprintEditor) -> void:
 	editor = _editor
 	draw_scale = 1.0
 	offset = Vector2.ZERO
 
 func _process(_delta: float) -> void:
+	if width <= 0 or height <= 0:
+		return
 	queue_redraw()
 
 func _draw() -> void:
@@ -35,7 +42,12 @@ func _draw() -> void:
 				continue
 
 			var index = Vector2i(x, y)
-			var type = editor.read_type(index)
+
+			var type
+			if layer == ShipBlueprintDesigner.Layer.STRUCTURE:
+				type = editor.read_structure_type(index)
+			else:
+				type = editor.read_part_type(index)
 
 			draw_sliced_placeholder_square(index, Vector2.ZERO, type)
 			#draw_placeholder_square(index, pair.structure.type)
@@ -87,31 +99,29 @@ func drag_by(relative: Vector2) -> void:
 func draw_grid() -> void:
 	const LINE_COLOR = Color.CADET_BLUE
 	const HIGHTLIGHT_COLOR = Color.RED
-	var x = first_visible_x() - 1
-	var y = first_visible_y() - 1
+	var x = first_visible_x()
+	var y = first_visible_y()
 	while true:
 		var index = Vector2i(0, y)
 		var top_left = top_left_or_zero(index)
-		var screen_dims = get_viewport().size
 
-		if top_left.y > screen_dims.y:
+		if top_left.y > height:
 			break
 		else:
 			y += 1
 
-		draw_line(top_left, Vector2(screen_dims.x, top_left.y), LINE_COLOR)
+		draw_line(top_left, Vector2(width, top_left.y), LINE_COLOR)
 
 	while true:
 		var index = Vector2i(x, 0)
 		var top_left = top_left_or_zero(index)
-		var screen_dims = get_viewport().size
 
-		if top_left.x > screen_dims.x:
+		if top_left.x > width:
 			break
 		else:
 			x += 1
 
-		draw_line(top_left, Vector2(top_left.x, screen_dims.y), LINE_COLOR)
+		draw_line(top_left, Vector2(top_left.x, height), LINE_COLOR)
 	
 	# draw the bottom and right edges of the blueprint
 	var dims = editor.read_dims()
@@ -120,6 +130,9 @@ func draw_grid() -> void:
 	if bottom_right.x >= 0 and bottom_right.y >= 0:
 		draw_dashed_line(top_left_or_zero(Vector2i(0, dims.y)), bottom_right, HIGHTLIGHT_COLOR)
 		draw_dashed_line(top_left_or_zero(Vector2i(dims.x, 0)), bottom_right, HIGHTLIGHT_COLOR)
+	
+	draw_line(Vector2.ZERO, Vector2(width, 0), Color.BLACK)
+	draw_line(Vector2.ZERO, Vector2(0, height), Color.BLACK)
 
 # really stupid approach, but im lazy
 func first_visible_x() -> int:
@@ -144,7 +157,7 @@ func first_visible_y() -> int:
 			y += 1
 	return y
 
-func draw_sliced_placeholder_square(index: Vector2i, bound: Vector2, type: StructureBlueprint.Type) -> void:
+func draw_sliced_placeholder_square(index: Vector2i, bound: Vector2, type) -> void:
 	var top_left = top_left_corner(index)
 	if top_left.x < 0:
 		top_left.x = bound.x
@@ -154,19 +167,25 @@ func draw_sliced_placeholder_square(index: Vector2i, bound: Vector2, type: Struc
 	var color = placeholder_color(type)
 	draw_rect(Rect2(top_left, bottom_right - top_left), color)
 
-func draw_placeholder_square(index: Vector2i, type: StructureBlueprint.Type) -> void:
+func draw_placeholder_square(index: Vector2i, type) -> void:
 	var top_left = top_left_corner(index)
 	var color = placeholder_color(type)
 	draw_square(top_left, draw_scale * GRID_SIZE, color)
 
-func placeholder_color(type: StructureBlueprint.Type) -> Color:
-	match type:
-		StructureBlueprint.Type.EMPTY:
-			return Color.BLACK
-		StructureBlueprint.Type.DEBUG:
-			return Color.WHITE
-		_:
-			return Color(0, 0, 0, 0)
+func placeholder_color(type) -> Color:
+	if type is StructureBlueprint.Type:
+		match type:
+			StructureBlueprint.Type.EMPTY:
+				return Color.BLACK
+			StructureBlueprint.Type.DEBUG:
+				return Color.WHITE
+	elif type is FactoryPartBlueprint.Type:
+		match type:
+			FactoryPartBlueprint.Type.EMPTY:
+				return Color.BLACK
+			FactoryPartBlueprint.Type.DEBUG:
+				return Color.WHITE
+	return Color(0, 0, 0, 0)
 
 func draw_square(top_left: Vector2, side_length: float, color: Color) -> void:
 	draw_rect(Rect2(top_left, Vector2(side_length, side_length)), color)
