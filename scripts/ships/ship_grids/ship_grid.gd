@@ -5,6 +5,7 @@ var soft_body: GridSoftBody
 var factory: GridFactory
 
 
+# this does nothing right now
 class ModuleVertexArray:
     extends Object
 

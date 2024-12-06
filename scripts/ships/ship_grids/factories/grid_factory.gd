@@ -4,7 +4,9 @@ extends Node
 var modules: Matrix
 var move = false
 
+
 class FactoryPartState extends Node:
+	enum PartType {EMPTY, DEBUG}
 	var inventory: Inventory
 	var factory_part_type: PartType
 	
@@ -21,7 +23,7 @@ func tick_forward() -> void:
 			move_module_part(module, x, y)
 
 # Moves part along conveyor belt 
-func move_module_part(module: FactoryPartState, x:int, y:int) -> void:
+func move_module_part(module: FactoryPartState, x: int, y: int) -> void:
 	var inventory = module.inventory
 	# Checks to see if module is empty or not
 	if inventory.amount > 0:
