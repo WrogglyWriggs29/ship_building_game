@@ -42,3 +42,29 @@ var shape_vertices: ModuleVertexArray
 
 func _init(modules: ModuleMatrix, connections: ConnectionMatrix) -> void:
     soft_body = GridSoftBody.new(modules, connections)
+	shape_vertices = ModuleVertexArray.new(modules)  # Initialize shape_vertices
+	
+func get_average_position() -> Vector2:
+	var modules = soft_body.modules
+
+	if modules == null:
+		return Vector2.ZERO
+
+	var total_position = Vector2.ZERO
+	var count = 0
+
+	# Get x and y coordinates of every vertex. 
+	for y in range(modules.height):
+		for x in range(modules.width):
+			var optional_module = modules.at(x, y)
+			if optional_module.exists:
+				total_position += optional_module.module.global_position
+				count += 1
+				print("vertex is ", optional_module.module.global_position)
+			else:
+				print("Vertex at", x, y, "is null")
+
+	if count == 0:
+		return Vector2.ZERO
+
+	return total_position / count
