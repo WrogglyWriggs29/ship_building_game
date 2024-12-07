@@ -1,11 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://ctfqpne8kdjcg"]
-
-[ext_resource type="Script" path="res://map_design/platnet/platnet.gd" id="1_q4lev"]
-[ext_resource type="Shader" path="res://map_design/platnet/platnet.gdshader" id="2_1636u"]
-[ext_resource type="Texture2D" uid="uid://78b3idoukp8n" path="res://icon.svg" id="3_12518"]
-
-[sub_resource type="Shader" id="Shader_v30ec"]
-code = "shader_type canvas_item;
+shader_type canvas_item;
 uniform bool is_card = true;
 uniform float iTime = 2.5;
 uniform float rotation_speed = 0.005;
@@ -170,47 +163,4 @@ void fragment()
     vec3 col = march(from, dir, ldir, objcol,objid,coast,alpha);
     
     COLOR = vec4(col*.85,alpha);
-}"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_brud6"]
-shader = SubResource("Shader_v30ec")
-shader_parameter/is_card = true
-shader_parameter/iTime = 2.5
-shader_parameter/rotation_speed = 0.005
-shader_parameter/water_color = Color(0, 0.4, 0.8, 1)
-shader_parameter/land_color1 = Color(0.6, 1, 0.5, 1)
-shader_parameter/land_color2 = Color(0.6, 0.2, 0, 1)
-shader_parameter/atmo_color = Color(0.4, 0.65, 0.9, 1)
-shader_parameter/cloud_color = Color(1.3, 1.3, 1.3, 1)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_at8dv"]
-resource_local_to_scene = true
-shader = ExtResource("2_1636u")
-shader_parameter/is_card = true
-shader_parameter/iTime = 15.0
-shader_parameter/rotation_speed = 0.005
-shader_parameter/water_color = Color(0, 0.4, 0.8, 1)
-shader_parameter/land_color1 = Color(0.6, 1, 0.5, 1)
-shader_parameter/land_color2 = Color(0.6, 0.2, 0, 1)
-shader_parameter/atmo_color = Color(0.4, 0.65, 0.9, 1)
-shader_parameter/cloud_color = Color(1.3, 1.3, 1.3, 1)
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_m4uoc"]
-resource_local_to_scene = true
-radius = 200.0
-
-[node name="Platnet" type="StaticBody2D" node_paths=PackedStringArray("_sprite", "_collision_shape")]
-material = SubResource("ShaderMaterial_brud6")
-collision_mask = 0
-script = ExtResource("1_q4lev")
-_sprite = NodePath("Sprite2D")
-_collision_shape = NodePath("CollisionShape2D")
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_at8dv")
-scale = Vector2(4, 4)
-texture = ExtResource("3_12518")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_m4uoc")
-debug_color = Color(0.772003, 0.606556, 0.443496, 0.42)
+}
