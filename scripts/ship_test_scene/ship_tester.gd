@@ -19,15 +19,15 @@ func _init() -> void:
 	grid.soft_body.modules.add_modules_as_children_to(self)
 	add_child(grid.soft_body)
 
-	dragger = UserVelocityApplicator.new(grid.soft_body.modules)
-	dragger.name = "dragger"
-	add_child(dragger)
-
 	ship = Ship.new([grid])
 
 	ship_camera = ShipCamera.new(ship)
 	add_child(ship_camera)
 	ship_camera.make_current()
+
+	dragger = UserVelocityApplicator.new(grid.soft_body.modules, ship_camera)
+	dragger.name = "dragger"
+	add_child(dragger)
 
 
 #    mods = ModuleMatrix.new(matrix)

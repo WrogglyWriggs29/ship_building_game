@@ -4,24 +4,26 @@ extends Node2D
 var linked_module: Module = null
 var velocity: Vector2 = Vector2(0, 0)
 var mods: ModuleMatrix
+var camera: ShipCamera
 
 const STRENGTH = 0.1
 
-func _init(matrix: ModuleMatrix) -> void:
+func _init(matrix: ModuleMatrix, _camera: ShipCamera) -> void:
     linked_module = null
     velocity = Vector2(0, 0)
     mods = matrix
+    camera = _camera
 
 func _process(_delta: float) -> void:
     if linked_module:
-        var mouse_pos = get_viewport().get_mouse_position()
+        var mouse_pos = get_global_mouse_position()
         calc_velocity(mouse_pos)
         queue_redraw()
 
 func _input(event: InputEvent) -> void:
     if event is InputEventMouseButton:
         if event.pressed:
-            var dragging = mods.get_closest_module(event.position)
+            var dragging = mods.get_closest_module(get_global_mouse_position()) # event.global_position + camera.global_position)
             if dragging:
                 link(dragging)
         else:

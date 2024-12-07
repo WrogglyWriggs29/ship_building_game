@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dr6ph4cq726m4"
+path="res://.godot/imported/Menu1A.wav-72ccfe7505a246cd91556af9dca06f8a.sample"
+
+[deps]
+
+source_file="res://Audio/Click module/Menu1A.wav"
+dest_files=["res://.godot/imported/Menu1A.wav-72ccfe7505a246cd91556af9dca06f8a.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

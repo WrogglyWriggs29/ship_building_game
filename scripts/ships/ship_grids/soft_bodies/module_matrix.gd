@@ -54,8 +54,8 @@ func get_closest_module(pos: Vector2) -> Module:
 	var candidates: Array[Module] = []
 	for x in range(width):
 		for y in range(height):
-			if matrix.at(x, y).exists && matrix.at(x, y).module.get_global_square().has_point(pos):
-				candidates.push_back(matrix.at(x, y).module)
+			#if matrix.at(x, y).exists && matrix.at(x, y).module.get_global_square().has_point(pos):
+			candidates.push_back(matrix.at(x, y).module)
 	
 	var closest: Module = null
 	var closest_dist: float = +INF
