@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://blykmqji8gjqy"]
+
+[ext_resource type="Script" path="res://scenes/fake_player/fake_player.gd" id="1_m58hd"]
+[ext_resource type="Texture2D" uid="uid://rwf7a478lgtl" path="res://icon.svg" id="2_1v705"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f1qtl"]
+size = Vector2(132, 126)
+
+[node name="FakePlayer" type="CharacterBody2D"]
+disable_mode = 2
+motion_mode = 1
+script = ExtResource("1_m58hd")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_1v705")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_f1qtl")
+debug_color = Color(0.412232, 0.390748, 0.873279, 0.42)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_enabled = true

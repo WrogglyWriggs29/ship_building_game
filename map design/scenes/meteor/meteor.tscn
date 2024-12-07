@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://5k28ec78i5a6"]
+
+[ext_resource type="Texture2D" uid="uid://btqw5eaq6qqq3" path="res://assets/images/spr_meteor_small.png" id="1_d8idl"]
+[ext_resource type="Script" path="res://scenes/meteor/meteor.gd" id="1_kpocp"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_m4uoc"]
+resource_local_to_scene = true
+radius = 36.95
+
+[node name="Meteor" type="RigidBody2D" node_paths=PackedStringArray("_sprite", "_collision_shape")]
+collision_layer = 2
+collision_mask = 3
+mass = 0.002
+gravity_scale = 0.0
+script = ExtResource("1_kpocp")
+_sprite = NodePath("Sprite2D")
+_collision_shape = NodePath("CollisionShape2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -2)
+scale = Vector2(0.833333, 0.869565)
+texture = ExtResource("1_d8idl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_m4uoc")
+debug_color = Color(0.772003, 0.606556, 0.443496, 0.42)
