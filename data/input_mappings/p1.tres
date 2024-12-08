@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="InputMapping" load_steps=2 format=3 uid="uid://nbc37d8dwk44"]
+
+[ext_resource type="Script" path="res://scripts/input_mapping.gd" id="1_bo5o2"]
+
+[resource]
+script = ExtResource("1_bo5o2")
+move_left = &"p1_left"
+move_right = &"p1_right"
+move_up = &"p1_up"
+move_down = &"p1_down"
+fire = &"p1_fire"

@@ -201,7 +201,9 @@ radius = 200.0
 
 [node name="Platnet" type="StaticBody2D" node_paths=PackedStringArray("_sprite", "_collision_shape")]
 material = SubResource("ShaderMaterial_brud6")
-collision_mask = 0
+disable_mode = 2
+collision_layer = 3
+collision_mask = 3
 script = ExtResource("1_q4lev")
 _sprite = NodePath("Sprite2D")
 _collision_shape = NodePath("CollisionShape2D")

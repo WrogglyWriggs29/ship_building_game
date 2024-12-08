@@ -1,9 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://ctmh64exv8da0"]
+[gd_scene load_steps=6 format=3 uid="uid://ctmh64exv8da0"]
 
 [ext_resource type="Script" path="res://map_design/level/level.gd" id="1_u76aw"]
 [ext_resource type="Shader" path="res://map_design/level/bg.gdshader" id="2_0hdpn"]
 [ext_resource type="PackedScene" uid="uid://ctfqpne8kdjcg" path="res://map_design/platnet/platnet.tscn" id="3_0hwbo"]
-[ext_resource type="PackedScene" uid="uid://blykmqji8gjqy" path="res://map_design/fake_player/fake_player.tscn" id="3_xnl5d"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0sm0n"]
 size = Vector2(6958, 3803)
@@ -67,6 +66,3 @@ radius = 530.0
 [node name="Platnet5" parent="Platnets" instance=ExtResource("3_0hwbo")]
 position = Vector2(676, -1155)
 radius = 515.0
-
-[node name="FakePlayer" parent="." instance=ExtResource("3_xnl5d")]
-position = Vector2(501, 325)

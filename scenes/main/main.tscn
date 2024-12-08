@@ -1,0 +1,70 @@
+[gd_scene load_steps=5 format=3 uid="uid://b0aid8mxkppsa"]
+
+[ext_resource type="Script" path="res://scenes/main/main.gd" id="1_fkvou"]
+[ext_resource type="PackedScene" uid="uid://ctmh64exv8da0" path="res://map_design/level/level.tscn" id="2_a4pij"]
+[ext_resource type="PackedScene" uid="uid://b64qyygg3lgvo" path="res://scenes/player/player.tscn" id="3_5cmq1"]
+[ext_resource type="Resource" uid="uid://c5csabkab6grm" path="res://data/input_mappings/p2.tres" id="5_rjjhv"]
+
+[node name="Main" type="Node" node_paths=PackedStringArray("view_port_p1", "view_port_p2")]
+script = ExtResource("1_fkvou")
+view_port_p1 = NodePath("SplitScreen/SubViewportContainer/SubViewportP1")
+view_port_p2 = NodePath("SplitScreen/SubViewportContainer2/SubViewportP2")
+
+[node name="SplitScreen" type="HBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="SplitScreen"]
+layout_mode = 2
+size_flags_horizontal = 3
+stretch = true
+
+[node name="SubViewportP1" type="SubViewport" parent="SplitScreen/SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(575, 648)
+render_target_update_mode = 4
+
+[node name="Level" parent="SplitScreen/SubViewportContainer/SubViewportP1" instance=ExtResource("2_a4pij")]
+
+[node name="Player1" parent="SplitScreen/SubViewportContainer/SubViewportP1/Level" instance=ExtResource("3_5cmq1")]
+position = Vector2(314, 216)
+
+[node name="RemoteTransformP1" type="RemoteTransform2D" parent="SplitScreen/SubViewportContainer/SubViewportP1/Level/Player1"]
+remote_path = NodePath("../../../Camera1")
+update_rotation = false
+update_scale = false
+
+[node name="Player2" parent="SplitScreen/SubViewportContainer/SubViewportP1/Level" instance=ExtResource("3_5cmq1")]
+self_modulate = Color(0.743021, 0.66423, 1, 1)
+position = Vector2(826, 248)
+input_mapping = ExtResource("5_rjjhv")
+
+[node name="RemoteTransformP2" type="RemoteTransform2D" parent="SplitScreen/SubViewportContainer/SubViewportP1/Level/Player2"]
+remote_path = NodePath("../../../../../SubViewportContainer2/SubViewportP2/Camera2")
+
+[node name="Camera1" type="Camera2D" parent="SplitScreen/SubViewportContainer/SubViewportP1"]
+unique_name_in_owner = true
+position = Vector2(314, 216)
+
+[node name="ColorRect" type="ColorRect" parent="SplitScreen"]
+custom_minimum_size = Vector2(2, 0)
+layout_mode = 2
+color = Color(0, 0.803854, 0.806433, 1)
+
+[node name="SubViewportContainer2" type="SubViewportContainer" parent="SplitScreen"]
+layout_mode = 2
+size_flags_horizontal = 3
+stretch = true
+
+[node name="SubViewportP2" type="SubViewport" parent="SplitScreen/SubViewportContainer2"]
+handle_input_locally = false
+size = Vector2i(575, 648)
+render_target_update_mode = 4
+
+[node name="Camera2" type="Camera2D" parent="SplitScreen/SubViewportContainer2/SubViewportP2"]
+unique_name_in_owner = true
+position = Vector2(826, 248)
