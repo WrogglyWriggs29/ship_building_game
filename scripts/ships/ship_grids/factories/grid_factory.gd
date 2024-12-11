@@ -6,12 +6,28 @@ var move = false
 
 
 class FactoryPartState extends Node:
-	enum PartType {EMPTY, DEBUG}
+	enum Type {EMPTY, DEBUG, THRUSTER}
 	var inventory: Inventory
-	var factory_part_type: PartType
+	var type: Type
+	var orientation: int
+	var action_is_on: bool
 	
+class OptionalPart extends Node:
+	var exists: bool
+	var part: FactoryPartState
+
+	func _init(_exists: bool, _part: FactoryPartState = null) -> void:
+		exists = _exists
+		part = _part
 
 func _init(array = []):
+	for y in range(array.size()):
+		for x in range(array[y].size()):
+			if array[y][x] != null:
+				array[y][x] = OptionalPart.new(true, array[y][x])
+			else:
+				array[y][x] = OptionalPart.new(false)
+
 	modules = Matrix.new(array)
 
 # Moves grid 1 tick forward to move materials, gets current module

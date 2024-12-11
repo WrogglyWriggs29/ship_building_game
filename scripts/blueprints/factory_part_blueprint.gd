@@ -3,7 +3,8 @@ extends Node
 
 enum Type {
     EMPTY,
-    DEBUG
+    DEBUG,
+    THRUSTER
 }
 
 var type: Type
@@ -21,5 +22,7 @@ static func type_name(_type: Type) -> String:
             return "Empty"
         Type.DEBUG:
             return "Debug"
+        Type.THRUSTER:
+            return "Thruster"
         _:
             return "Unknown"

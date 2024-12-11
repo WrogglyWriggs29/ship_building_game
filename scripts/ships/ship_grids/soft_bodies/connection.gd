@@ -34,6 +34,6 @@ static func basic_spring(scale) -> Connection:
     var bfl = 1000.0
 
     var dza = 0.0
-    var ka = 3500.0
+    var ka = 6000.0
     var bta = 1000.0
     return Connection.new(Type.BASIC_SPRING, dzl, kl, bfl, dza, ka, bta)

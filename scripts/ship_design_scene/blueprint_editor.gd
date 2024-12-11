@@ -109,6 +109,32 @@ func flip_connection_bools(index: Vector2i, dir: int) -> void:
 	set_connection(index, dir, not read_connection(index, dir))
 	set_connection(neighbor_index, Dir.reverse(dir), not read_connection(neighbor_index, Dir.reverse(dir)))
 
+func set_adjacent_connections(index: Vector2i, value: bool) -> void:
+	for dir in Dir.MAX:
+		var neighbor = increment_index_by_dir(index, dir)
+		if blueprint.matrix.in_range(neighbor) and read_structure_type(neighbor) != StructureBlueprint.Type.EMPTY:
+			set_connection(index, dir, value)
+			set_connection(neighbor, Dir.reverse(dir), value)
+
+func unbind(index: Vector2i) -> void:
+	for key in blueprint.actions.keys():
+		if blueprint.actions[key].has(index):
+			blueprint.actions[key].erase(index)
+
+func read_keybind(index: Vector2i) -> int:
+	for key in blueprint.actions.keys():
+		if blueprint.actions[key].has(index):
+			return key
+	return -1
+
+func set_keybind(index: Vector2i, key: int) -> void:
+	unbind(index)
+
+	if blueprint.actions.has(key) and not blueprint.actions[key].has(index):
+		blueprint.actions[key].push_back(index)
+	elif not blueprint.actions.has(key):
+		blueprint.actions[key] = [index]
+
 static func increment_index_by_dir(index: Vector2i, dir: int) -> Vector2i:
 	Dir.assert_dir(dir)
 	match dir:

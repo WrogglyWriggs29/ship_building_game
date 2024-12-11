@@ -53,4 +53,4 @@ static func from_vector(vec: Vector2) -> Nangle:
 	return Nangle.new(vec.angle())
 
 func to_vector() -> Vector2:
-	return Vector2(cos(value), -sin(value))
+	return Vector2(cos(value), -sin(value)).normalized()

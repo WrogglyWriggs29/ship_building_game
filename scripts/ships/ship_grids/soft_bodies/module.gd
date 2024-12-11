@@ -25,7 +25,7 @@ func _init(_type, _position) -> void:
 	velocity = Vector2.ZERO
 
 func _draw() -> void:
-	const ACCEL_VECTOR_SCALE = 30.0
+	const ACCEL_VECTOR_SCALE = 300.0
 	if debug_draw:
 		for vec in debug_accel_vectors:
 			draw_line(Vector2(0, 0), vec * ACCEL_VECTOR_SCALE, Color.BLUE)

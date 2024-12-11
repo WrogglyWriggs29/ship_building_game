@@ -10,6 +10,7 @@ var connections: ConnectionMatrix
 var angular_displacements: DisplacementMatrix
 
 var debug_draw: bool = false
+var debug_applied_forces: Array = []
 
 class LineCoords:
 	var start: Vector2
@@ -63,6 +64,11 @@ func _draw() -> void:
 			var index = Vector2i(x_index, y_index)
 			if modules.at_index(index).exists:
 				draw_module_outgoing_angles(index)
+
+func apply_force(force: Vector2, index: Vector2i) -> void:
+	var optional_module = modules.at_index(index)
+	if optional_module.exists:
+		optional_module.module.apply_accel(force / optional_module.module.mass)
 
 func manual_physics_process() -> void:
 	update_displacement_angles()
@@ -175,7 +181,7 @@ func apply_torque_forces_to_module(index: Vector2i, module: Module, adjacent_mod
 	
 	if force_count > 0:
 		var avg_force = force_sum / force_count
-		module.apply_accel(-avg_force / module.mass)
+		module.apply_accel(-avg_force * 2 / module.mass)
 
 func apply_spring_forces() -> void:
 	var visited = VisitedMatrix.new(connections.width, connections.height)
@@ -315,7 +321,8 @@ func update_displacement_angles() -> void:
 					if !modules.in_range(neighbor_index) || is_visited.at(neighbor_index):
 						continue
 					if modules.at_index(neighbor_index).exists:
-						update_displacements(current, neighbor_index, dir)
+						if connections.connection_from_module(current, dir).exists:
+							update_displacements(current, neighbor_index, dir)
 			
 			is_visited.mark(current, true)
 

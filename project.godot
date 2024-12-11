@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 GlobalConstants="*res://scripts/global_constants.gd"
 AudioManager="*res://autoloads/audio_manager.gd"
+SceneStack="*res://scripts/util/scene_stack.gd"
 
 [input]
 

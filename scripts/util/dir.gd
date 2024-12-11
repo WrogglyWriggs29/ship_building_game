@@ -25,6 +25,7 @@ static func assert_dir(dir: int) -> void:
 	assert(0 <= dir && dir < MAX, "Invalid direction provided.")
 
 static func to_vector(dir: int) -> Vector2:
+	assert_dir(dir)
 	match dir:
 		UP:
 			return Vector2(0, -1)
@@ -36,3 +37,17 @@ static func to_vector(dir: int) -> Vector2:
 			return Vector2(-1, 0)
 		_:
 			return Vector2(0, -1)
+
+static func to_angle(dir: int) -> float:
+	assert_dir(dir)
+	match dir:
+		UP:
+			return PI / 2
+		RIGHT:
+			return 0
+		DOWN:
+			return -PI / 2
+		LEFT:
+			return PI
+		_:
+			return PI / 2
