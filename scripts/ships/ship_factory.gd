@@ -26,6 +26,9 @@ func validate(bp: ShipGridBlueprint) -> String:
 			if pair.structure.type != StructureBlueprint.Type.EMPTY:
 				module_indices[Vector2i(x, y)] = false
 	
+	if module_indices.size() == 0:
+		return "Blueprint is blank."
+	
 	var first = module_indices.keys().front()
 	mark_adjacent(bp, module_indices, first)
 

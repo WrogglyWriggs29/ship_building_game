@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://pun1ir45ou4s"]
+[gd_scene load_steps=6 format=3 uid="uid://cb4x2uianqdw5"]
 
 [ext_resource type="Script" path="res://scripts/ship_test_scene/ship_test_level.gd" id="1_eikbe"]
 [ext_resource type="Shader" path="res://map_design/level/bg.gdshader" id="2_0hdpn"]
@@ -27,6 +27,11 @@ monitorable = false
 gravity = 0.0
 linear_damp = 0.0
 script = ExtResource("1_eikbe")
+platnet_min_radius = null
+platnet_max_radius = null
+meteor_min_radius = null
+meteor_max_radius = null
+meteor_amount = null
 
 [node name="MapShape" type="CollisionShape2D" parent="."]
 position = Vector2(516, 332.5)

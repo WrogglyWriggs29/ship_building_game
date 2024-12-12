@@ -1,7 +1,7 @@
 class_name TestButton
 extends Node2D
 
-const TEST_SCENE_FILE = "res://scripts/ship_test_scene/ship_test_level.tscn"
+const TEST_SCENE_FILE = "res://ship_test_level.tscn"
 
 var width: float
 var height: float

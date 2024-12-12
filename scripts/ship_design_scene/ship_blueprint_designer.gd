@@ -39,6 +39,8 @@ var config_panel_bottom_right: UICoord = UICoord.new(Vector2(H_SPLIT, 1.0), self
 enum Layer {STRUCTURE, FACTORY}
 
 var editor: BlueprintEditor
+var writer: BlueprintWriter
+var reader: BlueprintReader
 
 var layer_selector: LayerSelector
 var palette: ToolPalette
@@ -82,6 +84,9 @@ func _init() -> void:
 	var blueprint = ShipGridBlueprint.blank(10, 10)
 
 	editor = BlueprintEditor.new(blueprint)
+	writer = BlueprintWriter.new()
+	reader = BlueprintReader.new()
+
 	layer_selector = LayerSelector.new()
 	grid = BlueprintGrid.new(editor)
 	palette = ToolPalette.new()
@@ -233,3 +238,22 @@ func click_on_self(pos: Vector2) -> void:
 
 func is_on_grid(pos: Vector2) -> bool:
 	return Rect2(grid.position, Vector2(grid.width, grid.height)).has_point(pos)
+
+func save_blueprint(file_path: String) -> void:
+	if writer == null or editor == null:
+		#print("Writer or Editor not initialized!")
+		return
+	print("Saving blueprint to:", file_path)
+	writer.save_ship_grid_to_json(editor.blueprint, file_path)
+
+func load_blueprint(file_path: String) -> void:
+	if reader == null or editor == null:
+		print("Reader or Editor not initialized!")
+		return
+	print("Loading blueprint from:", file_path)
+	var loaded_blueprint = reader.load_ship_grid_from_json(file_path)
+	if loaded_blueprint == null:
+		print("Failed to load blueprint.")
+		return
+	editor.set_blueprint(loaded_blueprint)
+	print("Blueprint loaded successfully.")

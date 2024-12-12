@@ -14,8 +14,6 @@ var ship_camera: ShipCamera
 
 var dragger: UserVelocityApplicator
 
-var returner: SceneReturner = null
-
 @export var platnet_min_radius := 100
 @export var platnet_max_radius := 300
 

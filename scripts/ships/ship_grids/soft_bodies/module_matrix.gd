@@ -97,3 +97,11 @@ func add_modules_as_children_to(parent: Node) -> void:
 		for y in range(height):
 			if matrix.at(x, y).exists:
 				parent.add_child(matrix.at(x, y).module)
+
+func first_module() -> Vector2i:
+	for x in range(width):
+		for y in range(height):
+			if matrix.at(x, y).exists:
+				return Vector2i(x, y)
+
+	return Vector2i(-1, -1)

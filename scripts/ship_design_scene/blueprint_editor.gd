@@ -6,6 +6,9 @@ var blueprint: ShipGridBlueprint
 func _init(_blueprint: ShipGridBlueprint) -> void:
 	blueprint = _blueprint
 
+func set_blueprint(new_blueprint: ShipGridBlueprint) -> void:
+	blueprint = new_blueprint
+
 func read_dims() -> Vector2i:
 	return Vector2i(blueprint.matrix.width, blueprint.matrix.height)
 

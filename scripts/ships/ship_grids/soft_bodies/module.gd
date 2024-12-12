@@ -15,6 +15,8 @@ var phys_rotation: Fangle = Fangle.new(0.0)
 var debug_draw: bool = true
 var debug_accel_vectors: Array[Vector2] = []
 
+var vertices: Array[SharedVector] = [SharedVector.new(), SharedVector.new(), SharedVector.new(), SharedVector.new()]
+
 func _init(_type, _position) -> void:
 	type = _type
 	position = _position
