@@ -48,6 +48,11 @@ var test_button: TestButton
 var binder: BlueprintActionBinder
 var config: ConfigPanel
 
+const BattleButton = preload("res://scripts/ship_design_scene/battle_button.gd")
+var battle_button_top_left: UICoord = UICoord.new(Vector2(0.0, 0.1), self)
+var battle_button_bottom_right: UICoord = UICoord.new(Vector2(H_SPLIT, 0.2), self)
+var battle_button: BattleButton
+
 # needs to exist for the none tool
 func do_nothing(_index: Vector2i) -> void:
 	pass
@@ -72,11 +77,11 @@ func configure_select(index: Vector2i) -> void:
 	config.select(index)
 
 var tool_actions: Array[Callable] = [Callable(do_nothing),
-									 Callable(place_module),
-									 Callable(remove_module),
-									 Callable(place_part),
-									 Callable(remove_part),
-									 Callable(configure_select)]
+									Callable(place_module),
+									Callable(remove_module),
+									Callable(place_part),
+									Callable(remove_part),
+									Callable(configure_select)]
 
 func _init() -> void:
 	var blueprint = ShipGridBlueprint.blank(10, 10)
@@ -88,6 +93,7 @@ func _init() -> void:
 	test_button = TestButton.new(blueprint)
 	binder = BlueprintActionBinder.new(editor)
 	config = ConfigPanel.new(editor)
+	battle_button = BattleButton.new()
 
 func _ready() -> void:
 	layer_selector.position = layer_selector_top_left.to_px()
@@ -105,6 +111,10 @@ func _ready() -> void:
 	add_child(test_button)
 	add_child(binder)
 	add_child(config)
+	
+	battle_button.position = battle_button_top_left.to_px()
+	add_child(battle_button)
+
 
 func _process(_delta: float) -> void:
 	layer_selector.position = layer_selector_top_left.to_px()
@@ -131,7 +141,6 @@ func _process(_delta: float) -> void:
 	config.width = config_panel_bottom_right.to_px().x - config_panel_top_left.to_px().x
 	config.height = config_panel_bottom_right.to_px().y - config_panel_top_left.to_px().y
 
-
 	# tell the grid and the config which layer is selected
 	grid.layer = layer_selector.selected
 	config.layer = layer_selector.selected
@@ -149,6 +158,10 @@ func _process(_delta: float) -> void:
 		binder.select(config.selected)
 	else:
 		binder.deselect()
+		
+	battle_button.position = battle_button_top_left.to_px()
+	battle_button.width = battle_button_bottom_right.to_px().x - battle_button_top_left.to_px().x
+	battle_button.height = battle_button_bottom_right.to_px().y - battle_button_top_left.to_px().y
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
@@ -173,7 +186,19 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventKey:
 		var key_event = event as InputEventKey
 		if key_event.pressed:
-			key_on_self(get_global_mouse_position(), key_event.keycode)
+			if key_event.keycode == KEY_S and key_event.ctrl_pressed:
+				save_current_blueprint()
+			else:
+				key_on_self(get_global_mouse_position(), key_event.keycode)
+
+func save_current_blueprint() -> void:
+	# Get a timestamp for unique naming
+	var timestamp = Time.get_datetime_string_from_system().replace(":", "-")
+	var success = BlueprintWriter.save_blueprint(editor.blueprint, "ship_" + timestamp)
+	if success:
+		print("Blueprint saved successfully as ship_" + timestamp)
+	else:
+		print("Failed to save blueprint")
 
 func key_on_self(pos: Vector2, scancode: int) -> void:
 	var binder_rect = Rect2(binder.position, Vector2(binder.width, binder.height))
@@ -184,7 +209,6 @@ func key_on_self(pos: Vector2, scancode: int) -> void:
 func move_on_self(pos: Vector2, relative: Vector2) -> void:
 	if is_on_grid(pos) and grid.dragging:
 		grid.drag_by(relative)
-
 
 func start_drag_on_self(pos: Vector2) -> void:
 	if is_on_grid(pos):
@@ -217,6 +241,9 @@ func click_on_self(pos: Vector2) -> void:
 	var on_config: bool = config_rect.has_point(pos)
 	var on_test_button: bool = test_button_rect.has_point(pos)
 	var on_binder: bool = binder_rect.has_point(pos)
+	
+	var battle_button_rect = Rect2(battle_button.position, Vector2(battle_button.width, battle_button.height))
+	var on_battle_button: bool = battle_button_rect.has_point(pos)
 
 	if on_layer_selector:
 		layer_selector.select_at(pos - layer_selector.position)
@@ -230,6 +257,8 @@ func click_on_self(pos: Vector2) -> void:
 		test_button.click()
 	elif on_binder:
 		binder.click_at(pos - binder.position)
+	elif on_battle_button:
+		SceneTransitionManager.goto_blueprint_selection()
 
 func is_on_grid(pos: Vector2) -> bool:
 	return Rect2(grid.position, Vector2(grid.width, grid.height)).has_point(pos)
