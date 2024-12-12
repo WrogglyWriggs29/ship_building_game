@@ -81,6 +81,7 @@ func spawn_bullet(position: Vector2, direction: Vector2, owner_player: Player) -
 	bullet.global_position = position
 	bullet.rotation = direction.angle()
 	bullet.owner_player = owner_player
+	
 	# Add projectile to tree
 	print("Scene Stuatus", get_tree())
 	
