@@ -41,12 +41,26 @@ func load_ship_grid_from_json(file_path: String) -> ShipGridBlueprint:
 			var pair_data = grid[y][x]
 
 			# Reconstruct StructureBlueprint
-			var structure_type = StructureBlueprint.Type.DEBUG if pair_data["structure"]["type"] == "Debug" else StructureBlueprint.Type.EMPTY
+			var structure_type : StructureBlueprint.Type
+			if pair_data["structure"]["type"] == "Debug":
+				structure_type = StructureBlueprint.Type.DEBUG
+			elif  pair_data["structure"]["type"] == "Empty":
+				structure_type = StructureBlueprint.Type.EMPTY
+				
 			var connections = pair_data["structure"]["connections"]
 			var structure = StructureBlueprint.new(structure_type)
 
 			# Reconstruct FactoryPartBlueprint
-			var part_type = FactoryPartBlueprint.Type.DEBUG if pair_data["part"]["type"] == "Debug" else FactoryPartBlueprint.Type.EMPTY
+			var part_type : FactoryPartBlueprint.Type
+			if pair_data["part"]["type"] == "Debug": 
+				part_type = FactoryPartBlueprint.Type.DEBUG
+			elif pair_data["part"]["type"] == "Empty":
+				part_type = FactoryPartBlueprint.Type.EMPTY
+			elif pair_data["part"]["type"] == "Thruster":
+				part_type = FactoryPartBlueprint.Type.THRUSTER
+			elif  pair_data["part"]["type"] == "Gun":
+				part_type = FactoryPartBlueprint.Type.GUN
+				
 			var orientation = pair_data["part"]["orientation"]
 			var inventory_data = pair_data["part"]["starting_inventory"]
 
