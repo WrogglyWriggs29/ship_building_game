@@ -105,3 +105,13 @@ func are_connected(module_index_a: Vector2i, module_index_b: Vector2i) -> bool:
 		return false
 	
 	return true
+
+func connecting(mod_a: Vector2i, mod_b: Vector2i) -> Array[Vector2i]:
+	var offset: Vector2i = mod_b - mod_a
+	var dir = Dir.from_index_offset(offset)
+	if dir == Dir.INVALID:
+		return []
+	
+	var a_to_b = index_from_module(mod_a, dir)
+	var b_to_a = linked_index(a_to_b)
+	return [a_to_b, b_to_a]

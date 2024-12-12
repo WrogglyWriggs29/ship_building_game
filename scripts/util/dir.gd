@@ -22,18 +22,11 @@ static func reverse(dir: int) -> int:
 		_:
 			return UP
 
+const _clockwise_dirs = [RIGHT, DOWN, LEFT, UP]
+const _counter_clockwise_dirs = [LEFT, UP, RIGHT, DOWN]
+
 static func rotate(dir: int, clockwise: bool) -> int:
-	match dir:
-		UP:
-			return RIGHT if clockwise else LEFT
-		RIGHT:
-			return DOWN if clockwise else UP
-		DOWN:
-			return LEFT if clockwise else RIGHT
-		LEFT:
-			return UP if clockwise else DOWN
-		_:
-			return UP
+	return _clockwise_dirs[dir] if clockwise else _counter_clockwise_dirs[dir]
 
 static func assert_dir(dir: int) -> void:
 	assert(0 <= dir && dir < MAX, "Invalid direction provided.")

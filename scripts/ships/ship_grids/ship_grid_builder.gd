@@ -95,6 +95,112 @@ static func build(bp: ShipGridBlueprint, offset: Vector2, scale: float) -> ShipG
 
 	return grid
 
+# starting at start_mod, does a tree search to copy (references to) all connected modules, connections, and factory parts
+static func tree_copy_existing(grid: ShipGrid, start_mod: Vector2i) -> ShipGrid:
+	var tabula = blank(grid.width, grid.height)
+
+	var visited = {}
+	var queue = [start_mod]
+	visited[start_mod] = true
+
+	var min_i = Vector2i(grid.soft_body.modules.width - 1, grid.soft_body.modules.height - 1)
+	var max_i = Vector2i.ZERO
+
+	while queue.size() > 0:
+		var current = queue.pop_front()
+		if current.x < min_i.x:
+			min_i.x = current.x
+		if current.x > max_i.x:
+			max_i.x = current.x
+		if current.y < min_i.y:
+			min_i.y = current.y
+		if current.y > max_i.y:
+			max_i.y = current.y
+
+		copy_index_into(grid, tabula, current)
+
+		for dir in Dir.MAX:
+			var next_con = grid.soft_body.connections.index_from_module(current, dir)
+			var next_mod = grid.soft_body.modules.adjacent_index(current, dir)
+			if grid.connection_exists(next_con) and not visited.has(next_mod):
+				queue.append(next_mod)
+				visited[next_mod] = true
+	
+	# trim the grid to only include the copied modules
+	print("Min index " + str(min_i) + " Max index " + str(max_i))
+	var trimmed_blank = blank(max_i.x - min_i.x + 1, max_i.y - min_i.y + 1)
+	for x in range(min_i.x, max_i.x + 1):
+		for y in range(min_i.y, max_i.y + 1):
+			copy_index_into(tabula, trimmed_blank, Vector2i(x, y), min_i)
+	
+
+	return trimmed_blank
+
+static func copy_index_into(grid: ShipGrid, tabula: ShipGrid, index: Vector2i, offset: Vector2i = Vector2i.ZERO) -> void:
+	# module
+	var mod = grid.soft_body.modules.at_index(index)
+	tabula.soft_body.modules.matrix.set_at_index(index - offset, mod)
+
+	# connections
+	for dir in Dir.MAX:
+		var con = grid.soft_body.connections.index_from_module(index, dir)
+		var con_new = grid.soft_body.connections.index_from_module(index - offset, dir)
+		if grid.connection_exists(con):
+			tabula.soft_body.connections.matrix.set_at_index(con_new, grid.soft_body.connections.at_index(con))
+
+	# part
+	var part = grid.factory.modules.at_index(index)
+	tabula.factory.modules.set_at_index(index - offset, part)
+
+class ConnectionChunk:
+	var cons: Array[Connection]
+	
+	func _init(_cons: Array[Connection] = [null, null, null, null]) -> void:
+		cons = _cons
+	
+	func set_con(dir: int, con: Connection) -> void:
+		Dir.assert_dir(dir)
+		cons[dir] = con
+	
+	func get_con(dir: int) -> Connection:
+		Dir.assert_dir(dir)
+		return cons[dir]
+
+class ModuleState:
+	var module: Module
+	var part: GridFactory.FactoryPartState
+	var cons: ConnectionChunk
+
+	func _init(_module: Module, _part: GridFactory.FactoryPartState, _cons: ConnectionChunk) -> void:
+		module = _module
+		part = _part
+		cons = _cons
+
+	static func blank() -> ModuleState:
+		return ModuleState.new(null, null, ConnectionChunk.new())
+
+static func blank(width: int, height: int) -> ShipGrid:
+	var mods = []
+	var cons = []
+	var parts = []
+	for y in range(height):
+		var mod_row = []
+		var con_row1 = []
+		var con_row2 = []
+		var part_row = []
+		for x in range(width):
+			mod_row.push_back(null)
+			con_row1.append_array([null, null])
+			con_row2.append_array([null, null])
+			part_row.push_back(null)
+		mods.push_back(mod_row)
+		cons.push_back(con_row1)
+		cons.push_back(con_row2)
+		parts.push_back(part_row)
+	
+	return ShipGrid.new(ModuleMatrix.new(mods), ConnectionMatrix.new(cons), parts)
+	
+
 static func position_from_index(index: Vector2i, scale: float) -> Vector2:
 	return Vector2(index.x * scale, index.y * scale)
 

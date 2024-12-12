@@ -70,13 +70,21 @@ func apply_force(force: Vector2, index: Vector2i) -> void:
 	if optional_module.exists:
 		optional_module.module.apply_accel(force / optional_module.module.mass)
 
-func manual_physics_process() -> void:
+func manual_physics_process() -> Array[DisconnectionEvent]:
+	var dc: Array[DisconnectionEvent] = []
+
 	update_displacement_angles()
 	update_node_rotations()
-	apply_torque_forces()
-	apply_spring_forces()
+
+	dc.append_array(apply_torque_forces())
+	#dc.append_array(
+	apply_spring_forces() # )
+
 	dampen_locally_allow_curl(get_center_of_mass())
+
 	modules.manual_physics_process()
+
+	return dc
 
 func get_center_of_mass() -> Vector2:
 	var sum = Vector2.ZERO
@@ -142,16 +150,21 @@ func dampen_velocity(velocity: Vector2, avg: Vector2, tangent_direction: Vector2
 	#const DAMPING_CONSTANT = 0.1
 	#return velocity * (1 - DAMPING_CONSTANT) + avg * DAMPING_CONSTANT
 
-func apply_torque_forces() -> void:
+func apply_torque_forces() -> Array[DisconnectionEvent]:
+	var dc: Array[DisconnectionEvent] = []
+
 	for y_index in modules.height:
 		for x_index in modules.width:
 			var current = Vector2i(x_index, y_index)
 			var optional_module = modules.at_index(current)
 			if optional_module.exists:
 				var adjacent_modules: Array[OptionalModule] = get_adjacent_modules(current)
-				apply_torque_forces_to_module(current, optional_module.module, adjacent_modules)
+				dc.append_array(apply_torque_forces_to_module(current, optional_module.module, adjacent_modules))
 
-func apply_torque_forces_to_module(index: Vector2i, module: Module, adjacent_modules: Array[OptionalModule]) -> void:
+	return dc
+
+func apply_torque_forces_to_module(index: Vector2i, module: Module, adjacent_modules: Array[OptionalModule]) -> Array[DisconnectionEvent]:
+	var dc: Array[DisconnectionEvent] = []
 	var force_sum: Vector2 = Vector2.ZERO
 	var force_count = 0
 	for dir in Dir.MAX:
@@ -162,6 +175,9 @@ func apply_torque_forces_to_module(index: Vector2i, module: Module, adjacent_mod
 				var displacement = angular_displacements.from_module_index(index, dir)
 
 				var torque = optional_connection.connection.k_angular * displacement.get_value()
+				if abs(torque) > optional_connection.connection.breaking_torque:
+					torque = sign(torque) * optional_connection.connection.breaking_torque
+					dc.append(DisconnectionEvent.new(index, modules.adjacent_index(index, dir)))
 
 				var dist = Module.distance_between(module, neighbor)
 				var force = torque * stability_factor(dist) / dist
@@ -182,28 +198,50 @@ func apply_torque_forces_to_module(index: Vector2i, module: Module, adjacent_mod
 	if force_count > 0:
 		var avg_force = force_sum / force_count
 		module.apply_accel(-avg_force * 2 / module.mass)
+	
+	return dc
 
 func apply_spring_forces() -> void:
-	var visited = VisitedMatrix.new(connections.width, connections.height)
-	for x_index in connections.width:
-		for y_index in connections.height:
-			var current = Vector2i(x_index, y_index)
-			
-			if visited.at(current):
+	var visited: Dictionary = {}
+	# visited is a dictionary of Vector2i -> Array[Vector2i]
+	# when b is visited from a, visited[b].push_back(a)
+	for x in modules.width:
+		for y in modules.height:
+			var current = Vector2i(x, y)
+
+			var cur_mod = modules.at_index(current)
+			if not cur_mod.exists:
 				continue
 			
-			var linked = connections.linked_index(current)
-			if connections.in_range(linked) && connections.at_index(linked).exists:
-				var from = modules.at_connection_index(current)
-				var to = modules.at_connection_index(linked)
-				var from_connection = connections.at_index(current)
-				var to_connection = connections.at_index(linked)
-				if from.exists && to.exists:
-					simulate_spring(from.module, to.module, from_connection.connection, to_connection.connection)
+			for dir in Dir.MAX:
+				var neighbor = modules.adjacent_index(current, dir)
+				if visited.has(current) and visited[current].has(neighbor):
+					continue
 
-				visited.mark(linked, true)
+				if modules.in_range(neighbor):
+					if not visited.has(neighbor):
+						visited[neighbor] = [current]
+					else:
+						visited[neighbor].push_back(current)
 
-			visited.mark(current, true)
+					var neigh_mod = modules.at_index(neighbor)
+					if not neigh_mod.exists:
+						continue
+
+					var con_cur = connections.connection_from_module(current, dir)
+					var con_neigh = connections.connection_from_module(neighbor, Dir.reverse(dir))
+					if con_cur.exists and con_neigh.exists:
+						simulate_spring(cur_mod.module, neigh_mod.module, con_cur.connection, con_neigh.connection)
+
+func hash_vector2i(v: Vector2i) -> int:
+	return v.x * 1000 + v.y
+
+func _simulate_spring(a: Vector2i, b: Vector2i, dir: int) -> void:
+	var mod_a = modules.at_index(a).module
+	var mod_b = modules.at_index(b).module
+	var con_a = connections.connection_from_module(a, dir).connection
+	var con_b = connections.connection_from_module(b, Dir.reverse(dir)).connection
+	simulate_spring(mod_a, mod_b, con_a, con_b)
 
 func simulate_spring(m_a: Module, m_b: Module, c_a: Connection, c_b: Connection) -> void:
 	var delta_vector: Vector2 = m_b.phys_position - m_a.phys_position

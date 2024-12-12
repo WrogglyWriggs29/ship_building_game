@@ -12,15 +12,90 @@ class VertexIndex:
 var soft_body: GridSoftBody
 var factory: GridFactory
 
+var width: int
+var height: int
+
 func _init(modules: ModuleMatrix, connections: ConnectionMatrix, starting_factory_state: Array) -> void:
+	width = modules.width
+	height = modules.height
 	soft_body = GridSoftBody.new(modules, connections)
 	factory = GridFactory.new(starting_factory_state)
+
 
 func _process(_delta: float) -> void:
 	queue_redraw()
 
 func _draw() -> void:
 	draw_vertices()
+
+func manual_physics_process() -> Array[DisconnectionEvent]:
+	for x in factory.modules.width:
+		for y in factory.modules.height:
+			var optional_part = factory.modules.at(x, y)
+			if optional_part.exists:
+				var part = optional_part.part
+				if part.action_is_on:
+					match part.type:
+						GridFactory.FactoryPartState.Type.THRUSTER:
+							apply_thruster_force(part, Vector2i(x, y))
+						GridFactory.FactoryPartState.Type.GUN:
+							apply_gun_action(part, Vector2i(x, y))
+
+	var dc: Array[DisconnectionEvent] = soft_body.manual_physics_process()
+
+	find_vertices()
+
+	return dc
+
+func disconnect_cons(a: Vector2i, b: Vector2i) -> void:
+	soft_body.connections.at_index(a).exists = false
+	soft_body.connections.at_index(b).exists = false
+
+func assert_valid_connection_pair(cons: Array[Vector2i], event: DisconnectionEvent) -> void:
+	assert(cons.size() == 2, name_str() + "Couldn't find connections between " + str(event.a) + " and " + str(event.b))
+	assert(connection_exists(cons[0]), name_str() + "Couldn't find outgoing connection at index " + str(cons[0]) + " from index " + str(event.a))
+	assert(connection_exists(cons[1]), name_str() + "Couldn't find outgoing connection at index " + str(cons[1]) + " from index " + str(event.b))
+
+func name_str() -> String:
+	return "Grid '" + name + "': "
+
+# given a starting connection index and an ending connection index, determine whether a path exists between them
+# along other connections
+# a and b should no longer exist/be connected
+# a breadth first search is likely to be much faster than a depth first search
+func find_from(a: Vector2i, b: Vector2i) -> bool:
+	var from = mod_of_con(a)
+	var target = mod_of_con(b)
+
+	var queue = []
+
+	# note that visited will hold module indices, not connection indices
+	var visited = {}
+
+	queue.append(from)
+	visited[from] = true
+
+	while queue.size() > 0:
+		var current = queue.pop_front()
+		if current == target:
+			return true
+
+		for dir in Dir.MAX:
+			var next_con = soft_body.connections.index_from_module(current, dir)
+			var next_mod = soft_body.modules.adjacent_index(current, dir)
+			if connection_exists(next_con) and not visited.has(next_mod):
+				queue.append(next_mod)
+				visited[next_mod] = true
+
+	return false
+
+func mod_of_con(con_i: Vector2i) -> Vector2i:
+	return Vector2i(floor(con_i.x / 2.0), floor(con_i.y / 2.0))
+
+func con_from_con(con_i: Vector2i, dir: int) -> Vector2i:
+	Dir.assert_dir(dir)
+	var mod_i = mod_of_con(con_i)
+	return soft_body.connections.index_from_module(mod_i, dir)
 
 func draw_vertices() -> void:
 	var starting_index = soft_body.modules.first_module()
@@ -65,22 +140,14 @@ func tree_draw(index: Vector2i, vertices_visited: Dictionary, modules_visited: D
 		if are_connected(index, next_index):
 			tree_draw(next_index, vertices_visited, modules_visited)
 
-func manual_physics_process() -> void:
-	for x in factory.modules.width:
-		for y in factory.modules.height:
-			var optional_part = factory.modules.at(x, y)
-			if optional_part.exists:
-				var part = optional_part.part
-				if part.action_is_on:
-					match part.type:
-						GridFactory.FactoryPartState.Type.THRUSTER:
-							apply_thruster_force(part, Vector2i(x, y))
-						GridFactory.FactoryPartState.Type.GUN:
-							apply_gun_action(part, Vector2i(x, y))
-
-	soft_body.manual_physics_process()
-
-	find_vertices()
+func clear_vertices() -> void:
+	for x in range(soft_body.modules.width):
+		for y in range(soft_body.modules.height):
+			var optional_module = soft_body.modules.at(x, y)
+			if optional_module.exists:
+				var module = optional_module.module
+				for corner in CornerDir.MAX:
+					module.vertices[corner] = SharedVector.new(Vector2.ZERO, [])
 
 func find_vertices() -> void:
 	var starting_index = soft_body.modules.first_module()
@@ -120,8 +187,6 @@ func find_vertices_for_index(index: Vector2i, module_visited: Dictionary = {}) -
 	# SharedVector.held_by array to reflect the modules sharing the vertex
 	# it doesn't set if it is already set by a higher number of modules, which we can check by looking at the
 	# SharedVector.held_by array's size
-	if module_visited.has(index):
-		return
 	module_visited[index] = true
 
 	for corner in CornerDir.MAX:
@@ -129,7 +194,10 @@ func find_vertices_for_index(index: Vector2i, module_visited: Dictionary = {}) -
 	
 	for dir in Dir.MAX:
 		var next_index = soft_body.modules.adjacent_index(index, dir)
-		if module_exists(next_index) and are_connected(index, next_index):
+		if module_visited.get(next_index) != null:
+			continue
+		# note are_connected does range/existence checking
+		if are_connected(index, next_index):
 			find_vertices_for_index(next_index, module_visited)
 
 func find_vertices_for_corner(index: Vector2i, corner: int) -> void:
@@ -198,13 +266,13 @@ func set_two_sharers(corner: int, sharers: Array) -> void:
 		# walking counter-clockwise around the vertex
 		var dir_to_vertex = corner
 		for i in 2:
-			set_if_better(held_by[i], dir_to_vertex, shared)
+			set_if_better(held_by[i], dir_to_vertex, shared, 2)
 			dir_to_vertex = Dir.rotate(dir_to_vertex, false)
 	else:
 		# walking clockwise around the vertex
 		var dir_to_vertex = corner
 		for i in 2:
-			set_if_better(held_by[i], dir_to_vertex, shared)
+			set_if_better(held_by[i], dir_to_vertex, shared, 2)
 			dir_to_vertex = Dir.rotate(dir_to_vertex, true)
 
 func set_three_sharers(corner: int, sharers: Array) -> void:
@@ -235,14 +303,16 @@ func set_three_sharers(corner: int, sharers: Array) -> void:
 		# walking counter-clockwise around the vertex
 		var dir_to_vertex = corner
 		for i in 3:
-			set_if_better(held_by[i], dir_to_vertex, shared)
-			dir_to_vertex = Dir.rotate(dir_to_vertex, false)
+			set_if_better(held_by[i], dir_to_vertex, shared, 3)
+			#dir_to_vertex = Dir.rotate(dir_to_vertex, false)
+			dir_to_vertex = Dir._counter_clockwise_dirs[dir_to_vertex]
 	else:
 		# walking clockwise around the vertex
 		var dir_to_vertex = corner
 		for i in 3:
-			set_if_better(held_by[i], dir_to_vertex, shared)
-			dir_to_vertex = Dir.rotate(dir_to_vertex, true)
+			set_if_better(held_by[i], dir_to_vertex, shared, 3)
+			#dir_to_vertex = Dir.rotate(dir_to_vertex, true)
+			dir_to_vertex = Dir._clockwise_dirs[dir_to_vertex]
 
 
 func set_four_sharers(corner: int, sharers: Array) -> void:
@@ -251,30 +321,30 @@ func set_four_sharers(corner: int, sharers: Array) -> void:
 	# we need to set the vertex position for each module
 	# we also want to use the same shared vector for all of them
 	# we also need to set the held_by array for the shared vector
-	var held_by = []
+	# this is kinda unreadable because it's a very important function to efficiency
 	var average_position = Vector2.ZERO
-	for sharer in sharers.slice(1, 5):
-		assert(soft_body.modules.at_index(sharer).exists, "Module does not exist, and this shouldn't happen.")
+	var dir_to_vertex = corner
+	var ccw = sharers[0]
+	var shared = SharedVector.new(Vector2.ZERO, [])
+	for i in range(1, 5):
+		#assert(soft_body.modules.at_index(sharer).exists, "Module does not exist, and this shouldn't happen.")
+		var module: Module = soft_body.modules.at_index(sharers[i]).module
 
-		var module: Module = soft_body.modules.at_index(sharer).module
-		held_by.push_back(module)
+		module.vertices[dir_to_vertex] = shared
+		shared.held_by.push_back(module)
+		
+		if ccw:
+			dir_to_vertex = Dir._counter_clockwise_dirs[dir_to_vertex]
+		else:
+			dir_to_vertex = Dir._clockwise_dirs[dir_to_vertex]
 
 		average_position += module.phys_position
 	
-	var shared = SharedVector.new(average_position / 4, held_by as Array[Module])
-	if sharers[0]:
-		# walking counter-clockwise around the vertex
-		var dir_to_vertex = corner
-		for i in 4:
-			set_if_better(held_by[i], dir_to_vertex, shared)
-			dir_to_vertex = Dir.rotate(dir_to_vertex, false)
+	shared.value = average_position / 4
 
-	else:
-		# walking clockwise around the vertex
-		var dir_to_vertex = corner
-		for i in 4:
-			set_if_better(held_by[i], dir_to_vertex, shared)
-			dir_to_vertex = Dir.rotate(dir_to_vertex, true)
+func set_if_better(module: Module, dir: int, shared: SharedVector, size: int) -> void:
+	if module.vertices[dir].held_by.size() <= size:
+		module.vertices[dir] = shared
 
 func who_shares(index: Vector2i, corner_dir: int) -> Array:
 	# because modules can be disconnected, we need to do two checks
@@ -319,10 +389,6 @@ func who_shares(index: Vector2i, corner_dir: int) -> Array:
 		return path_0
 	else:
 		return path_1
-
-func set_if_better(module: Module, dir: int, shared: SharedVector) -> void:
-	if module.vertices[dir].held_by.size() <= shared.held_by.size():
-		module.vertices[dir] = shared
 
 
 func module_exists(index: Vector2i) -> bool:
@@ -376,11 +442,11 @@ func spawn_bullet(position: Vector2, direction: Vector2, owner_player: Player) -
 	print("Sprite scale: ", sprite.scale)
 	print("Sprite texture: ", sprite.texture)
 	
-func get_average_position() -> Vector2:
+func get_position_sum() -> Array:
 	var modules = soft_body.modules
 
 	if modules == null:
-		return Vector2.ZERO
+		return [Vector2.ZERO, 0]
 
 	var total_position = Vector2.ZERO
 	var count = 0
@@ -396,10 +462,10 @@ func get_average_position() -> Vector2:
 			#else:
 				#print("Vertex at", x, y, "is null")
 
-	if count == 0:
-		return Vector2.ZERO
-
-	return total_position / count
+	return [total_position, count]
 
 func are_connected(mod_ind_a: Vector2i, mod_ind_b: Vector2i) -> bool:
-	return soft_body.connections.are_connected(mod_ind_a, mod_ind_b)
+	return module_exists(mod_ind_b) and soft_body.connections.are_connected(mod_ind_a, mod_ind_b)
+
+func connection_exists(ind: Vector2i) -> bool:
+	return soft_body.connections.in_range(ind) and soft_body.connections.at_index(ind).exists

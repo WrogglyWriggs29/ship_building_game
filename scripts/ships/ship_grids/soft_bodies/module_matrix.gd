@@ -5,6 +5,8 @@ var width: int = 0
 var height: int = 0
 var matrix: Matrix
 
+var first_module_index = Vector2i(-1, -1)
+
 # expects a 2d array of either modules or nulls
 func _init(_matrix: Array) -> void:
 	var input_width = _matrix[0].size()
@@ -22,28 +24,18 @@ func _init(_matrix: Array) -> void:
 
 	matrix = Matrix.new(_matrix)
 
+const _ADJ_OFFSETS = [Vector2i(0, -1), Vector2i(1, 0), Vector2i(0, 1), Vector2i(-1, 0)]
 func adjacent_index(index: Vector2i, direction: int) -> Vector2i:
-	assert(direction >= 0 && direction <= 3, "Direction must be an integer between zero and three.")
-	match direction:
-		0:
-			return Vector2i(index.x, index.y - 1)
-		1:
-			return Vector2i(index.x + 1, index.y)
-		2:
-			return Vector2i(index.x, index.y + 1)
-		3:
-			return Vector2i(index.x - 1, index.y)
-		_:
-			return adjacent_index(index, 0)
+	return _ADJ_OFFSETS[direction] + index
 
 func in_range(index: Vector2i) -> bool:
 	return index.x >= 0 && index.x < width && index.y >= 0 && index.y < height
 
 func at(x: int, y: int) -> OptionalModule:
-	return matrix.at(x, y)
+	return matrix.rows[y].members[x]
 
 func at_index(index: Vector2i) -> OptionalModule:
-	return at(index.x, index.y)
+	return matrix.rows[index.y].members[index.x]
 
 func at_connection_index(index: Vector2i) -> OptionalModule:
 	return at(floor(index.x / 2.0), floor(index.y / 2.0))
@@ -99,9 +91,14 @@ func add_modules_as_children_to(parent: Node) -> void:
 				parent.add_child(matrix.at(x, y).module)
 
 func first_module() -> Vector2i:
-	for x in range(width):
-		for y in range(height):
-			if matrix.at(x, y).exists:
-				return Vector2i(x, y)
+	if first_module_index.x != -1 and at_index(first_module_index).exists:
+		return first_module_index
+	else:
+		for x in range(width):
+			for y in range(height):
+				if matrix.at(x, y).exists:
+					first_module_index = Vector2i(x, y)
+					return first_module_index
 
-	return Vector2i(-1, -1)
+	first_module_index = Vector2i(-1, -1)
+	return first_module_index
