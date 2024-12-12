@@ -231,6 +231,8 @@ func placeholder_color(type) -> Color:
 					return Color.WHITE
 				FactoryPartBlueprint.Type.THRUSTER:
 					return Color.RED
+				FactoryPartBlueprint.Type.GUN:
+					return Color.GREEN
 	return Color(0, 0, 0, 0)
 
 func draw_square(top_left: Vector2, side_length: float, color: Color) -> void:
