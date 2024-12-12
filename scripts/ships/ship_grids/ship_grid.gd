@@ -9,29 +9,96 @@ class VertexIndex:
 		module_index = _module_index
 		vertex_index = _vertex_index
 
+class CollisionPolygon:
+	var boundary: Array[SharedVector] = []
+
+	# uses boundary to compute below values
+	var centroid: Vector2
+	var max_radius: float
+
+	# recomputes polygon on-demand, 
+	# and avoids recomputing if boundary hasn't been updated since last computation
+	var _polygon_up_to_date: bool = false
+	var _collision_polygon: PackedVector2Array
+
+	func _init(_boundary: Array[SharedVector]) -> void:
+		boundary = _boundary
+	
+	func update(_boundary) -> void:
+		boundary = _boundary
+		_polygon_up_to_date = false
+	
+	func get_polygon() -> PackedVector2Array:
+		_collision_polygon = pack_shared_vectors(boundary)
+		_polygon_up_to_date = true
+		return _collision_polygon
+	
+	func compile() -> void:
+		#collision_polygon = pack_shared_vectors(boundary)
+		centroid = compute_centroid()
+		max_radius = compute_max_radius(centroid)
+
+	func pack_shared_vectors(shared_vectors: Array[SharedVector]) -> PackedVector2Array:
+		var values: Array[Vector2] = []
+		for shared in shared_vectors:
+			values.push_back(shared.value)
+		return values
+	
+	func compute_centroid() -> Vector2:
+		var sum = Vector2.ZERO
+		for shared in boundary:
+			sum += shared.value
+		return sum / boundary.size()
+	
+	func compute_max_radius(_centroid: Vector2) -> float:
+		var _max_radius = 0.0
+		for shared in boundary:
+			var dist = shared.value.distance_to(_centroid)
+			if dist > _max_radius:
+				_max_radius = dist
+		
+		return _max_radius
+	
+	static func may_collide(a: CollisionPolygon, b: CollisionPolygon) -> bool:
+		var dist = a.centroid.distance_to(b.centroid)
+		var max_dist = a.max_radius + b.max_radius
+		return dist < max_dist
+
 var soft_body: GridSoftBody
 var factory: GridFactory
 
 var width: int
 var height: int
 
+var boundary: Array[SharedVector] = []
+var collision_polygon: PackedVector2Array
+
+var collider: CollisionPolygon
+
 func _init(modules: ModuleMatrix, connections: ConnectionMatrix, starting_factory_state: Array) -> void:
 	width = modules.width
 	height = modules.height
 	soft_body = GridSoftBody.new(modules, connections)
 	factory = GridFactory.new(starting_factory_state)
+	collider = CollisionPolygon.new([])
 
 
 func _process(_delta: float) -> void:
 	queue_redraw()
 
 func _draw() -> void:
+	draw_colored_polygon(collider.get_polygon(), Color(0.5, 0.5, 0.5, 0.5))
 	draw_vertices()
-	var to_draw = find_bounding()
+	var to_draw: Array[SharedVector] = boundary
 	if to_draw.size() > 1:
 		for i in range(1, to_draw.size()):
-			draw_line(to_draw[i - 1], to_draw[i], Color.INDIAN_RED)
-		draw_line(to_draw[to_draw.size() - 1], to_draw[0], Color.INDIAN_RED)
+			draw_line(to_draw[i - 1].value, to_draw[i].value, Color.INDIAN_RED)
+		draw_line(to_draw[to_draw.size() - 1].value, to_draw[0].value, Color.INDIAN_RED)
+
+	var boundary = collider.get_polygon()
+	if boundary.size() > 1:
+		boundary.push_back(boundary[0])
+	draw_polyline(boundary, Color.INDIAN_RED, 3)
 
 func manual_physics_process() -> Array[DisconnectionEvent]:
 	for x in factory.modules.width:
@@ -49,6 +116,9 @@ func manual_physics_process() -> Array[DisconnectionEvent]:
 	var dc: Array[DisconnectionEvent] = soft_body.manual_physics_process()
 
 	find_vertices()
+	collider.update(find_bounding())
+	collider.compile()
+	#collision_polygon = pack_shared_vectors(boundary)
 
 	return dc
 
@@ -60,20 +130,20 @@ class ModuleCorner:
 		m_index = _m_index
 		corner_dir = _corner_dir
 
-func find_bounding() -> Array[Vector2]:
+func find_bounding() -> Array[SharedVector]:
 	var starting_index = soft_body.modules.first_module()
 	if starting_index == Vector2i(-1, -1):
 		return []
 	
-	var to_draw: Array[Vector2] = []
+	var to_draw: Array[SharedVector] = []
 
 	var termination_position = ModuleCorner.new(starting_index, CornerDir.UP_LEFT)
-	to_draw.push_back(soft_body.modules.at_index(starting_index).module.vertices[CornerDir.UP_LEFT].value)
+	to_draw.push_back(soft_body.modules.at_index(starting_index).module.vertices[CornerDir.UP_LEFT])
 
 	recurse_find_bounding(starting_index, Dir.RIGHT, 0, termination_position, to_draw)
 	return to_draw
 
-func recurse_find_bounding(cur_mod: Vector2i, prefer_dir: int, level: int, stop_cond: ModuleCorner, to_draw: Array[Vector2]) -> void:
+func recurse_find_bounding(cur_mod: Vector2i, prefer_dir: int, level: int, stop_cond: ModuleCorner, to_draw: Array[SharedVector]) -> void:
 	#if level > 2:
 	#	return
 	# think of prefer_dir as up for convenience
@@ -91,15 +161,12 @@ func recurse_find_bounding(cur_mod: Vector2i, prefer_dir: int, level: int, stop_
 			return
 		var next_mod = soft_body.modules.adjacent_index(cur_mod, next_dir)
 		if not are_connected(cur_mod, next_mod):
-			#print("found a gap from ", cur_mod, " in direction ", Dir.string(next_dir))
 			var rotated_through = CornerDir.corner_dir_counter_clockwise_from(next_dir)
-			var vertex = module.vertices[rotated_through].value
+			var vertex = module.vertices[rotated_through]
 			to_draw.append(vertex)
-			draw_string(ThemeDB.fallback_font, vertex, str(level) + " " + str(rot_offset) + " " + Dir.string(next_dir))
+			#draw_string(ThemeDB.fallback_font, vertex.value, str(level) + " " + str(rot_offset) + " " + Dir.string(next_dir))
 			continue
 		else:
-			# we found the module we want to move to
-			#print("found a connected module from ", cur_mod, " in direction ", Dir.string(next_dir))
 			recurse_find_bounding(next_mod, Dir.rotate(next_dir, false), level + 1, stop_cond, to_draw)
 			break
 

@@ -77,8 +77,7 @@ func manual_physics_process() -> Array[DisconnectionEvent]:
 	update_node_rotations()
 
 	dc.append_array(apply_torque_forces())
-	#dc.append_array(
-	apply_spring_forces() # )
+	dc.append_array(apply_spring_forces())
 
 	dampen_locally_allow_curl(get_center_of_mass())
 
@@ -201,7 +200,8 @@ func apply_torque_forces_to_module(index: Vector2i, module: Module, adjacent_mod
 	
 	return dc
 
-func apply_spring_forces() -> void:
+func apply_spring_forces() -> Array[DisconnectionEvent]:
+	var dc: Array[DisconnectionEvent] = []
 	var visited: Dictionary = {}
 	# visited is a dictionary of Vector2i -> Array[Vector2i]
 	# when b is visited from a, visited[b].push_back(a)
@@ -231,19 +231,17 @@ func apply_spring_forces() -> void:
 					var con_cur = connections.connection_from_module(current, dir)
 					var con_neigh = connections.connection_from_module(neighbor, Dir.reverse(dir))
 					if con_cur.exists and con_neigh.exists:
-						simulate_spring(cur_mod.module, neigh_mod.module, con_cur.connection, con_neigh.connection)
+						var disconnected: bool = simulate_spring(cur_mod.module, neigh_mod.module, con_cur.connection, con_neigh.connection)
+						if disconnected:
+							dc.push_back(DisconnectionEvent.new(current, neighbor))
+
+	return dc
 
 func hash_vector2i(v: Vector2i) -> int:
 	return v.x * 1000 + v.y
 
-func _simulate_spring(a: Vector2i, b: Vector2i, dir: int) -> void:
-	var mod_a = modules.at_index(a).module
-	var mod_b = modules.at_index(b).module
-	var con_a = connections.connection_from_module(a, dir).connection
-	var con_b = connections.connection_from_module(b, Dir.reverse(dir)).connection
-	simulate_spring(mod_a, mod_b, con_a, con_b)
-
-func simulate_spring(m_a: Module, m_b: Module, c_a: Connection, c_b: Connection) -> void:
+func simulate_spring(m_a: Module, m_b: Module, c_a: Connection, c_b: Connection) -> bool:
+	var ret = false
 	var delta_vector: Vector2 = m_b.phys_position - m_a.phys_position
 	var dir: Vector2 = delta_vector.normalized()
 	var dist: float = delta_vector.length()
@@ -253,11 +251,16 @@ func simulate_spring(m_a: Module, m_b: Module, c_a: Connection, c_b: Connection)
 	var displ = neutral_eq - dist
 	
 	var force = keq * displ
+	if abs(force) > min(c_a.breaking_force, c_b.breaking_force):
+		ret = true
+		force = sign(force) * min(c_a.breaking_force, c_b.breaking_force)
+
 	var accel_a = -dir * force / m_a.mass
 	var accel_b = dir * force / m_b.mass
 
 	m_a.apply_accel(accel_a) # * GlobalConstants.LINEAR_DAMPING_FACTOR)
 	m_b.apply_accel(accel_b) # * GlobalConstants.LINEAR_DAMPING_FACTOR)
+	return ret
 
 # Equivalent k for two springs in series
 func keq2(k_a: float, k_b: float) -> float:

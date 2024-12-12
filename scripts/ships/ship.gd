@@ -22,6 +22,12 @@ func _input(event: InputEvent) -> void:
 		else:
 			actions.untrigger(event.keycode)
 
+func _process(_delta: float) -> void:
+	queue_redraw()
+
+func _draw() -> void:
+	pass
+
 func manual_physics_process() -> void:
 	for i in grids.size():
 		var grid = grids[i]
@@ -39,7 +45,28 @@ func manual_physics_process() -> void:
 			grid.assert_valid_connection_pair(cons, event)
 
 			grid.disconnect_cons(cons[0], cons[1])
-			if not grid.find_from(cons[0], cons[1]):
+
+			if grid.find_from(cons[0], cons[1]):
+				# tell the two modules to recalculate their vertices that could be affected
+				# we don't need to do this for a split because it clears the vertices completely
+				var offset: Vector2i = event.b - event.a
+				var dir := Dir.from_index_offset(offset)
+				Dir.assert_dir(dir)
+
+				var corner_a1 := CornerDir.corner_dir_counter_clockwise_from(dir)
+				var corner_a2 := CornerDir.corner_dir_clockwise_from(dir)
+				var corner_b1 := CornerDir.corner_dir_counter_clockwise_from(Dir.reverse(dir))
+				var corner_b2 := CornerDir.corner_dir_clockwise_from(Dir.reverse(dir))
+
+				var mod_a = grid.soft_body.modules.at_index(event.a).module
+				var mod_b = grid.soft_body.modules.at_index(event.b).module
+
+				mod_a.vertices[corner_a1] = SharedVector.new()
+				mod_a.vertices[corner_a2] = SharedVector.new()
+				mod_b.vertices[corner_b1] = SharedVector.new()
+				mod_b.vertices[corner_b2] = SharedVector.new()
+
+			else:
 				print("Grid split detected.")
 				var new_grids: Array[ShipGrid] = split_grid(grid.mod_of_con(cons[0]), grid.mod_of_con(cons[1]), grid)
 				for new_grid in new_grids:

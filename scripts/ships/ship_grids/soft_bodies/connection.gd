@@ -31,7 +31,7 @@ func _init(_type, _dzl, _kl, _bfl, _dza, _ka, _bta) -> void:
 static func basic_spring(scale) -> Connection:
     var dzl = 0.0
     var kl = 8.0
-    var bf = 1000.0
+    var bf = 100.0
 
     var dza = 0.0
     var ka = 6000.0
