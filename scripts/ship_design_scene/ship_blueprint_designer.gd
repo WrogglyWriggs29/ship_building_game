@@ -56,6 +56,9 @@ var test_button: TestButton
 var binder: BlueprintActionBinder
 var config: ConfigPanel
 
+@onready var save_dialog = $SaveDialog
+@onready var load_dialog = $LoadDialog
+
 # needs to exist for the none tool
 func do_nothing(_index: Vector2i) -> void:
 	pass
@@ -132,6 +135,10 @@ func _ready() -> void:
 	load_button.size = load_button_bottom_right.to_px() - load_button_top_left.to_px()
 	load_button.connect("pressed", Callable(self, "_on_load_button_pressed"))
 	add_child(load_button)
+	
+	# Load Dialog configuration
+	load_dialog.current_dir = "res://"
+	load_dialog.visible = false
 
 func _process(_delta: float) -> void:
 	layer_selector.position = layer_selector_top_left.to_px()
@@ -284,9 +291,16 @@ func load_blueprint(file_path: String) -> void:
 	print("Blueprint loaded successfully.")
 	
 func _on_save_button_pressed() -> void:
+	#save_dialog.popup_centered()
 	var file_path = "res://test_blueprint.json"  # Save to the user directory
 	save_blueprint(file_path)
 
 func _on_load_button_pressed() -> void:
-	var file_path = "res://test_blueprint.json"  # Load from the user directory
-	load_blueprint(file_path)
+	load_dialog.visible = true
+	load_dialog.popup_centered()
+	#var file_path = "res://test_blueprint.json"  # Load from the user directory
+	#load_blueprint(file_path)
+
+func _on_load_dialog_file_selected(path: String) -> void:
+	load_blueprint(path)
+	print(path, " successfully sent to load_blueprint.")

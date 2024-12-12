@@ -4,3 +4,13 @@
 
 [node name="ShipBlueprintDesigner" type="Node2D"]
 script = ExtResource("1_1dvyb")
+
+[node name="SaveDialog" type="FileDialog" parent="."]
+
+[node name="LoadDialog" type="FileDialog" parent="."]
+title = "Open a File"
+size = Vector2i(500, 400)
+ok_button_text = "Open"
+file_mode = 0
+
+[connection signal="file_selected" from="LoadDialog" to="." method="_on_load_dialog_file_selected"]
