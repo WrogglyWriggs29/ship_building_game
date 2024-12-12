@@ -30,6 +30,8 @@ class CollisionPolygon:
 	
 	func get_polygon() -> PackedVector2Array:
 		_collision_polygon = pack_shared_vectors(boundary)
+		if _collision_polygon.size() > 0:
+			_collision_polygon.push_back(_collision_polygon[0])
 		_polygon_up_to_date = true
 		return _collision_polygon
 	
@@ -75,6 +77,8 @@ var collision_polygon: PackedVector2Array
 
 var collider: CollisionPolygon
 
+var debug_draw_colliding: Array[Vector2] = []
+
 func _init(modules: ModuleMatrix, connections: ConnectionMatrix, starting_factory_state: Array) -> void:
 	width = modules.width
 	height = modules.height
@@ -88,6 +92,7 @@ func _process(_delta: float) -> void:
 
 func _draw() -> void:
 	draw_colored_polygon(collider.get_polygon(), Color(0.5, 0.5, 0.5, 0.5))
+
 	draw_vertices()
 	var to_draw: Array[SharedVector] = boundary
 	if to_draw.size() > 1:
@@ -96,9 +101,10 @@ func _draw() -> void:
 		draw_line(to_draw[to_draw.size() - 1].value, to_draw[0].value, Color.INDIAN_RED)
 
 	var boundary = collider.get_polygon()
-	if boundary.size() > 1:
-		boundary.push_back(boundary[0])
 	draw_polyline(boundary, Color.INDIAN_RED, 3)
+
+	for point in debug_draw_colliding:
+		draw_circle(point, 5.0, Color.RED)
 
 func manual_physics_process() -> Array[DisconnectionEvent]:
 	for x in factory.modules.width:
@@ -121,6 +127,44 @@ func manual_physics_process() -> Array[DisconnectionEvent]:
 	#collision_polygon = pack_shared_vectors(boundary)
 
 	return dc
+
+func collide(polygon: PackedVector2Array) -> void:
+	const BACKOUT_LENGTH = 200.0
+	debug_draw_colliding.clear()
+
+	#print("Center at ", avg, " centroid at ", collider.centroid)
+	var union = Geometry2D.intersect_polygons(polygon, collider.get_polygon())
+	#print(polygon, " ", collider.centroid, " ", union)
+
+	for poly in union:
+		for shared in collider.boundary:
+			if Geometry2D.is_point_in_polygon(shared.value, poly):
+				debug_draw_colliding.push_back(shared.value)
+
+				var nearest = closest_point_on_polygon(shared.value, polygon)
+				var backout_path = nearest - shared.value
+				debug_draw_colliding.push_back(shared.value + backout_path)
+
+				var distance_out = backout_path.length()
+
+				var speed = distance_out / GlobalConstants.TIME_STEP_CONSTANT
+
+				var accel = backout_path.normalized() * speed
+
+				for module in shared.held_by:
+					module.apply_accel(accel)
+
+					#debug_draw_colliding.push_back(backout_clipped[0][1])
+		
+func closest_point_on_polygon(pos: Vector2, polygon: PackedVector2Array) -> Vector2:
+	var closest = polygon[0]
+	var closest_dist = closest.distance_to(pos)
+	for i in range(1, polygon.size()):
+		var close = Geometry2D.get_closest_point_to_segment(pos, polygon[i - 1], polygon[i])
+		if close.distance_to(pos) < closest_dist:
+			closest = close
+			closest_dist = close.distance_to(pos)
+	return closest
 
 class ModuleCorner:
 	var m_index: Vector2i

@@ -27,11 +27,6 @@ var dragger: UserVelocityApplicator
 @onready var _map_shape := $MapShape as CollisionShape2D
 
 func _ready() -> void:
-	#var test_bp = ShipTester.make_test_bp()
-
-	#var factory = ShipFactory.new()
-	#add_child(factory)
-	#ship = factory.from_grid(test_bp)
 	ship.grids[0].soft_body.modules.add_modules_as_children_to(get_parent())
 	add_child(ship.grids[0].soft_body)
 	add_child(ship)
@@ -52,6 +47,21 @@ func _input(event: InputEvent) -> void:
 		SceneStack.return_scene()
 
 func _physics_process(_delta: float) -> void:
+	# collide grids with planets
+	for planet in $Platnets.get_children():
+		for grid in ship.grids:
+			var grid_radius = grid.collider.max_radius
+			var grid_centroid = grid.collider.centroid
+			var planet_radius = planet.radius
+			var distance = grid_centroid.distance_to(planet.global_position)
+			if distance < grid_radius + planet_radius:
+				var polygon: CollisionPolygon2D = planet.get_node("collision_polygon")
+				if polygon != null:
+					var collision = PackedVector2Array(polygon.polygon)
+					for i in collision.size():
+						collision[i] = collision[i] + planet.global_position
+					grid.collide(collision)
+
 	ship.manual_physics_process() # grid.soft_body.manual_physics_process()
 
 func _spread_meteors() -> void:

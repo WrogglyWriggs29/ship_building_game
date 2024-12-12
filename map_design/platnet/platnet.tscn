@@ -216,3 +216,6 @@ texture = ExtResource("3_12518")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_m4uoc")
 debug_color = Color(0.772003, 0.606556, 0.443496, 0.42)
+
+[node name="collision_polygon" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-34, -198, 54, -196, 126, -155, 178, -87, 199, -8, 180, 88, 117, 164, 32, 194, -37, 195, -119, 156, -185, 79, -201, 1, -176, -96, -120, -163)

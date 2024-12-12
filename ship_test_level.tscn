@@ -27,11 +27,6 @@ monitorable = false
 gravity = 0.0
 linear_damp = 0.0
 script = ExtResource("1_eikbe")
-platnet_min_radius = null
-platnet_max_radius = null
-meteor_min_radius = null
-meteor_max_radius = null
-meteor_amount = null
 
 [node name="MapShape" type="CollisionShape2D" parent="."]
 position = Vector2(516, 332.5)

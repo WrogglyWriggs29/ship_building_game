@@ -2,7 +2,7 @@
 class_name Planet
 extends StaticBody2D
 
-@export_range(100, 10000.0, 1, "or_greater") var radius :float = 200:
+@export_range(100, 10000.0, 1, "or_greater") var radius: float = 200:
 	set(v):
 		radius = v
 		if not is_instance_valid(_sprite):
@@ -14,8 +14,8 @@ extends StaticBody2D
 		#rotation = randf() * PI * 2.0
 
 
-@export var _sprite :Sprite2D
-@export var _collision_shape :CollisionShape2D
+@export var _sprite: Sprite2D
+@export var _collision_shape: CollisionShape2D
 
 func _ready() -> void:
 	radius = radius
