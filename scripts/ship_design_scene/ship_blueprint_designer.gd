@@ -136,6 +136,10 @@ func _ready() -> void:
 	load_button.connect("pressed", Callable(self, "_on_load_button_pressed"))
 	add_child(load_button)
 	
+	# Save Dialog configuration
+	load_dialog.current_dir = "res://"
+	load_dialog.visible = false
+	
 	# Load Dialog configuration
 	load_dialog.current_dir = "res://"
 	load_dialog.visible = false
@@ -291,9 +295,10 @@ func load_blueprint(file_path: String) -> void:
 	print("Blueprint loaded successfully.")
 	
 func _on_save_button_pressed() -> void:
-	#save_dialog.popup_centered()
-	var file_path = "res://test_blueprint.json"  # Save to the user directory
-	save_blueprint(file_path)
+	save_dialog.visible = true
+	save_dialog.popup_centered()
+	#var file_path = "res://test_blueprint.json"  # Save to the user directory
+	#save_blueprint(file_path)
 
 func _on_load_button_pressed() -> void:
 	load_dialog.visible = true
@@ -304,3 +309,7 @@ func _on_load_button_pressed() -> void:
 func _on_load_dialog_file_selected(path: String) -> void:
 	load_blueprint(path)
 	print(path, " successfully sent to load_blueprint.")
+
+func _on_save_dialog_file_selected(path: String) -> void:
+	save_blueprint(path)
+	print(path, " successfully sent to save_blueprint.")
