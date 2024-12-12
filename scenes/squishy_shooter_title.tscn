@@ -1,0 +1,65 @@
+[gd_scene load_steps=11 format=3 uid="uid://bq4krxef4we7i"]
+
+[ext_resource type="Texture2D" uid="uid://co8s630cavyg0" path="res://assets/ui components/png/background (1).png" id="1_e327v"]
+[ext_resource type="Shader" path="res://map_design/level/bg.gdshader" id="2_4aqxk"]
+[ext_resource type="Texture2D" uid="uid://cqpkbruhj4m82" path="res://assets/images/Squish Shooters.png" id="3_gca4h"]
+[ext_resource type="Texture2D" uid="uid://cb2gueg182c45" path="res://assets/images/yellow_button.png" id="4_mw204"]
+[ext_resource type="Texture2D" uid="uid://ciriuh1bqy8ap" path="res://assets/images/blue_button.png" id="5_7kpdr"]
+[ext_resource type="FontFile" uid="uid://1dbgtplhlwtv" path="res://assets/speedy-font/SpeedyRegular-7BLoE.ttf" id="6_w0s84"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_l8v0v"]
+shader = ExtResource("2_4aqxk")
+shader_parameter/anim_speed = 0.112
+shader_parameter/star_brightness = 0.01
+shader_parameter/dust = 0.001
+shader_parameter/dist_fade = 0.35
+shader_parameter/pixelation = 1000.0
+shader_parameter/quantization_levels = 15
+shader_parameter/dust_color = Color(0, 5.55686, 50.7059, 1)
+shader_parameter/saturation = 1.0
+shader_parameter/layers = 9.0
+shader_parameter/iterations = 6
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wjbdm"]
+texture = ExtResource("4_mw204")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_u0wvl"]
+texture = ExtResource("5_7kpdr")
+
+[sub_resource type="Theme" id="Theme_gm26a"]
+Button/styles/hover = SubResource("StyleBoxTexture_wjbdm")
+Button/styles/normal = SubResource("StyleBoxTexture_u0wvl")
+
+[node name="Squishy Shooter Title" type="Node2D"]
+
+[node name="Background(1)" type="Sprite2D" parent="."]
+position = Vector2(1016, 596)
+scale = Vector2(1.47709, 1.47709)
+texture = ExtResource("1_e327v")
+
+[node name="BG" type="Panel" parent="Background(1)"]
+material = SubResource("ShaderMaterial_l8v0v")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1123.83
+offset_top = -613.37
+offset_right = -1123.83
+offset_bottom = -613.37
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="SquishShooters" type="Sprite2D" parent="Background(1)"]
+position = Vector2(-304.464, -223.912)
+scale = Vector2(0.218689, 0.218689)
+texture = ExtResource("3_gca4h")
+
+[node name="Button" type="Button" parent="Background(1)"]
+offset_left = -361.522
+offset_top = -72.4397
+offset_right = -248.522
+offset_bottom = -36.4397
+theme = SubResource("Theme_gm26a")
+theme_override_fonts/font = ExtResource("6_w0s84")
+text = "Play"
