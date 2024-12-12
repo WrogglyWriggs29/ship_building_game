@@ -435,12 +435,12 @@ func spawn_bullet(position: Vector2, direction: Vector2, owner_player: Player) -
 	
 	soft_body.add_child(bullet)
 	
-	print("Trying to spawn bullet here", bullet.position)
+	#print("Trying to spawn bullet here", bullet.position)
 	var sprite = bullet.get_node("Sprite2D")
-	print("Sprite modulate: ", sprite.modulate)
-	print("Sprite visible: ", sprite.visible)
-	print("Sprite scale: ", sprite.scale)
-	print("Sprite texture: ", sprite.texture)
+	#print("Sprite modulate: ", sprite.modulate)
+	#print("Sprite visible: ", sprite.visible)
+	#print("Sprite scale: ", sprite.scale)
+	#print("Sprite texture: ", sprite.texture)
 	
 func get_position_sum() -> Array:
 	var modules = soft_body.modules
@@ -469,3 +469,19 @@ func are_connected(mod_ind_a: Vector2i, mod_ind_b: Vector2i) -> bool:
 
 func connection_exists(ind: Vector2i) -> bool:
 	return soft_body.connections.in_range(ind) and soft_body.connections.at_index(ind).exists
+	
+func is_thruster(index: Vector2i) -> bool:
+	# Check if the module at the given index is a thruster
+	if factory.modules.in_range(index):
+		var optional_part = factory.modules.at(index.x, index.y)
+		if optional_part.exists:
+			return optional_part.part.type == GridFactory.FactoryPartState.Type.THRUSTER
+	return false
+
+func is_gun(index: Vector2i) -> bool:
+	# Check if the module at the given index is a gun
+	if factory.modules.in_range(index):
+		var optional_part = factory.modules.at(index.x, index.y)
+		if optional_part.exists:
+			return optional_part.part.type == GridFactory.FactoryPartState.Type.GUN
+	return false

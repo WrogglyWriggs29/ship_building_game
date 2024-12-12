@@ -268,7 +268,7 @@ func save_blueprint(file_path: String) -> void:
 		print("Writer or Editor not initialized!")
 		return
 	print("Saving blueprint to:", file_path)
-	print(editor.blueprint.print_as_string())
+	# print(editor.blueprint.print_as_string())
 	writer.save_ship_grid_to_json(editor.blueprint, file_path)
 
 func load_blueprint(file_path: String) -> void:
