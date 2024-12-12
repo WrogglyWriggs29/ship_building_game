@@ -129,7 +129,6 @@ func manual_physics_process() -> Array[DisconnectionEvent]:
 	return dc
 
 func collide(polygon: PackedVector2Array) -> void:
-	const BACKOUT_LENGTH = 200.0
 	debug_draw_colliding.clear()
 
 	#print("Center at ", avg, " centroid at ", collider.centroid)
@@ -155,6 +154,7 @@ func collide(polygon: PackedVector2Array) -> void:
 					module.apply_accel(accel)
 
 					#debug_draw_colliding.push_back(backout_clipped[0][1])
+
 		
 func closest_point_on_polygon(pos: Vector2, polygon: PackedVector2Array) -> Vector2:
 	var closest = polygon[0]
@@ -586,17 +586,19 @@ func apply_gun_action(part: GridFactory.FactoryPartState, index: Vector2i) -> vo
 	var angle_offset = Dir.to_angle(part.orientation)
 	var gun_angle = Nangle.new(start_angle + angle_offset)
 	var gun_direction = gun_angle.to_vector()
+	var start_vel = module.velocity
 	
-	spawn_bullet(module.global_position, gun_angle.to_vector(), owner)
+	spawn_bullet(module.global_position, gun_angle.to_vector(), start_vel, owner)
 
 func apply_force(_force: Vector2, _index: Vector2i) -> void:
 	soft_body.apply_force(_force, _index)
 
-func spawn_bullet(position: Vector2, direction: Vector2, owner_player: Player) -> void:
+func spawn_bullet(position: Vector2, direction: Vector2, starting_velocity, owner_player: Player) -> void:
 	var bullet = preload("res://scenes/projectile/projectile.tscn").instantiate()
 	bullet.global_position = position
 	bullet.rotation = direction.angle()
 	bullet.owner_player = owner_player
+	bullet.velocity = starting_velocity
 	# Add projectile to tree
 	print("Scene Stuatus", get_tree())
 	

@@ -292,6 +292,7 @@ func load_blueprint(file_path: String) -> void:
 		print("Failed to load blueprint.")
 		return
 	editor.set_blueprint(loaded_blueprint)
+	test_button.blueprint = loaded_blueprint
 	print("Blueprint loaded successfully.")
 	
 func _on_save_button_pressed() -> void:

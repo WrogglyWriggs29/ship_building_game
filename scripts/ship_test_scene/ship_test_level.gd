@@ -47,6 +47,8 @@ func _input(event: InputEvent) -> void:
 		SceneStack.return_scene()
 
 func _physics_process(_delta: float) -> void:
+	ship.manual_physics_process() # grid.soft_body.manual_physics_process()
+
 	# collide grids with planets
 	for planet in $Platnets.get_children():
 		for grid in ship.grids:
@@ -61,8 +63,16 @@ func _physics_process(_delta: float) -> void:
 					for i in collision.size():
 						collision[i] = collision[i] + planet.global_position
 					grid.collide(collision)
-
-	ship.manual_physics_process() # grid.soft_body.manual_physics_process()
+	
+	for i in ship.grids.size():
+		var grid = ship.grids[i]
+		for j in ship.grids.size():
+			if i == j:
+				continue
+			var other = ship.grids[j]
+			if ShipGrid.CollisionPolygon.may_collide(grid.collider, other.collider):
+				grid.collide_grid(other.collider.get_polygon())
+				other.collide_grid(grid.collider.get_polygon())
 
 func _spread_meteors() -> void:
 	var ctn := $Meteors

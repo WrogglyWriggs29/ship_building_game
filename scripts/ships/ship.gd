@@ -145,6 +145,8 @@ func update_sprites() -> void:
 		# Retrieve the sprite and corresponding module
 		var sprite = sprites_by_module[module_index]
 		var grid = grids[0] # Adjust if you have multiple grids
+		if not grid.soft_body.modules.in_range(module_index):
+			continue
 		var optional_module = grid.soft_body.modules.at(module_index.x, module_index.y)
 		var optional_part = grid.factory.modules.at(module_index.x, module_index.y)
 		

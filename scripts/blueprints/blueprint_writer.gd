@@ -37,7 +37,7 @@ func save_ship_grid_to_json(ship_grid: ShipGridBlueprint, file_path: String) -> 
 		
 	var file = FileAccess.open(file_path, FileAccess.WRITE)
 	if file != null:
-		json_data = JSON.stringify(json_data, "    " )
+		json_data = JSON.stringify(json_data, "    ")
 		# json_data = json.stringify(json_data)
 		file.store_string((json_data))
 		file.close()
