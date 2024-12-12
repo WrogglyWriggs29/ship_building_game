@@ -28,6 +28,12 @@ var grid_bottom_right: UICoord = UICoord.new(Vector2(1.0, 1.0), self)
 var test_button_top_left: UICoord = UICoord.new(Vector2(0.0, 0.0), self)
 var test_button_bottom_right: UICoord = UICoord.new(Vector2(H_SPLIT, 0.1), self)
 
+var save_button_top_left: UICoord = UICoord.new(Vector2(0.0, 0.1), self)
+var save_button_bottom_right: UICoord = UICoord.new(Vector2(H_SPLIT / 2, 0.15), self)
+
+var load_button_top_left: UICoord = UICoord.new(Vector2(H_SPLIT / 2, 0.1), self)
+var load_button_bottom_right: UICoord = UICoord.new(Vector2(H_SPLIT, 0.15), self)
+
 const BOX_WIDTH = H_SPLIT
 const BOX_HEIGHT = H_SPLIT * EXPECTED_RATIO
 var action_binder_top_left = UICoord.new(Vector2(0.0, 1 - BOX_HEIGHT - 0.1), self)
@@ -110,6 +116,22 @@ func _ready() -> void:
 	add_child(test_button)
 	add_child(binder)
 	add_child(config)
+	
+	# Create Save Button
+	var save_button = Button.new()
+	save_button.text = "Save"
+	save_button.position = save_button_top_left.to_px()
+	save_button.size = save_button_bottom_right.to_px() - save_button_top_left.to_px()
+	save_button.connect("pressed", Callable(self, "_on_save_button_pressed"))
+	add_child(save_button)
+
+	# Create Load Button
+	var load_button = Button.new()
+	load_button.text = "Load"
+	load_button.position = load_button_top_left.to_px()
+	load_button.size = load_button_bottom_right.to_px() - load_button_top_left.to_px()
+	load_button.connect("pressed", Callable(self, "_on_load_button_pressed"))
+	add_child(load_button)
 
 func _process(_delta: float) -> void:
 	layer_selector.position = layer_selector_top_left.to_px()
@@ -233,9 +255,7 @@ func click_on_self(pos: Vector2) -> void:
 		config.click_at(pos - config.position)
 	elif on_test_button:
 		test_button.click()
-		#var file_path = "res://test_blueprint.json"
-		# save_blueprint(file_path)
-		#load_blueprint(file_path)
+
 		
 	elif on_binder:
 		binder.click_at(pos - binder.position)
@@ -245,7 +265,7 @@ func is_on_grid(pos: Vector2) -> bool:
 
 func save_blueprint(file_path: String) -> void:
 	if writer == null or editor == null:
-		#print("Writer or Editor not initialized!")
+		print("Writer or Editor not initialized!")
 		return
 	print("Saving blueprint to:", file_path)
 	print(editor.blueprint.print_as_string())
@@ -262,3 +282,11 @@ func load_blueprint(file_path: String) -> void:
 		return
 	editor.set_blueprint(loaded_blueprint)
 	print("Blueprint loaded successfully.")
+	
+func _on_save_button_pressed() -> void:
+	var file_path = "res://test_blueprint.json"  # Save to the user directory
+	save_blueprint(file_path)
+
+func _on_load_button_pressed() -> void:
+	var file_path = "res://test_blueprint.json"  # Load from the user directory
+	load_blueprint(file_path)
