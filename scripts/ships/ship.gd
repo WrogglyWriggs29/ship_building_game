@@ -92,7 +92,7 @@ func add_module_sprites() -> void:
 					var scale = Vector2(1.5, 1.5)
 					var orientation = grid.factory.modules.at(x, y).part.orientation
 					var rotation = module.phys_rotation.get_value() # - grid.rotation
-					var combined_rotation = rotation # + Dir.to_angle(orientation)
+					var combined_rotation = rotation + Dir.to_angle(orientation)
 					if grid.is_thruster(Vector2i(x, y)):
 						# Add sprite for thruster
 						var thruster_sprite = Sprite2D.new()
@@ -119,21 +119,34 @@ func update_sprites() -> void:
 		var sprite = sprites_by_module[module_index]
 		var grid = grids[0] # Adjust if you have multiple grids
 		var optional_module = grid.soft_body.modules.at(module_index.x, module_index.y)
+		var optional_part = grid.factory.modules.at(module_index.x, module_index.y)
 		
-		if optional_module.exists:
+		if optional_module.exists and optional_part.exists:
 			var module = optional_module.module
-			print("Thruster on:", actions.thruster_on, "Gun on:", actions.gun_on)
-			if grid.is_gun(module_index):
-				sprite.position = module.global_position
-				sprite.rotation = -module.phys_rotation.get_value()
-				if actions.gun_on == true:
-					sprite.texture = preload("res://assets/images/gun_fired.png")
-				if actions.gun_on == false:
-					sprite.texture = preload("res://assets/images/gun.png")
-			elif grid.is_thruster(module_index):
-				sprite.position = module.global_position
-				sprite.rotation = -module.phys_rotation.get_value()
-				if actions.thruster_on == true:
-					sprite.texture = preload("res://assets/images/thrusters_fired.png")
-				if actions.thruster_on == false:
-					sprite.texture = preload("res://assets/images/thrusters.png")
+			var part = optional_part.part
+
+			# don't ask me why this works
+			var orientation_angle = Dir.to_angle(Dir._clockwise_dirs[Dir.reverse(part.orientation)])
+			var desired_angle = -module.phys_rotation.get_norm().value - orientation_angle
+			var vec = Vector2.RIGHT.rotated(desired_angle)
+			var angle = -vec.angle_to(Vector2.RIGHT)
+			angle += PI
+
+			var action_on = part.action_is_on
+
+			sprite.position = module.global_position
+			sprite.rotation = angle
+
+			match part.type:
+				GridFactory.FactoryPartState.Type.GUN:
+					match action_on:
+						true:
+							sprite.texture = preload("res://assets/images/gun_fired.png")
+						false:
+							sprite.texture = preload("res://assets/images/gun.png")
+				GridFactory.FactoryPartState.Type.THRUSTER:
+					match action_on:
+						true:
+							sprite.texture = preload("res://assets/images/thrusters_fired.png")
+						false:
+							sprite.texture = preload("res://assets/images/thrusters.png")
