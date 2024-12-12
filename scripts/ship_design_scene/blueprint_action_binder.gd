@@ -64,6 +64,8 @@ func action_string() -> String:
 					return ""
 				FactoryPartBlueprint.Type.THRUSTER:
 					return "Burn"
+				FactoryPartBlueprint.Type.GUN:
+					return "Fire"
 				_:
 					return ""
 		_:

@@ -75,6 +75,8 @@ func manual_physics_process() -> void:
 					match part.type:
 						GridFactory.FactoryPartState.Type.THRUSTER:
 							apply_thruster_force(part, Vector2i(x, y))
+						GridFactory.FactoryPartState.Type.GUN:
+							apply_gun_action(part, Vector2i(x, y))
 
 	soft_body.manual_physics_process()
 
@@ -341,8 +343,38 @@ func apply_thruster_force(part: GridFactory.FactoryPartState, index: Vector2i) -
 
 		apply_force(thruster_direction * 20, index)
 
+func apply_gun_action(part: GridFactory.FactoryPartState, index: Vector2i) -> void:
+	var optional_module = soft_body.modules.at_index(index)
+	if not optional_module.exists:
+		return
+
+	var module = optional_module.module
+	var start_angle = module.phys_rotation.get_value()
+	var angle_offset = Dir.to_angle(part.orientation)
+	var gun_angle = Nangle.new(start_angle + angle_offset)
+	var gun_direction = gun_angle.to_vector()
+	
+	spawn_bullet(module.global_position, gun_angle.to_vector(), owner)
+
 func apply_force(_force: Vector2, _index: Vector2i) -> void:
 	soft_body.apply_force(_force, _index)
+
+func spawn_bullet(position: Vector2, direction: Vector2, owner_player: Player) -> void:
+	var bullet = preload("res://scenes/projectile/projectile.tscn").instantiate()
+	bullet.global_position = position
+	bullet.rotation = direction.angle()
+	bullet.owner_player = owner_player
+	# Add projectile to tree
+	print("Scene Stuatus", get_tree())
+	
+	soft_body.add_child(bullet)
+	
+	print("Trying to spawn bullet here", bullet.position)
+	var sprite = bullet.get_node("Sprite2D")
+	print("Sprite modulate: ", sprite.modulate)
+	print("Sprite visible: ", sprite.visible)
+	print("Sprite scale: ", sprite.scale)
+	print("Sprite texture: ", sprite.texture)
 	
 func get_average_position() -> Vector2:
 	var modules = soft_body.modules
