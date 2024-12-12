@@ -6,7 +6,7 @@ var move = false
 
 
 class FactoryPartState extends Node:
-	enum Type {EMPTY, DEBUG, THRUSTER}
+	enum Type {EMPTY, DEBUG, THRUSTER, GUN}
 	var inventory: Inventory
 	var type: Type
 	var orientation: int

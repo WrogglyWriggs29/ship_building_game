@@ -7,14 +7,15 @@
 size = Vector2(22, 14)
 
 [node name="Projectile" type="Area2D"]
+position = Vector2(256, 1)
 collision_layer = 0
 collision_mask = 15
 script = ExtResource("1_y7pgu")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 self_modulate = Color(0.693214, 0.511966, 0, 1)
-position = Vector2(11, 0)
-scale = Vector2(0.171875, 0.109375)
+position = Vector2(33, 0)
+scale = Vector2(0.515625, 0.109375)
 texture = ExtResource("1_3rkq3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
