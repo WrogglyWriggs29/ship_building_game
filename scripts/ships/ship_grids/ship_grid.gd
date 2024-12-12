@@ -95,8 +95,8 @@ func find_vertices_for_index(index: Vector2i, module_visited: Dictionary = {}) -
 		#   \ 
 		#    m
 	# 2. It is determined by two modules
-	    #    m
-	    #   /|
+		#    m
+		#   /|
 		#  v |
 		#   \|
 		#    m
