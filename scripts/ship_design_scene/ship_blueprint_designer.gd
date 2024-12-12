@@ -232,10 +232,10 @@ func click_on_self(pos: Vector2) -> void:
 	elif on_config:
 		config.click_at(pos - config.position)
 	elif on_test_button:
-		# test_button.click()
-		var file_path = "res://test_blueprint.json"
+		test_button.click()
+		#var file_path = "res://test_blueprint.json"
 		# save_blueprint(file_path)
-		load_blueprint(file_path)
+		#load_blueprint(file_path)
 		
 	elif on_binder:
 		binder.click_at(pos - binder.position)
