@@ -355,7 +355,8 @@ func update_node_rotation(index: Vector2i, module: Module, adjacent_modules: Arr
 		sum_prods += tuple[1] * tuple[2]
 		sum_kr += tuple[2]
 	
-	module.phys_rotation.add(sum_prods / (2 * sum_kr))
+	if sum_kr != 0:
+		module.phys_rotation.add(sum_prods / (2 * sum_kr))
 
 	#var to_print: String = ""
 	#var i = 0

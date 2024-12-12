@@ -88,3 +88,20 @@ func linked_index(index: Vector2i) -> Vector2i:
 	# D
 	else:
 		return Vector2i(index.x - 1, index.y - 1)
+
+func are_connected(module_index_a: Vector2i, module_index_b: Vector2i) -> bool:
+	var index_offset = module_index_b - module_index_a
+	var dir = Dir.from_index_offset(index_offset)
+	if dir == Dir.INVALID:
+		return false
+
+	var c_index = index_from_module(module_index_a, dir)
+	var back_index = linked_index(c_index)
+
+	if not in_range(c_index) or not in_range(back_index):
+		return false
+	
+	if not at_index(c_index).exists or not at_index(back_index).exists:
+		return false
+	
+	return true

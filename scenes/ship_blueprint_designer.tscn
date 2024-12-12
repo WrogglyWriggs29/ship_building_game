@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://bogbnlgb5w6o6"]
 
 [ext_resource type="Script" path="res://scripts/ship_design_scene/ship_blueprint_designer.gd" id="1_b60ti"]
-[ext_resource type="Texture2D" uid="uid://dfyxa3j0bvkid" path="res://assets/ui components/png/background (1).png" id="2_j25wk"]
+[ext_resource type="Texture2D" uid="uid://dkx45oifjgaw3" path="res://assets/images/background (1).png" id="2_j25wk"]
 [ext_resource type="Shader" path="res://map_design/level/bg.gdshader" id="3_pmfwi"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rhrhm"]

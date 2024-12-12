@@ -47,7 +47,7 @@ var layer: ShipBlueprintDesigner.Layer
 var tool_placeholder_text = ["Place", "Remove", "Select"]
 
 var structure_type_placeholder_text = ["Debug"]
-var part_type_placeholder_text = ["Debug", "Thruster", "Gun"]
+var part_type_placeholder_text = ["Debug", "Thruster"]
 
 func _process(_delta: float) -> void:
 	if width == 0 or height == 0:

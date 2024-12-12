@@ -47,6 +47,7 @@ func click() -> void:
 	var test_scene_packed: PackedScene = ResourceLoader.load(TEST_SCENE_FILE)
 	var test_scene: Node = test_scene_packed.instantiate()
 
+	ship.name = "Test Ship"
 	test_scene.ship = ship
 
 	get_tree().get_root().add_child(test_scene)

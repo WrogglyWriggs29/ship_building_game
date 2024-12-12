@@ -216,18 +216,21 @@ func draw_placeholder_square(index: Vector2i, type) -> void:
 	draw_square(top_left, draw_scale * GRID_SIZE, color)
 
 func placeholder_color(type) -> Color:
-	if type is StructureBlueprint.Type:
-		match type:
-			StructureBlueprint.Type.EMPTY:
-				return Color.BLACK
-			StructureBlueprint.Type.DEBUG:
-				return Color.WHITE
-	elif type is FactoryPartBlueprint.Type:
-		match type:
-			FactoryPartBlueprint.Type.EMPTY:
-				return Color.BLACK
-			FactoryPartBlueprint.Type.DEBUG:
-				return Color.WHITE
+	match layer:
+		ShipBlueprintDesigner.Layer.STRUCTURE:
+			match type:
+				StructureBlueprint.Type.EMPTY:
+					return Color.BLACK
+				StructureBlueprint.Type.DEBUG:
+					return Color.WHITE
+		ShipBlueprintDesigner.Layer.FACTORY:
+			match type:
+				FactoryPartBlueprint.Type.EMPTY:
+					return Color.BLACK
+				FactoryPartBlueprint.Type.DEBUG:
+					return Color.WHITE
+				FactoryPartBlueprint.Type.THRUSTER:
+					return Color.RED
 	return Color(0, 0, 0, 0)
 
 func draw_square(top_left: Vector2, side_length: float, color: Color) -> void:

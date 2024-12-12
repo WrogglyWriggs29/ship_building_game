@@ -3,8 +3,7 @@ extends Area2D
 
 @export var speed := 600.0
 @export var damage := 25.0
-@export var life_time := 500.0
-
+@export var life_time := 5.0
 
 var owner_player : Player
 
