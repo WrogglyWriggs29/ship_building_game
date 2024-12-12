@@ -8,6 +8,10 @@ func _init(_grids: Array[ShipGrid], _actions) -> void:
 	grids = _grids
 	actions = _actions
 
+func _ready() -> void:
+	for grid in grids:
+		add_child(grid)
+
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey:
 		if event.pressed:

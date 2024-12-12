@@ -27,7 +27,11 @@ func _process(delta: float) -> void:
 	if dist_to > LEASH:
 		position = -dir_to * LEASH + new_position
 	else:
-		position = position + dir_to * SPEED * delta
+		var travel_dist = SPEED * delta
+		if travel_dist > dist_to:
+			position = new_position
+		else:
+			position = position + dir_to * SPEED * delta
 
 func dir(a: Vector2, b: Vector2) -> Vector2:
 	return (b - a).normalized()

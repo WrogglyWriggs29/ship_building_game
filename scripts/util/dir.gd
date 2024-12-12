@@ -7,6 +7,7 @@ const RIGHT = 1
 const DOWN = 2
 const LEFT = 3
 const MAX = 4
+const INVALID = -1
 
 static func reverse(dir: int) -> int:
 	match dir:
@@ -18,6 +19,19 @@ static func reverse(dir: int) -> int:
 			return UP
 		LEFT:
 			return RIGHT
+		_:
+			return UP
+
+static func rotate(dir: int, clockwise: bool) -> int:
+	match dir:
+		UP:
+			return RIGHT if clockwise else LEFT
+		RIGHT:
+			return DOWN if clockwise else UP
+		DOWN:
+			return LEFT if clockwise else RIGHT
+		LEFT:
+			return UP if clockwise else DOWN
 		_:
 			return UP
 
@@ -51,3 +65,15 @@ static func to_angle(dir: int) -> float:
 			return PI
 		_:
 			return PI / 2
+
+static func from_index_offset(index_offset: Vector2i) -> int:
+	if index_offset == Vector2i(0, -1):
+		return UP
+	elif index_offset == Vector2i(1, 0):
+		return RIGHT
+	elif index_offset == Vector2i(0, 1):
+		return DOWN
+	elif index_offset == Vector2i(-1, 0):
+		return LEFT
+	else:
+		return INVALID
