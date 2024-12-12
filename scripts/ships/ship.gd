@@ -25,7 +25,6 @@ func _input(event: InputEvent) -> void:
 func manual_physics_process() -> void:
 	for grid in grids:
 		grid.manual_physics_process()
-		
 		update_sprites()
 
 func get_average_position() -> Vector2:
@@ -60,8 +59,6 @@ func add_module_sprites() -> void:
 					var scale = Vector2(1.5, 1.5)
 					var orientation = grid.factory.modules.at(x, y).part.orientation
 					var rotation = module.phys_rotation.get_value() #- grid.rotation
-					print("Rotation of module", rotation)
-					print("Rotation of grid", grid.rotation)
 					var combined_rotation = rotation # + Dir.to_angle(orientation)
 					if grid.is_thruster(Vector2i(x, y)):
 						# Add sprite for thruster
@@ -89,13 +86,26 @@ func update_sprites() -> void:
 		var sprite = sprites_by_module[module_index]
 		var grid = grids[0]  # Adjust if you have multiple grids
 		var optional_module = grid.soft_body.modules.at(module_index.x, module_index.y)
-
+		
 		if optional_module.exists:
 			var module = optional_module.module
-
-			# Update sprite position and rotation
-			sprite.position = module.global_position
-			sprite.rotation = -module.phys_rotation.get_value()
+			print("Thruster on:", actions.thruster_on, "Gun on:", actions.gun_on)
+			if grid.is_gun(module_index):
+				sprite.position = module.global_position
+				sprite.rotation = -module.phys_rotation.get_value()
+				if actions.gun_on == true:
+					sprite.texture = preload("res://assets/images/gun_fired.png")
+				if actions.gun_on == false:
+					sprite.texture = preload("res://assets/images/gun.png")
+			elif grid.is_thruster(module_index):
+				sprite.position = module.global_position
+				sprite.rotation = -module.phys_rotation.get_value()
+				if actions.thruster_on == true:
+					sprite.texture = preload("res://assets/images/thrusters_fired.png")
+				if actions.thruster_on == false:
+					sprite.texture = preload("res://assets/images/thrusters.png")
+			
+			
 	
 	
 	
