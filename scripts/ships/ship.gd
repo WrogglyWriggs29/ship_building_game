@@ -52,6 +52,8 @@ func manual_physics_process() -> void:
 				# we don't want to process the other disconnections on the old grid
 				break
 
+	update_sprites()
+
 # create two new equally sized blank grids, one for each side of the disconnection, 
 # then copy the modules and connections from the original grid to the new grids in a tree search
 func split_grid(a: Vector2i, b: Vector2i, grid: ShipGrid) -> Array[ShipGrid]:
@@ -59,7 +61,6 @@ func split_grid(a: Vector2i, b: Vector2i, grid: ShipGrid) -> Array[ShipGrid]:
 	var grid_b = ShipGridBuilder.tree_copy_existing(grid, b)
 
 	return [grid_a, grid_b]
-		update_sprites()
 
 func get_average_position() -> Vector2:
 	if grids.is_empty():
