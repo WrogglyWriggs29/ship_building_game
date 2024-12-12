@@ -59,11 +59,11 @@ static func corner_dir_counter_clockwise_from(dir: int) -> int:
         Dir.UP:
             return UP_LEFT
         Dir.RIGHT:
-            return UP_LEFT
+            return UP_RIGHT
         Dir.DOWN:
-            return DOWN_LEFT
-        Dir.LEFT:
             return DOWN_RIGHT
+        Dir.LEFT:
+            return DOWN_LEFT
         _:
             return UP_LEFT
 
@@ -94,3 +94,17 @@ static func flip_horizontal(corner_dir: int) -> int:
             return DOWN_RIGHT
         _:
             return UP_LEFT
+
+static func string(corner_dir: int) -> String:
+    assert_corner_dir(corner_dir)
+    match corner_dir:
+        UP_LEFT:
+            return "UP_LEFT"
+        UP_RIGHT:
+            return "UP_RIGHT"
+        DOWN_RIGHT:
+            return "DOWN_RIGHT"
+        DOWN_LEFT:
+            return "DOWN_LEFT"
+        _:
+            return "INVALID"

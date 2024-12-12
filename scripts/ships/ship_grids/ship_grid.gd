@@ -27,6 +27,11 @@ func _process(_delta: float) -> void:
 
 func _draw() -> void:
 	draw_vertices()
+	var to_draw = find_bounding()
+	if to_draw.size() > 1:
+		for i in range(1, to_draw.size()):
+			draw_line(to_draw[i - 1], to_draw[i], Color.INDIAN_RED)
+		draw_line(to_draw[to_draw.size() - 1], to_draw[0], Color.INDIAN_RED)
 
 func manual_physics_process() -> Array[DisconnectionEvent]:
 	for x in factory.modules.width:
@@ -46,6 +51,57 @@ func manual_physics_process() -> Array[DisconnectionEvent]:
 	find_vertices()
 
 	return dc
+
+class ModuleCorner:
+	var m_index: Vector2i
+	var corner_dir: int
+
+	func _init(_m_index: Vector2i, _corner_dir: int) -> void:
+		m_index = _m_index
+		corner_dir = _corner_dir
+
+func find_bounding() -> Array[Vector2]:
+	var starting_index = soft_body.modules.first_module()
+	if starting_index == Vector2i(-1, -1):
+		return []
+	
+	var to_draw: Array[Vector2] = []
+
+	var termination_position = ModuleCorner.new(starting_index, CornerDir.UP_LEFT)
+	to_draw.push_back(soft_body.modules.at_index(starting_index).module.vertices[CornerDir.UP_LEFT].value)
+
+	recurse_find_bounding(starting_index, Dir.RIGHT, 0, termination_position, to_draw)
+	return to_draw
+
+func recurse_find_bounding(cur_mod: Vector2i, prefer_dir: int, level: int, stop_cond: ModuleCorner, to_draw: Array[Vector2]) -> void:
+	#if level > 2:
+	#	return
+	# think of prefer_dir as up for convenience
+	# in reality, it's just the direction ccw of where we came from
+	assert(soft_body.modules.at_index(cur_mod).exists, "Module does not exist, and this shouldn't happen.")
+
+	var module = soft_body.modules.at_index(cur_mod).module
+
+	# we start from the top left, but this will get skipped
+	#to_draw.push_back(module.vertices[CornerDir.UP_LEFT].value)
+	# if, instead, we start with a gap in the up direction, we look for the first non-gap in the clockwise direction
+	for rot_offset in range(0, 4):
+		var next_dir = Dir.rotate_times(prefer_dir, true, rot_offset)
+		if cur_mod == stop_cond.m_index and CornerDir.corner_dir_counter_clockwise_from(next_dir) == stop_cond.corner_dir:
+			return
+		var next_mod = soft_body.modules.adjacent_index(cur_mod, next_dir)
+		if not are_connected(cur_mod, next_mod):
+			#print("found a gap from ", cur_mod, " in direction ", Dir.string(next_dir))
+			var rotated_through = CornerDir.corner_dir_counter_clockwise_from(next_dir)
+			var vertex = module.vertices[rotated_through].value
+			to_draw.append(vertex)
+			draw_string(ThemeDB.fallback_font, vertex, str(level) + " " + str(rot_offset) + " " + Dir.string(next_dir))
+			continue
+		else:
+			# we found the module we want to move to
+			#print("found a connected module from ", cur_mod, " in direction ", Dir.string(next_dir))
+			recurse_find_bounding(next_mod, Dir.rotate(next_dir, false), level + 1, stop_cond, to_draw)
+			break
 
 func disconnect_cons(a: Vector2i, b: Vector2i) -> void:
 	soft_body.connections.at_index(a).exists = false

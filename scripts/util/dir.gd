@@ -28,6 +28,12 @@ const _counter_clockwise_dirs = [LEFT, UP, RIGHT, DOWN]
 static func rotate(dir: int, clockwise: bool) -> int:
 	return _clockwise_dirs[dir] if clockwise else _counter_clockwise_dirs[dir]
 
+static func rotate_times(dir: int, clockwise: bool, times: int) -> int:
+	var new_dir = dir
+	for i in range(times):
+		new_dir = rotate(new_dir, clockwise)
+	return new_dir
+
 static func assert_dir(dir: int) -> void:
 	assert(0 <= dir && dir < MAX, "Invalid direction provided.")
 
@@ -70,3 +76,17 @@ static func from_index_offset(index_offset: Vector2i) -> int:
 		return LEFT
 	else:
 		return INVALID
+
+static func string(dir: int) -> String:
+	assert_dir(dir)
+	match dir:
+		UP:
+			return "UP"
+		RIGHT:
+			return "RIGHT"
+		DOWN:
+			return "DOWN"
+		LEFT:
+			return "LEFT"
+		_:
+			return "INVALID"
