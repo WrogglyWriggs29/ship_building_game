@@ -264,10 +264,13 @@ func click_on_self(pos: Vector2) -> void:
 
 	if on_layer_selector:
 		layer_selector.select_at(pos - layer_selector.position)
+		AudioManager.player_sfx("res://Audio/Click module/Menu1A.wav")
 	elif on_palette:
 		palette.select_at(pos - palette.position)
+		AudioManager.player_sfx("res://Audio/Click module/Menu1A.wav")
 	elif on_grid:
 		tool_actions[ToolPalette.type(palette.selected, layer_selector.selected)].call(grid.index_at(pos - grid.position))
+		AudioManager.player_sfx("res://Audio/Click module/Menu Selection Click.wav")
 	elif on_config:
 		config.click_at(pos - config.position)
 	elif on_test_button:

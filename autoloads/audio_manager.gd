@@ -1,4 +1,11 @@
-extends Node
+extends AudioStreamPlayer
+
+
+
+func _ready() -> void:
+	stream = load("res://Audio/BGM/03 Toy Soldiers.wav")
+	play()
+	finished.connect(play)
 
 
 func player_sfx(stream_file: String) -> void:
