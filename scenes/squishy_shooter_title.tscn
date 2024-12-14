@@ -1,10 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://bq4krxef4we7i"]
+[gd_scene load_steps=10 format=3 uid="uid://bq4krxef4we7i"]
 
-[ext_resource type="Texture2D" uid="uid://co8s630cavyg0" path="res://assets/ui components/png/background (1).png" id="1_e327v"]
+[ext_resource type="Texture2D" uid="uid://dkx45oifjgaw3" path="res://assets/images/background (1).png" id="1_e327v"]
+[ext_resource type="Script" path="res://scenes/squishy_shooter_title.gd" id="1_g4730"]
 [ext_resource type="Shader" path="res://map_design/level/bg.gdshader" id="2_4aqxk"]
-[ext_resource type="Texture2D" uid="uid://cqpkbruhj4m82" path="res://assets/images/Squish Shooters.png" id="3_gca4h"]
-[ext_resource type="Texture2D" uid="uid://cb2gueg182c45" path="res://assets/images/yellow_button.png" id="4_mw204"]
-[ext_resource type="Texture2D" uid="uid://ciriuh1bqy8ap" path="res://assets/images/blue_button.png" id="5_7kpdr"]
+[ext_resource type="Texture2D" uid="uid://bula28rua3y8e" path="res://assets/images/Squish_Shooters.png" id="5_tn0et"]
 [ext_resource type="FontFile" uid="uid://1dbgtplhlwtv" path="res://assets/speedy-font/SpeedyRegular-7BLoE.ttf" id="6_w0s84"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_l8v0v"]
@@ -21,16 +20,15 @@ shader_parameter/layers = 9.0
 shader_parameter/iterations = 6
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wjbdm"]
-texture = ExtResource("4_mw204")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_u0wvl"]
-texture = ExtResource("5_7kpdr")
 
 [sub_resource type="Theme" id="Theme_gm26a"]
 Button/styles/hover = SubResource("StyleBoxTexture_wjbdm")
 Button/styles/normal = SubResource("StyleBoxTexture_u0wvl")
 
 [node name="Squishy Shooter Title" type="Node2D"]
+script = ExtResource("1_g4730")
 
 [node name="Background(1)" type="Sprite2D" parent="."]
 position = Vector2(1016, 596)
@@ -53,9 +51,9 @@ metadata/_edit_use_anchors_ = true
 [node name="SquishShooters" type="Sprite2D" parent="Background(1)"]
 position = Vector2(-304.464, -223.912)
 scale = Vector2(0.218689, 0.218689)
-texture = ExtResource("3_gca4h")
+texture = ExtResource("5_tn0et")
 
-[node name="Button" type="Button" parent="Background(1)"]
+[node name="Play Button" type="Button" parent="Background(1)"]
 offset_left = -361.522
 offset_top = -72.4397
 offset_right = -248.522
@@ -63,3 +61,24 @@ offset_bottom = -36.4397
 theme = SubResource("Theme_gm26a")
 theme_override_fonts/font = ExtResource("6_w0s84")
 text = "Play"
+
+[node name="Build Button" type="Button" parent="Background(1)"]
+offset_left = -400.0
+offset_top = -120.0
+offset_right = -219.0
+offset_bottom = -84.0
+theme = SubResource("Theme_gm26a")
+theme_override_fonts/font = ExtResource("6_w0s84")
+text = "Edit and Build
+"
+
+[node name="Tutorial Button" type="Button" parent="Background(1)"]
+offset_left = -340.0
+offset_top = -20.0
+offset_right = -271.0
+offset_bottom = 11.0
+text = "Tutorial"
+
+[connection signal="pressed" from="Background(1)/Play Button" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="Background(1)/Build Button" to="." method="_on_build_button_pressed"]
+[connection signal="pressed" from="Background(1)/Tutorial Button" to="." method="_on_tutorial_button_pressed"]

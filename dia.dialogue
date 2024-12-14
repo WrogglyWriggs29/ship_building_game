@@ -1,0 +1,11 @@
+~ first
+Captain: Hey there recruits. Congrats on joinging the team, we' re glad to have you. 
+Captain: Since it's your first day on the job I' ll walk you through the basics
+Captain: First, you gotta build your ship, select boxes from the grid to build 
+Captain: Looking great! Next up go to the factory to deck ur ship out with guns and thrusters. 
+Captain: And you' re ready to go blast some meteoriods!
+Captain: -movement/ shooting guide-
+Captain: -anything else?-
+Captain: Great job out there recruit! Now show us what you got!
+ set Playerstate.isend=true
+=> END

@@ -1,0 +1,46 @@
+[gd_scene load_steps=7 format=3 uid="uid://c3juxdj8xk23m"]
+
+[ext_resource type="Script" path="res://scripts/start.gd" id="1_1jhd0"]
+[ext_resource type="Texture2D" uid="uid://c78pbx24ao30i" path="res://assets/images/startback.png" id="2_5ikos"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nvpfc"]
+atlas = ExtResource("2_5ikos")
+region = Rect2(0, 0, 1280, 2160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f28ta"]
+atlas = ExtResource("2_5ikos")
+region = Rect2(1280, 0, 1280, 2160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2n0v3"]
+atlas = ExtResource("2_5ikos")
+region = Rect2(2560, 0, 1280, 2160)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gbauo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nvpfc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f28ta")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2n0v3")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[node name="start" type="Node2D"]
+script = ExtResource("1_1jhd0")
+
+[node name="human" type="Node2D" parent="."]
+scale = Vector2(0.25, 0.25)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="human"]
+position = Vector2(644, 1496)
+sprite_frames = SubResource("SpriteFrames_gbauo")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.588204

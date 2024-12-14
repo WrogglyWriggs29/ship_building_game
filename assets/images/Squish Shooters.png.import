@@ -2,7 +2,11 @@
 
 importer="texture"
 type="CompressedTexture2D"
+<<<<<<< Updated upstream
 uid="uid://cqa1bxryhwhw7"
+=======
+uid="uid://dth21s0qybhew"
+>>>>>>> Stashed changes
 path="res://.godot/imported/Squish Shooters.png-da04f9dd46ba48cc84cf4216a1fb3a3c.ctex"
 metadata={
 "vram_texture": false
