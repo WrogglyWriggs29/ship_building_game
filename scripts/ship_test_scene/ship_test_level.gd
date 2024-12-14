@@ -71,8 +71,8 @@ func _physics_process(_delta: float) -> void:
 				continue
 			var other = ship.grids[j]
 			if ShipGrid.CollisionPolygon.may_collide(grid.collider, other.collider):
-				grid.collide_grid(other.collider.get_polygon())
-				other.collide_grid(grid.collider.get_polygon())
+				grid.collide(other.collider.get_polygon())
+				other.collide(grid.collider.get_polygon())
 
 func _spread_meteors() -> void:
 	var ctn := $Meteors

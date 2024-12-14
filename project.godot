@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="ship_building_game"
-run/main_scene="res://ship_blueprint_designer.tscn"
+run/main_scene="res://scenes/squishy_shooter_title.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 GlobalConstants="*res://scripts/global_constants.gd"
 AudioManager="*res://autoloads/audio_manager.gd"
 SceneStack="*res://scripts/util/scene_stack.gd"
+SceneManager="*res://autoloads/scene_manager.gd"
 
 [input]
 

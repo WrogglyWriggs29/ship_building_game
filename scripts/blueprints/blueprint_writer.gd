@@ -28,7 +28,7 @@ func save_ship_grid_to_json(ship_grid: ShipGridBlueprint, file_path: String) -> 
 						"max_amount": pair.part.starting_inventory.max_amount
 					}
 				},
-				 "coordinate": {
+				"coordinate": {
 					"x": x,
 					"y": y
 				}
