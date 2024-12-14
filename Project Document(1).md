@@ -59,7 +59,7 @@ Andrew: Built the factory system allowing ships to manage inventories and delive
 
 #### Camera (Harshana Somas)
 
-Implemented a camera model that takes the average of all the ship modules and locks to the position. Updated to a camera that smoothly tracks the target object with a leash and speed constraint. 
+Implemented a camera model that takes the average of all the ship modules and locks to the position. Updated to a camera that smoothly tracks the target object with a leash and speed constraint. Camera Model takes into account the positiion of both the ships and zooms out based to have the viewport accomodate both ships.
 
 #### User Interface (Calvin Yee), (Harshana Somas), (Sam Herring)
 
@@ -120,6 +120,9 @@ The background music needs to be played continuously between the design and comb
 
 \*\*Document the sound style.\*\*   
 Sound style is very important for our game. Since our game is set in space, the sound styles I choose for combat are all from sci-fi sound effects. These sci-fi sounds are louder, so I chose softer soundtrack background music so that the sound effects will not be covered by the background music or too many sound effects at the same time, which will reduce the player's gaming experience.
+
+#### Trailer / PressKit (Harshana Somas)
+The trailer was created using Davinci Resolve. The presskit was created using static html files.
 
 ## Further Improvements and Fixes
 
