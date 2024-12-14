@@ -54,7 +54,8 @@ When designing combat scenes, I tried to balance the two-player control and the 
 
 
 
-https://github.com/user-attachments/assets/406eb456-8e2e-4e1a-aece-174cfd3813e7
+
+https://github.com/user-attachments/assets/73ba99bc-4d00-43b2-b63e-dde833e5793a
 
 
 My [movement system](/scenes/player/player.gd) allows two people to control two ships to move and fire projectiles to cause damage. I created a split-screen display mode, using separate viewports and cameras for each player to ensure that the experience of any player is not affected by the limitations of the shared camera. This design also solves the challenge of playing two players simultaneously on a single screen. I also set up two control systems and keyboard bindings. Player 1 controls ship 1 through wasd and uses the space key to fire projectiles. Player 2 controls ship2 with the arrow key and uses the enter key to fire projectiles. In order to achieve the goal of combat on the same PC, I created two viewports with two cameras loaded separately, and the two split-screen viewports share the same 2D map. The camera will follow the two players separately.
