@@ -54,7 +54,7 @@ func draw_structure_config() -> void:
 	for dir in Dir.MAX:
 		var connection_value = editor.read_connection(selected, dir)
 		var color = Color.CADET_BLUE if connection_value else Color.INDIAN_RED
-		draw_trait_display_arrow(dir, color)
+		draw_trait_display_arrow(dir, color, false)
 		
 		draw_rect(direction_selection_rect(dir), Color.RED, false)
 
@@ -67,24 +67,34 @@ func draw_factory_config() -> void:
 	var radius = width / 10
 	draw_circle(center, radius, Color.WHITE_SMOKE)
 
+	var type = editor.read_part_type(selected)
+	var type_name = FactoryPartBlueprint.type_name(type)
 	var orientation = editor.read_part_orientation(selected)
-	draw_trait_display_arrow(orientation, Color.CADET_BLUE)
+
+	# for thrusters, we want the arrow to show as pushing the point in the direction of the arrow
+	orientation = Dir.reverse(orientation) if type == FactoryPartBlueprint.Type.THRUSTER else orientation
+	var reverse = (type == FactoryPartBlueprint.Type.THRUSTER)
+
+	draw_trait_display_arrow(orientation, Color.CADET_BLUE, reverse)
 
 	for dir in Dir.MAX:
 		draw_rect(direction_selection_rect(dir), Color.RED, false)
 
-	var type = editor.read_part_type(selected)
-	var type_name = FactoryPartBlueprint.type_name(type)
 	draw_string(ThemeDB.fallback_font, Vector2(5, 15), "Configure " + type_name)
 
-func draw_trait_display_arrow(dir: int, color: Color) -> void:
+func draw_trait_display_arrow(dir: int, color: Color, reverse: bool) -> void:
 	var center = Vector2(width / 2, height / 2)
 	var radius = width / 10
 	var arrow_length = width / 2 - radius - width / 10
 	var dir_vector = Dir.to_vector(dir)
 	var offset = dir_vector * (radius + width / 20)
 
-	draw_arrow(center + offset, dir_vector, arrow_length, color)
+	match reverse:
+		true:
+			var true_offset = offset + dir_vector * arrow_length
+			draw_arrow(center + true_offset, -dir_vector, arrow_length, color)
+		false:
+			draw_arrow(center + offset, dir_vector, arrow_length, color)
 
 func select(index: Vector2i) -> void:
 	selected = index
@@ -106,7 +116,11 @@ func click_at(pos: Vector2) -> void:
 		ShipBlueprintDesigner.Layer.FACTORY:
 			for dir in Dir.MAX:
 				if direction_selection_rect(dir).has_point(pos):
-					editor.set_part_orientation(selected, dir)
+					match editor.read_part_type(selected):
+						FactoryPartBlueprint.Type.THRUSTER:
+							editor.set_part_orientation(selected, Dir.reverse(dir))
+						_:
+							editor.set_part_orientation(selected, dir)
 					return
 	
 
