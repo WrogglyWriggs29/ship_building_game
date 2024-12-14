@@ -8,6 +8,7 @@ enum Type {
 var type: Type = Type.DEBUG
 var mass: float = 1.0
 var velocity: Vector2 = Vector2.ZERO
+var index : Vector2i
 
 var phys_position: Vector2 = Vector2.ZERO
 var phys_rotation: Fangle = Fangle.new(0.0)

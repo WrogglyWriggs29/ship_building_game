@@ -17,7 +17,15 @@ func _process(_delta: float) -> void:
 	queue_redraw()
 
 func _draw() -> void:
-	draw_circle(Vector2.ZERO, 5, Color.CADET_BLUE)
+	draw_circle(Vector2.ZERO, 6, Color.CYAN)
+	draw_circle(Vector2.ZERO, 3, Color.AZURE)
+
+func manual_physics_process() -> void:
+	age += 1
+	global_position += velocity * GlobalConstants.TIME_STEP_CONSTANT
+
+func is_dead() -> bool:
+	return age >= lifetime
 
 #func _process(delta: float) -> void:
 	#_countdown += delta
@@ -28,15 +36,6 @@ func _draw() -> void:
 	#var base_velocity = Vector2(cos(rotation), sin(rotation)) * speed
 	#var total_velocity = base_velocity + velocity
 	#position += total_velocity * delta
-
-func manual_physics_process() -> void:
-	age += 1
-
-	global_position += velocity * GlobalConstants.TIME_STEP_CONSTANT
-
-func is_dead() -> bool:
-	return age >= lifetime
-
 
 #func _on_body_entered(body: Node2D) -> void:
 	#if owner_player == body:

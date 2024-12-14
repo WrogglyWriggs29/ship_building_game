@@ -49,6 +49,7 @@ func get_closest_module(pos: Vector2) -> Module:
 			#if matrix.at(x, y).exists && matrix.at(x, y).module.get_global_square().has_point(pos):
 			if matrix.at(x, y).exists:
 				candidates.push_back(matrix.at(x, y).module)
+				matrix.at(x, y).module.index = Vector2i(x, y)
 	
 	var closest: Module = null
 	var closest_dist: float = +INF
