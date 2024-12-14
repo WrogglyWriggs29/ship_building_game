@@ -138,12 +138,14 @@ func _update_camera(delta) -> void:
 	camera.position = lerp(camera.position, midpoint, delta * camera_lerp_speed)
 
 	# Calculate the distance between the two ships
-	var distance = ship1.global_position.distance_to(ship2.global_position)
-
+	var distance = ship1.get_average_position().distance_to(ship2.get_average_position())
+	print(distance)
+	
 	# Determine desired zoom level based on the distance
-	var desired_zoom = base_zoom + (distance / zoom_distance_scale)
+	var desired_zoom = base_zoom * (zoom_distance_scale / distance)
 	desired_zoom = clamp(desired_zoom, min_zoom, max_zoom)
-
+	print(desired_zoom)
 	# Smoothly adjust the zoom level
 	camera.zoom = lerp(camera.zoom, Vector2(desired_zoom, desired_zoom), delta * camera_lerp_speed)
+
 	
