@@ -77,6 +77,20 @@ static func from_index_offset(index_offset: Vector2i) -> int:
 	else:
 		return INVALID
 
+static func to_index_offset(dir: int) -> Vector2i:
+	assert_dir(dir)
+	match dir:
+		UP:
+			return Vector2i(0, -1)
+		RIGHT:
+			return Vector2i(1, 0)
+		DOWN:
+			return Vector2i(0, 1)
+		LEFT:
+			return Vector2i(-1, 0)
+		_:
+			return Vector2i(0, -1)
+
 static func string(dir: int) -> String:
 	assert_dir(dir)
 	match dir:

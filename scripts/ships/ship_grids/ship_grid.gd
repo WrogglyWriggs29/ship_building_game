@@ -72,7 +72,6 @@ var factory: GridFactory
 var width: int
 var height: int
 
-var boundary: Array[SharedVector] = []
 var collision_polygon: PackedVector2Array
 
 var collider: CollisionPolygon
@@ -91,17 +90,18 @@ func _process(_delta: float) -> void:
 	queue_redraw()
 
 func _draw() -> void:
-	draw_colored_polygon(collider.get_polygon(), Color(0.5, 0.5, 0.5, 0.5))
+	var boundary_poly = collider.get_polygon()
+	if boundary_poly.size() > 1:
+		draw_colored_polygon(boundary_poly, Color(0.5, 0.5, 0.5, 0.5))
 
 	draw_vertices()
-	var to_draw: Array[SharedVector] = boundary
+	var to_draw: Array[SharedVector] = collider.boundary
 	if to_draw.size() > 1:
 		for i in range(1, to_draw.size()):
 			draw_line(to_draw[i - 1].value, to_draw[i].value, Color.INDIAN_RED)
 		draw_line(to_draw[to_draw.size() - 1].value, to_draw[0].value, Color.INDIAN_RED)
 
-	var boundary = collider.get_polygon()
-	draw_polyline(boundary, Color.INDIAN_RED, 3)
+	draw_polyline(boundary_poly, Color.INDIAN_RED, 3)
 
 	for point in debug_draw_colliding:
 		draw_circle(point, 5.0, Color.RED)

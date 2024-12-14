@@ -30,12 +30,26 @@ func validate(bp: ShipGridBlueprint) -> String:
 		return "Blueprint is blank."
 	
 	var first = module_indices.keys().front()
+	# mark all connected modules as true
 	mark_adjacent(bp, module_indices, first)
 
 	for index in module_indices.keys():
+		# if any module is still false, it must not be connected
 		if not module_indices[index]:
 			return "Blueprint has disconnected modules."
-	
+		
+	# make sure that guns have open spaces in front of them
+	for x in bp.width:
+		for y in bp.height:
+			var pair = bp.matrix.at(x, y)
+			if pair.part.type == FactoryPartBlueprint.Type.GUN:
+				var offset = Dir.to_index_offset(pair.part.orientation)
+				var current_pos = Vector2i(x, y) + offset
+				while bp.matrix.in_range(current_pos):
+					var current_pair = bp.matrix.at(current_pos.x, current_pos.y)
+					if current_pair.structure.type != StructureBlueprint.Type.EMPTY:
+						return "Blueprint has a gun that is blocked by structure elements."
+					current_pos += offset
 
 	return ""
 

@@ -73,7 +73,7 @@ func draw_selection_circle(index: Vector2i) -> void:
 	var bottom_right = top_left_corner(Vector2i(index.x + 1, index.y + 1))
 	var center = (top_left + bottom_right) / 2
 	var radius = draw_scale * GRID_SIZE / 2 * sqrt(2)
-	draw_circle(center, radius, Color.RED)
+	draw_circle(center, radius, Color.RED, false)
 
 func process_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
