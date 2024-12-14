@@ -82,13 +82,33 @@ func load_ship_grid_from_json(file_path: String) -> ShipGridBlueprint:
 			row.append(BlueprintPair.new(structure, part))
 		matrix.append(row)
 
+	var acts_json = json_data["actions"]
+
+
 	# Return the populated ShipGridBlueprint
 	var bp = ShipGridBlueprint.new(matrix)
 	var json = JSON.new()
-	var acts = json_data["actions"]
-	if acts is Dictionary:
-		for key in acts:
-			var value = acts[key]
-			for i in value.size():
-				value[i] = json.parse(value[i])
+
+	var acts_values = {}
+	if acts_json is Dictionary:
+		for key in acts_json.keys():
+			var reconstruction = []
+			for value in acts_json[key]:
+				var str = value as String
+				# remove parenthesis
+				str = str.trim_prefix("(")
+				str = str.trim_suffix(")")
+				print(str)
+				var values = str.split(", ")
+				print(values)
+				assert(values[0].is_valid_int() and values[1].is_valid_int(), "Invalid action index " + str)
+				var x = values[0].to_int()
+				var y = values[1].to_int()
+				reconstruction.append(Vector2i(x, y))
+			print(reconstruction)
+
+			assert(key.is_valid_int(), "Invalid action key " + key)
+			acts_values[key.to_int()] = reconstruction
+
+	bp.actions = acts_values
 	return bp

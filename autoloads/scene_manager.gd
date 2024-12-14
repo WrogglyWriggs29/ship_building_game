@@ -23,14 +23,13 @@ func goto_ship_designer() -> void:
 
 # Helper function to handle scene switching
 func _switch_scene(new_scene: Node) -> void:
-	# Get the current scene
-	var root = get_tree().get_root()
-	var current_scene = root.get_child(root.get_child_count() - 1)
+	# Store the current scene
+	var current_scene = get_tree().current_scene
+	SceneStack.store(current_scene)
 	
-	# Remove the current scene
-	root.remove_child(current_scene)
-	current_scene.queue_free()
-	
-	# Add the new scene
-	root.add_child(new_scene)
+	# Add the new scene to view
+	get_tree().get_root().add_child(new_scene)
 	get_tree().set_current_scene(new_scene)
+
+	# Remove the current scene from view
+	get_tree().get_root().remove_child(current_scene)
