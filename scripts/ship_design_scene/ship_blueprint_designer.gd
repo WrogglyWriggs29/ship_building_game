@@ -74,6 +74,8 @@ func remove_module(index: Vector2i) -> void:
 
 func place_part(index: Vector2i) -> void:
 	var current = palette.selected_type()
+	if editor.read_structure_type(index) == StructureBlueprint.Type.EMPTY:
+		return
 	editor.set_part_type(index, current)
 
 func remove_part(index: Vector2i) -> void:
