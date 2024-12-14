@@ -9,6 +9,7 @@ const TUTORIAL_SCENE = "res://scenes/start.tscn"
 
 func goto_tutorial() -> void:
 	var tutorial = load(TUTORIAL_SCENE).instantiate()
+	tutorial.start_playback = true
 	_switch_scene(tutorial)
 
 # Transition to ship designer scene
