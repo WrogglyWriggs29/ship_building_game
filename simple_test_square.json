@@ -1,0 +1,2442 @@
+{
+    "actions": {
+        "65": [
+            "\"(0, 2)\"",
+            "\"(2, 0)\""
+        ],
+        "68": [
+            "\"(0, 0)\"",
+            "\"(2, 2)\""
+        ],
+        "83": [
+            "\"(1, 0)\""
+        ],
+        "87": [
+            "\"(1, 2)\""
+        ]
+    },
+    "grid": [
+        [
+            {
+                "coordinate": {
+                    "x": 0,
+                    "y": 0
+                },
+                "part": {
+                    "orientation": 1,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Thruster"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        true,
+                        true,
+                        false
+                    ],
+                    "type": "Debug"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 1,
+                    "y": 0
+                },
+                "part": {
+                    "orientation": 2,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Thruster"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        true,
+                        true,
+                        true
+                    ],
+                    "type": "Debug"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 2,
+                    "y": 0
+                },
+                "part": {
+                    "orientation": 3,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Thruster"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        true,
+                        true
+                    ],
+                    "type": "Debug"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 3,
+                    "y": 0
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 4,
+                    "y": 0
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 5,
+                    "y": 0
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 6,
+                    "y": 0
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 7,
+                    "y": 0
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 8,
+                    "y": 0
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 9,
+                    "y": 0
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            }
+        ],
+        [
+            {
+                "coordinate": {
+                    "x": 0,
+                    "y": 1
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        true,
+                        true,
+                        true,
+                        false
+                    ],
+                    "type": "Debug"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 1,
+                    "y": 1
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        true,
+                        true,
+                        true,
+                        true
+                    ],
+                    "type": "Debug"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 2,
+                    "y": 1
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        true,
+                        false,
+                        true,
+                        true
+                    ],
+                    "type": "Debug"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 3,
+                    "y": 1
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 4,
+                    "y": 1
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 5,
+                    "y": 1
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 6,
+                    "y": 1
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 7,
+                    "y": 1
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 8,
+                    "y": 1
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 9,
+                    "y": 1
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            }
+        ],
+        [
+            {
+                "coordinate": {
+                    "x": 0,
+                    "y": 2
+                },
+                "part": {
+                    "orientation": 1,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Thruster"
+                },
+                "structure": {
+                    "connections": [
+                        true,
+                        true,
+                        false,
+                        false
+                    ],
+                    "type": "Debug"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 1,
+                    "y": 2
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Thruster"
+                },
+                "structure": {
+                    "connections": [
+                        true,
+                        true,
+                        false,
+                        true
+                    ],
+                    "type": "Debug"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 2,
+                    "y": 2
+                },
+                "part": {
+                    "orientation": 3,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Thruster"
+                },
+                "structure": {
+                    "connections": [
+                        true,
+                        false,
+                        false,
+                        true
+                    ],
+                    "type": "Debug"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 3,
+                    "y": 2
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 4,
+                    "y": 2
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 5,
+                    "y": 2
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 6,
+                    "y": 2
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 7,
+                    "y": 2
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 8,
+                    "y": 2
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 9,
+                    "y": 2
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            }
+        ],
+        [
+            {
+                "coordinate": {
+                    "x": 0,
+                    "y": 3
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 1,
+                    "y": 3
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 2,
+                    "y": 3
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 3,
+                    "y": 3
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 4,
+                    "y": 3
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 5,
+                    "y": 3
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 6,
+                    "y": 3
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 7,
+                    "y": 3
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 8,
+                    "y": 3
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 9,
+                    "y": 3
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            }
+        ],
+        [
+            {
+                "coordinate": {
+                    "x": 0,
+                    "y": 4
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 1,
+                    "y": 4
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 2,
+                    "y": 4
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 3,
+                    "y": 4
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 4,
+                    "y": 4
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 5,
+                    "y": 4
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 6,
+                    "y": 4
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 7,
+                    "y": 4
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 8,
+                    "y": 4
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 9,
+                    "y": 4
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            }
+        ],
+        [
+            {
+                "coordinate": {
+                    "x": 0,
+                    "y": 5
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 1,
+                    "y": 5
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 2,
+                    "y": 5
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 3,
+                    "y": 5
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 4,
+                    "y": 5
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 5,
+                    "y": 5
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 6,
+                    "y": 5
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 7,
+                    "y": 5
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 8,
+                    "y": 5
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 9,
+                    "y": 5
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            }
+        ],
+        [
+            {
+                "coordinate": {
+                    "x": 0,
+                    "y": 6
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 1,
+                    "y": 6
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 2,
+                    "y": 6
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 3,
+                    "y": 6
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 4,
+                    "y": 6
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 5,
+                    "y": 6
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 6,
+                    "y": 6
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 7,
+                    "y": 6
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 8,
+                    "y": 6
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 9,
+                    "y": 6
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            }
+        ],
+        [
+            {
+                "coordinate": {
+                    "x": 0,
+                    "y": 7
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 1,
+                    "y": 7
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 2,
+                    "y": 7
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 3,
+                    "y": 7
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 4,
+                    "y": 7
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 5,
+                    "y": 7
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 6,
+                    "y": 7
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 7,
+                    "y": 7
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 8,
+                    "y": 7
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 9,
+                    "y": 7
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            }
+        ],
+        [
+            {
+                "coordinate": {
+                    "x": 0,
+                    "y": 8
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 1,
+                    "y": 8
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 2,
+                    "y": 8
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 3,
+                    "y": 8
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 4,
+                    "y": 8
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 5,
+                    "y": 8
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 6,
+                    "y": 8
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 7,
+                    "y": 8
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 8,
+                    "y": 8
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 9,
+                    "y": 8
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            }
+        ],
+        [
+            {
+                "coordinate": {
+                    "x": 0,
+                    "y": 9
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 1,
+                    "y": 9
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 2,
+                    "y": 9
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 3,
+                    "y": 9
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 4,
+                    "y": 9
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 5,
+                    "y": 9
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 6,
+                    "y": 9
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 7,
+                    "y": 9
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 8,
+                    "y": 9
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            },
+            {
+                "coordinate": {
+                    "x": 9,
+                    "y": 9
+                },
+                "part": {
+                    "orientation": 0,
+                    "starting_inventory": {
+                        "amount": 0,
+                        "max_amount": 0,
+                        "type": "<null>"
+                    },
+                    "type": "Empty"
+                },
+                "structure": {
+                    "connections": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ],
+                    "type": "Empty"
+                }
+            }
+        ]
+    ],
+    "height": 10,
+    "width": 10
+}
