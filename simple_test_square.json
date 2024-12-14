@@ -1,18 +1,21 @@
 {
     "actions": {
+        "32": [
+            "(1, 0)"
+        ],
         "65": [
-            "\"(0, 2)\"",
-            "\"(2, 0)\""
+            "(2, 0)",
+            "(0, 2)"
         ],
         "68": [
-            "\"(0, 0)\"",
-            "\"(2, 2)\""
+            "(0, 0)",
+            "(2, 2)"
         ],
         "83": [
-            "\"(1, 0)\""
+            "(1, 1)"
         ],
         "87": [
-            "\"(1, 2)\""
+            "(1, 2)"
         ]
     },
     "grid": [
@@ -47,13 +50,13 @@
                     "y": 0
                 },
                 "part": {
-                    "orientation": 2,
+                    "orientation": 0,
                     "starting_inventory": {
                         "amount": 0,
                         "max_amount": 0,
                         "type": "<null>"
                     },
-                    "type": "Thruster"
+                    "type": "Gun"
                 },
                 "structure": {
                     "connections": [
@@ -289,13 +292,13 @@
                     "y": 1
                 },
                 "part": {
-                    "orientation": 0,
+                    "orientation": 2,
                     "starting_inventory": {
                         "amount": 0,
                         "max_amount": 0,
                         "type": "<null>"
                     },
-                    "type": "Empty"
+                    "type": "Thruster"
                 },
                 "structure": {
                     "connections": [
