@@ -602,8 +602,8 @@ func spawn_bullet(position: Vector2, direction: Vector2, starting_velocity, owne
 	# Add projectile to tree
 	print("Scene Stuatus", get_tree())
 	
-	soft_body.add_child(bullet)
-	
+	get_parent().add_child(bullet)
+
 	#print("Trying to spawn bullet here", bullet.position)
 	var sprite = bullet.get_node("Sprite2D")
 	#print("Sprite modulate: ", sprite.modulate)
