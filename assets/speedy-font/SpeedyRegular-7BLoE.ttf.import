@@ -15,7 +15,6 @@ dest_files=["res://.godot/imported/SpeedyRegular-7BLoE.ttf-b0013d8e12e2fceba95f0
 Rendering=null
 antialiasing=1
 generate_mipmaps=false
-disable_embedded_bitmaps=true
 multichannel_signed_distance_field=false
 msdf_pixel_range=8
 msdf_size=48

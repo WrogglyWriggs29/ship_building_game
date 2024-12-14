@@ -49,7 +49,7 @@ func _draw() -> void:
 func draw_structure_config() -> void:
 	var center = Vector2(width / 2, height / 2)
 	var radius = width / 10
-	draw_circle(center, radius, Color.WHITE_SMOKE, true)
+	draw_circle(center, radius, Color.WHITE_SMOKE)
 
 	for dir in Dir.MAX:
 		var connection_value = editor.read_connection(selected, dir)
@@ -65,7 +65,7 @@ func draw_structure_config() -> void:
 func draw_factory_config() -> void:
 	var center = Vector2(width / 2, height / 2)
 	var radius = width / 10
-	draw_circle(center, radius, Color.WHITE_SMOKE, true)
+	draw_circle(center, radius, Color.WHITE_SMOKE)
 
 	var orientation = editor.read_part_orientation(selected)
 	draw_trait_display_arrow(orientation, Color.CADET_BLUE)

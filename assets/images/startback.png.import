@@ -2,20 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-<<<<<<< Updated upstream
-uid="uid://cqa1bxryhwhw7"
-=======
-uid="uid://dth21s0qybhew"
->>>>>>> Stashed changes
-path="res://.godot/imported/Squish Shooters.png-da04f9dd46ba48cc84cf4216a1fb3a3c.ctex"
+uid="uid://c78pbx24ao30i"
+path="res://.godot/imported/startback.png-4329ab8224babca6cd61ae51bd1a1b6f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/Squish Shooters.png"
-dest_files=["res://.godot/imported/Squish Shooters.png-da04f9dd46ba48cc84cf4216a1fb3a3c.ctex"]
+source_file="res://assets/images/startback.png"
+dest_files=["res://.godot/imported/startback.png-4329ab8224babca6cd61ae51bd1a1b6f.ctex"]
 
 [params]
 
