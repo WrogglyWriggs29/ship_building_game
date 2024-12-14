@@ -9,4 +9,4 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if Playerstate.isend==true:
-		get_tree().change_scene_to_file("res://ship_test_level.tscn")
+		get_tree().change_scene_to_file("res://scenes/squishy_shooter_title.tscn") #("res://ship_test_level.tscn")

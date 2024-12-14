@@ -16,3 +16,7 @@ func _on_play_button_pressed() -> void:
 func _on_build_button_pressed() -> void:
 	print("Buildbutton pressed")
 	SceneManager.goto_ship_designer()
+	
+func _on_tutorial_button_pressed() -> void:
+	print("tutorial pressed")
+	SceneManager.goto_tutorial()

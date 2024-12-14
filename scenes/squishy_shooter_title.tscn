@@ -53,7 +53,7 @@ position = Vector2(-304.464, -223.912)
 scale = Vector2(0.218689, 0.218689)
 texture = ExtResource("5_tn0et")
 
-[node name="Button" type="Button" parent="Background(1)"]
+[node name="Play Button" type="Button" parent="Background(1)"]
 offset_left = -361.522
 offset_top = -72.4397
 offset_right = -248.522
@@ -62,15 +62,23 @@ theme = SubResource("Theme_gm26a")
 theme_override_fonts/font = ExtResource("6_w0s84")
 text = "Play"
 
-[node name="Button2" type="Button" parent="Background(1)"]
+[node name="Build Button" type="Button" parent="Background(1)"]
 offset_left = -400.0
-offset_top = -144.0
+offset_top = -120.0
 offset_right = -219.0
-offset_bottom = -108.0
+offset_bottom = -84.0
 theme = SubResource("Theme_gm26a")
 theme_override_fonts/font = ExtResource("6_w0s84")
 text = "Edit and Build
 "
 
-[connection signal="pressed" from="Background(1)/Button" to="." method="_on_play_button_pressed"]
-[connection signal="pressed" from="Background(1)/Button2" to="." method="_on_build_button_pressed"]
+[node name="Tutorial Button" type="Button" parent="Background(1)"]
+offset_left = -340.0
+offset_top = -20.0
+offset_right = -271.0
+offset_bottom = 11.0
+text = "Tutorial"
+
+[connection signal="pressed" from="Background(1)/Play Button" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="Background(1)/Build Button" to="." method="_on_build_button_pressed"]
+[connection signal="pressed" from="Background(1)/Tutorial Button" to="." method="_on_tutorial_button_pressed"]
