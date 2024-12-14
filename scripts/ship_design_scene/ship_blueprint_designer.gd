@@ -267,9 +267,9 @@ func click_on_self(pos: Vector2) -> void:
 	elif on_test_button:
 		test_button.click()
 
-		
 	elif on_binder:
-		binder.click_at(pos - binder.position)
+		#binder.click_at(pos - binder.position)
+		return
 
 func is_on_grid(pos: Vector2) -> bool:
 	return Rect2(grid.position, Vector2(grid.width, grid.height)).has_point(pos)
