@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://dcie75mdih5k3"]
+
+[ext_resource type="Script" path="res://scripts/ship_combat_scene/ship_combat_scene.gd" id="1_5cy5o"]
+
+[node name="ShipCombatScene" type="Node2D"]
+script = ExtResource("1_5cy5o")
+
+[node name="LoadDialog1" type="FileDialog" parent="."]
+auto_translate_mode = 1
+title = "Open a File"
+size = Vector2i(500, 400)
+ok_button_text = "Open"
+file_mode = 0
+
+[node name="LoadDialog2" type="FileDialog" parent="."]
+auto_translate_mode = 1
+title = "Open a File"
+size = Vector2i(500, 400)
+ok_button_text = "Open"
+file_mode = 0

@@ -83,4 +83,12 @@ func load_ship_grid_from_json(file_path: String) -> ShipGridBlueprint:
 		matrix.append(row)
 
 	# Return the populated ShipGridBlueprint
-	return ShipGridBlueprint.new(matrix)
+	var bp = ShipGridBlueprint.new(matrix)
+	var json = JSON.new()
+	var acts = json_data["actions"]
+	if acts is Dictionary:
+		for key in acts:
+			var value = acts[key]
+			for i in value.size():
+				value[i] = json.parse(value[i])
+	return bp

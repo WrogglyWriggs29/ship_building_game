@@ -64,15 +64,15 @@ func _physics_process(_delta: float) -> void:
 						collision[i] = collision[i] + planet.global_position
 					grid.collide(collision)
 	
-	for i in ship.grids.size():
-		var grid = ship.grids[i]
-		for j in ship.grids.size():
-			if i == j:
-				continue
-			var other = ship.grids[j]
-			if ShipGrid.CollisionPolygon.may_collide(grid.collider, other.collider):
-				grid.collide_grid(other.collider.get_polygon())
-				other.collide_grid(grid.collider.get_polygon())
+	#for i in ship.grids.size():
+		#var grid = ship.grids[i]
+		#for j in ship.grids.size():
+			#if i == j:
+			#	continue
+			#var other = ship.grids[j]
+			#if ShipGrid.CollisionPolygon.may_collide(grid.collider, other.collider):
+				#grid.collide_grid(other.collider.get_polygon())
+				#other.collide_grid(grid.collider.get_polygon())
 
 func _spread_meteors() -> void:
 	var ctn := $Meteors

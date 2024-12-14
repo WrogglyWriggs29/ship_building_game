@@ -6,10 +6,13 @@ func save_ship_grid_to_json(ship_grid: ShipGridBlueprint, file_path: String) -> 
 		file_path = "user://ShipBlueprint.json"
 
 	var json_data = {
+		"actions": {},
 		"width": ship_grid.matrix.width,
 		"height": ship_grid.matrix.height,
 		"grid": []
 	}
+
+
 	for y in range(ship_grid.matrix.height):
 		var row_data = []
 		for x in range(ship_grid.matrix.width):
@@ -35,9 +38,15 @@ func save_ship_grid_to_json(ship_grid: ShipGridBlueprint, file_path: String) -> 
 			})
 		json_data["grid"].append(row_data)
 		
+	for key in ship_grid.actions:
+		json_data["actions"][key] = [] # key, ship_grid.actions[key])
+		for index in ship_grid.actions[key]:
+			json_data["actions"][key].push_back(JSON.stringify(index))
+
 	var file = FileAccess.open(file_path, FileAccess.WRITE)
 	if file != null:
 		json_data = JSON.stringify(json_data, "    ")
+
 		# json_data = json.stringify(json_data)
 		file.store_string((json_data))
 		file.close()
