@@ -31,6 +31,20 @@ func _draw() -> void:
 func manual_physics_process() -> void:
 	for i in grids.size():
 		var grid = grids[i]
+		var new_bullets: Array[Bullet] = []
+		for bullet in grid.bullets:
+			if not bullet.is_dead():
+				new_bullets.push_back(bullet)
+			else:
+				bullet.queue_free()
+
+		grid.bullets = new_bullets
+
+		for j in grid.bullets.size():
+			var bullet = grid.bullets[j]
+			bullet.manual_physics_process()
+		
+
 		var dc: Array[DisconnectionEvent] = grid.manual_physics_process()
 		var already_done = {}
 		for event in dc:

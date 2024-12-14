@@ -68,6 +68,7 @@ class CollisionPolygon:
 
 var soft_body: GridSoftBody
 var factory: GridFactory
+var bullets: Array[Bullet] = []
 
 var width: int
 var height: int
@@ -112,12 +113,15 @@ func manual_physics_process() -> Array[DisconnectionEvent]:
 			var optional_part = factory.modules.at(x, y)
 			if optional_part.exists:
 				var part = optional_part.part
-				if part.action_is_on:
+				part.decrement_cooldown()
+				if part.action_is_on and part.can_act():
 					match part.type:
 						GridFactory.FactoryPartState.Type.THRUSTER:
 							apply_thruster_force(part, Vector2i(x, y))
+							part.act()
 						GridFactory.FactoryPartState.Type.GUN:
 							apply_gun_action(part, Vector2i(x, y))
+							part.act()
 
 	var dc: Array[DisconnectionEvent] = soft_body.manual_physics_process()
 
@@ -594,22 +598,9 @@ func apply_force(_force: Vector2, _index: Vector2i) -> void:
 	soft_body.apply_force(_force, _index)
 
 func spawn_bullet(position: Vector2, direction: Vector2, starting_velocity, owner_player: Player) -> void:
-	var bullet = preload("res://scenes/projectile/projectile.tscn").instantiate()
-	bullet.global_position = position
-	bullet.rotation = direction.angle()
-	bullet.owner_player = owner_player
-	bullet.velocity = starting_velocity
-	# Add projectile to tree
-	print("Scene Stuatus", get_tree())
-	
-	get_parent().add_child(bullet)
-
-	#print("Trying to spawn bullet here", bullet.position)
-	var sprite = bullet.get_node("Sprite2D")
-	#print("Sprite modulate: ", sprite.modulate)
-	#print("Sprite visible: ", sprite.visible)
-	#print("Sprite scale: ", sprite.scale)
-	#print("Sprite texture: ", sprite.texture)
+	var bullet = Bullet.new(position, starting_velocity, direction)
+	add_child(bullet)
+	bullets.push_back(bullet)
 	
 func get_position_sum() -> Array:
 	var modules = soft_body.modules

@@ -2,15 +2,15 @@ class_name Player
 extends CharacterBody2D
 
 
-@export var input_mapping:InputMapping = preload("res://data/input_mappings/p1.tres")
+@export var input_mapping: InputMapping = preload("res://data/input_mappings/p1.tres")
 @export var speed := 300.0
 @export var acceleration := 600.0
 @export var shoot_interval := 1.0
 @export var max_hp := 100.0
-@export var projectile_scene: PackedScene = preload("res://scenes/projectile/projectile.tscn")
+#@export var projectile_scene: PackedScene = preload("res://scenes/projectile/projectile.tscn")
 
 
-@onready var _shoot_pos : Marker2D = %ShootPos
+@onready var _shoot_pos: Marker2D = %ShootPos
 
 var hp := max_hp
 var _shoot_cooldown_timer := -1.0
@@ -47,12 +47,13 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func fire() -> void:
-	var bullet := projectile_scene.instantiate() as Node2D
-	get_parent().add_child(bullet)
-	bullet.global_transform = _shoot_pos.global_transform
-	AudioManager.player_sfx("res://Audio/Gun/space laser.wav")
-	_shoot_cooldown_timer = shoot_interval
-	bullet.owner_player = self
+	pass
+#	var bullet := projectile_scene.instantiate() as Node2D
+#	get_parent().add_child(bullet)
+#	bullet.global_transform = _shoot_pos.global_transform
+#	AudioManager.player_sfx("res://Audio/Gun/space laser.wav")
+#	_shoot_cooldown_timer = shoot_interval
+#	bullet.owner_player = self
 
 
 func take_damage(damage: float) -> void:

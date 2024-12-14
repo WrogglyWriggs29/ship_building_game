@@ -10,7 +10,18 @@ class FactoryPartState extends Node:
 	var inventory: Inventory
 	var type: Type
 	var orientation: int
-	var action_is_on: bool
+	var action_is_on: bool = false
+	var action_cooldown_max: int = 0
+	var action_cooldown: int = 0
+	
+	func decrement_cooldown() -> void:
+		action_cooldown = max(0, action_cooldown - 1)
+	
+	func can_act() -> bool:
+		return action_cooldown == 0
+	
+	func act() -> void:
+		action_cooldown = action_cooldown_max
 	
 class OptionalPart extends Node:
 	var exists: bool

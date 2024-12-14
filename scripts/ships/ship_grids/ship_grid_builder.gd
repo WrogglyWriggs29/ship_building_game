@@ -83,6 +83,11 @@ static func build(bp: ShipGridBlueprint, offset: Vector2, scale: float) -> ShipG
 				part.type = pair.part.type
 				part.orientation = pair.part.orientation
 				part.inventory = pair.part.starting_inventory
+				match part.type:
+					GridFactory.FactoryPartState.Type.THRUSTER:
+						part.action_cooldown_max = 0
+					GridFactory.FactoryPartState.Type.GUN:
+						part.action_cooldown_max = 20
 				factory_state_row.push_back(part)
 
 
