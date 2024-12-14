@@ -4,39 +4,35 @@ extends Node2D
 var ship1
 var ship2
 
-var cont1: SubViewportContainer
-var viewport1: SubViewport
-var cam1: ShipCamera
-var cont2: SubViewportContainer
-var viewport2: SubViewport
-var cam2: ShipCamera
+var cam1
+var cam2
+
+var not_setup = true
+@onready var vp1 = $"SplitScreen/SubViewportContainer1/SubViewportP1"
+@onready var vp2 = $"SplitScreen/SubViewportContainer2/SubViewportP2"
 
 func _ready() -> void:
-	var dims = get_viewport().size
+	pass
 
-	cont1 = SubViewportContainer.new()
-	cont1.position = Vector2(0, 0)
-	cont1.size = Vector2(dims.x / 2, dims.y)
-	add_child(cont1)
-	viewport1 = SubViewport.new()
-	cont1.add_child(viewport1)
-	cam1 = ShipCamera.new(ship1)
-	viewport1.add_child(cam1)
+func _process(_delta: float) -> void:
+	if ship1 == null or ship2 == null:
+		return
+	elif not_setup:
+		vp1.add_child(ship1)
+		vp1.add_child(ship2)
 
-	viewport1.add_child(ship1)
+		cam1 = ShipCamera.new(ship1)
+		vp1.add_child(cam1)
+		cam1.make_current()
+		cam2 = ShipCamera.new(ship2)
+		vp2.add_child(cam2)
+		cam2.make_current()
 
-	cont2 = SubViewportContainer.new()
-	cont2.position = Vector2(dims.x / 2, 0)
-	cont2.size = Vector2(dims.x / 2, dims.y)
-	add_child(cont2)
-	viewport2 = SubViewport.new()
-	cont2.add_child(viewport2)
-	cam2 = ShipCamera.new(ship2)
-	viewport2.add_child(cam2)
-
-	viewport2.add_child(ship2)
+		vp2.world_2d = vp1.world_2d
+		not_setup = false
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
+	assert(ship1 != null and ship2 != null, "This scene should be entered from ShipCombatScene")
 	ship1.manual_physics_process()
 	ship2.manual_physics_process()

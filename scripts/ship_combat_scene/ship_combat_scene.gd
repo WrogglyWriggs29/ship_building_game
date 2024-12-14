@@ -40,6 +40,10 @@ func _process(_delta: float) -> void:
 	
 	change_to_fight()
 
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_cancel"):
+		SceneStack.return_scene()
+
 func change_to_fight() -> void:
 	var current: Node = get_tree().current_scene
 	SceneStack.store(current)
@@ -104,10 +108,6 @@ func load_blueprint(file_path: String) -> ShipGridBlueprint:
 	print("Blueprint loaded successfully.")
 
 	return loaded_blueprint
-
-func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_cancel"):
-		SceneStack.return_scene()
 
 func _physics_process(_delta: float) -> void:
 	pass

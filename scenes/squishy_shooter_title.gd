@@ -11,7 +11,8 @@ func _ready():
 
 
 func _on_play_button_pressed() -> void:
-	print("button pressed for play") # Replace with function body.
+	print("Play button pressed") # Replace with function body.
+	SceneManager.goto_combat_prep()
 	
 func _on_build_button_pressed() -> void:
 	print("Buildbutton pressed")

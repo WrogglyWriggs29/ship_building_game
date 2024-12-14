@@ -25,7 +25,7 @@ stretch = true
 
 [node name="SubViewportP1" type="SubViewport" parent="SplitScreen/SubViewportContainer"]
 handle_input_locally = false
-size = Vector2i(2, 2)
+size = Vector2i(575, 648)
 render_target_update_mode = 4
 
 [node name="Level" parent="SplitScreen/SubViewportContainer/SubViewportP1" instance=ExtResource("2_a4pij")]
@@ -62,7 +62,7 @@ stretch = true
 
 [node name="SubViewportP2" type="SubViewport" parent="SplitScreen/SubViewportContainer2"]
 handle_input_locally = false
-size = Vector2i(2, 2)
+size = Vector2i(575, 648)
 render_target_update_mode = 4
 
 [node name="Camera2" type="Camera2D" parent="SplitScreen/SubViewportContainer2/SubViewportP2"]

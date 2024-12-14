@@ -3,9 +3,15 @@ extends Node
 # Store scene paths
 const SHIP_DESIGNER_SCENE = "res://ship_blueprint_designer.tscn"
 const TUTORIAL_SCENE = "res://scenes/start.tscn"
+const PREP_SCENE = "res://ship_combat_scene.tscn"
+
 
 #const BLUEPRINT_SELECTION_SCENE = "res://scenes/blueprint_selection.tscn"
 #const BATTLE_SCENE = "res://scenes/battle_scene.tscn"
+
+func goto_combat_prep() -> void:
+	var combat_prep = load(PREP_SCENE).instantiate()
+	_switch_scene(combat_prep)
 
 func goto_tutorial() -> void:
 	var tutorial = load(TUTORIAL_SCENE).instantiate()

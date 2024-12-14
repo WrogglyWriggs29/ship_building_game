@@ -12,6 +12,8 @@ func _init(_grids: Array[ShipGrid], _actions) -> void:
 func _ready() -> void:
 	for grid in grids:
 		add_child(grid)
+		grid.soft_body.modules.add_modules_as_children_to(get_parent())
+		add_sibling(grid.soft_body)
 		
 	add_module_sprites()
 

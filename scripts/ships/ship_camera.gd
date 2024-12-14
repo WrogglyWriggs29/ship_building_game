@@ -1,12 +1,12 @@
 class_name ShipCamera
 extends Camera2D
 
-@export var ship: Ship
+@export var ship: Ship = null
 
 const LEASH: float = 200
 const SPEED: float = 150
 
-func _init(_ship: Ship) -> void:
+func _init(_ship: Ship = null) -> void:
 	ship = _ship
 
 func _input(event: InputEvent) -> void:
@@ -32,6 +32,9 @@ func _process(delta: float) -> void:
 			position = new_position
 		else:
 			position = position + dir_to * SPEED * delta
+
+func assign_ship(_ship: Ship) -> void:
+	ship = _ship
 
 func dir(a: Vector2, b: Vector2) -> Vector2:
 	return (b - a).normalized()

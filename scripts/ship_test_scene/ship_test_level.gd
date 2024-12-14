@@ -27,8 +27,8 @@ var dragger: UserVelocityApplicator
 @onready var _map_shape := $MapShape as CollisionShape2D
 
 func _ready() -> void:
-	ship.grids[0].soft_body.modules.add_modules_as_children_to(get_parent())
-	add_child(ship.grids[0].soft_body)
+	#ship.grids[0].soft_body.modules.add_modules_as_children_to(get_parent())
+	#add_child(ship.grids[0].soft_body)
 	add_child(ship)
 
 	ship_camera = ShipCamera.new(ship)
