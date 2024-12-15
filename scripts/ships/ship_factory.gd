@@ -53,8 +53,8 @@ func validate(bp: ShipGridBlueprint) -> String:
 
 	return ""
 
-func from_grid(bp: ShipGridBlueprint) -> Ship:
-	var grid = ShipGridBuilder.build(bp, OFFSET, SCALE)
+func from_grid(bp: ShipGridBlueprint, offset = Vector2.ZERO) -> Ship:
+	var grid = ShipGridBuilder.build(bp, offset, SCALE)
 
 	grid.name = "ship grid 0 from " + bp.name
 

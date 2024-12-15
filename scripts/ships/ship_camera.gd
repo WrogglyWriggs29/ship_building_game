@@ -8,6 +8,7 @@ const SPEED: float = 150
 
 func _init(_ship: Ship = null) -> void:
 	ship = _ship
+	zoom = Vector2(1.0 / 1.1, 1.0 / 1.1)
 
 func _input(event: InputEvent) -> void:
 	# zoom in and out with the mouse wheel

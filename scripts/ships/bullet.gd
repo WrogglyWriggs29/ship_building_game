@@ -1,7 +1,8 @@
 class_name Bullet
 extends Node2D
 
-const FIRE_SPEED: float = 3.0
+const FIRE_SPEED: float = 4.0
+const mass = 4.0
 
 @export var lifetime: int = 400
 var age: int = 0

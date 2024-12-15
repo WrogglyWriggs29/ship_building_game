@@ -23,6 +23,11 @@ shader_parameter/iterations = 6
 
 [node name="Node" type="Node2D"]
 script = ExtResource("1_c16qo")
+base_zoom = null
+max_zoom = null
+min_zoom = null
+zoom_distance_scale = null
+camera_lerp_speed = null
 
 [node name="MapShape" type="CollisionShape2D" parent="."]
 visible = false

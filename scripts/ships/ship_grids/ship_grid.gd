@@ -61,10 +61,25 @@ class CollisionPolygon:
 		
 		return _max_radius
 	
+	func may_collide_point(point: Vector2) -> bool:
+		var dist = centroid.distance_to(point)
+		return dist < max_radius
+	
+	func closest_shared(pos: Vector2) -> SharedVector:
+		var closest = boundary[0]
+		var closest_dist = closest.value.distance_to(pos)
+		for shared in boundary:
+			var dist = shared.value.distance_to(pos)
+			if dist < closest_dist:
+				closest = shared
+				closest_dist = dist
+		return closest
+	
 	static func may_collide(a: CollisionPolygon, b: CollisionPolygon) -> bool:
 		var dist = a.centroid.distance_to(b.centroid)
 		var max_dist = a.max_radius + b.max_radius
 		return dist < max_dist
+	
 
 var soft_body: GridSoftBody
 var factory: GridFactory

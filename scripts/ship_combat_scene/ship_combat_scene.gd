@@ -46,7 +46,7 @@ func _input(event: InputEvent) -> void:
 
 func change_to_fight() -> void:
 	var current: Node = get_tree().current_scene
-	SceneStack.store(current)
+	#SceneStack.store(current)
 
 	var fight_scene_packed: PackedScene = ResourceLoader.load(FIGHT_SCENE_FILE)
 	var fight_scene: Node = fight_scene_packed.instantiate()
@@ -91,7 +91,7 @@ func on_load_dia2_file_selected(path: String) -> void:
 		print("invalid blueprint: ", err)
 		return
 
-	var ship = factory.from_grid(bp)
+	var ship = factory.from_grid(bp, Vector2(300, 0))
 	ship2 = ship
 
 	load2_button.visible = false
