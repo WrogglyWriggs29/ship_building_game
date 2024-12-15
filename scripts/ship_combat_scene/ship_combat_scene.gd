@@ -15,13 +15,13 @@ var ship1: Ship = null
 var ship2: Ship = null
 
 func _ready() -> void:
-	load1_button.text = "Load"
+	load1_button.text = "Load P1"
 	load1_button.position = Vector2(30, 30)
 	load1_button.size = Vector2(100, 100)
 	load1_button.connect("pressed", Callable(self, "_on_load_button1_pressed"))
 	add_child(load1_button)
 
-	load2_button.text = "Load"
+	load2_button.text = "Load P2"
 	load2_button.position = Vector2(30, 130)
 	load2_button.size = Vector2(100, 100)
 	load2_button.connect("pressed", Callable(self, "_on_load_button2_pressed"))
@@ -30,14 +30,14 @@ func _ready() -> void:
 	load_dia1.connect("file_selected", Callable(self, "on_load_dia1_file_selected"))
 	load_dia2.connect("file_selected", Callable(self, "on_load_dia2_file_selected"))
 
-	load_dia1.current_dir = "res://"
-	load_dia2.current_dir = "res://"
+	load_dia1.current_dir = "res://user_blueprints"
+	load_dia2.current_dir = "res://user_blueprints"
 
 	load_dia1.visible = false
 	load_dia2.visible = false
 
-	if OS.get_name() == "Web":
-		load_defaults()
+	#if OS.get_name() == "Web":
+	#	load_defaults()
 
 func _process(_delta: float) -> void:
 	if ship1 == null || ship2 == null:

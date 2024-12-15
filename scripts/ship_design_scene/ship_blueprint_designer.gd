@@ -139,11 +139,11 @@ func _ready() -> void:
 	add_child(load_button)
 	
 	# Save Dialog configuration
-	load_dialog.current_dir = "res://"
-	load_dialog.visible = false
+	save_dialog.current_dir = "res://user_blueprints"
+	save_dialog.visible = false
 	
 	# Load Dialog configuration
-	load_dialog.current_dir = "res://"
+	load_dialog.current_dir = "res://user_blueprints"
 	load_dialog.visible = false
 
 func _process(_delta: float) -> void:
