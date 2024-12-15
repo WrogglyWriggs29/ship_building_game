@@ -11,7 +11,7 @@
 [https://docs.google.com/document/d/1gh0JiFi8XdOLrk2RTWnkMNiu0LnVpCPqKzEZdIWUy9E/edit?tab=t.0\#heading=h.i3tv2mxf7h7z](https://docs.google.com/document/d/1gh0JiFi8XdOLrk2RTWnkMNiu0LnVpCPqKzEZdIWUy9E/edit?tab=t.0#heading=h.i3tv2mxf7h7z)  
 **Progress Report**: [https://docs.google.com/document/d/1ykR4eWkXBu2gq9-\_zVIGGPoT24LsIhbJf\_svYaUdKJI/edit?tab=t.0](https://docs.google.com/document/d/1ykR4eWkXBu2gq9-_zVIGGPoT24LsIhbJf_svYaUdKJI/edit?tab=t.0)  
 **Trailer:**
-[https://www.youtube.com/watch?v=H4hevFfMShA](Squishy_Shooters.mov)
+[https://www.youtube.com/watch?v=H4hevFfMShA](https://www.youtube.com/watch?v=H4hevFfMShA)
 
 
 **Press Kit:**  
