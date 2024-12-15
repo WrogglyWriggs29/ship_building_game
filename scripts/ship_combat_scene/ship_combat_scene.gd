@@ -2,6 +2,8 @@ class_name ShipCombatScene
 extends Node2D
 
 const FIGHT_SCENE_FILE = "res://scripts/ship_combat_scene/ship_fight_scene.tscn"
+const P1_DEFAULT = "res://default_p1.json"
+const P2_DEFAULT = "res://default_p2.json"
 
 @onready var load_dia1 = $LoadDialog1
 @onready var load_dia2 = $LoadDialog2
@@ -34,6 +36,9 @@ func _ready() -> void:
 	load_dia1.visible = false
 	load_dia2.visible = false
 
+	if OS.get_name() == "Web":
+		load_defaults()
+
 func _process(_delta: float) -> void:
 	if ship1 == null || ship2 == null:
 		return
@@ -43,6 +48,23 @@ func _process(_delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
 		SceneStack.return_scene()
+
+func load_defaults() -> void:
+	var bp1: ShipGridBlueprint = load_blueprint(P1_DEFAULT)
+	var bp2: ShipGridBlueprint = load_blueprint(P2_DEFAULT)
+
+	var factory = ShipFactory.new()
+	var err = factory.validate(bp1)
+	if err != "":
+		print("invalid blueprint: ", err)
+		return
+	err = factory.validate(bp2)
+	if err != "":
+		print("invalid blueprint: ", err)
+		return
+	
+	ship1 = factory.from_grid(bp1, Vector2(-300, 0))
+	ship2 = factory.from_grid(bp2, Vector2(300, 0))
 
 func change_to_fight() -> void:
 	var current: Node = get_tree().current_scene

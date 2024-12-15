@@ -87,7 +87,7 @@ static func build(bp: ShipGridBlueprint, offset: Vector2, scale: float) -> ShipG
 					GridFactory.FactoryPartState.Type.THRUSTER:
 						part.action_cooldown_max = 0
 					GridFactory.FactoryPartState.Type.GUN:
-						part.action_cooldown_max = 20
+						part.action_cooldown_max = 50
 				factory_state_row.push_back(part)
 
 

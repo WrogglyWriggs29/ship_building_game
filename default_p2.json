@@ -5,25 +5,30 @@
         "68": [],
         "83": [],
         "87": [],
-        "4194309": [
-            "(0, 1)",
-            "(3, 1)"
-        ],
+        "4194309": [],
         "4194319": [
             "(1, 3)",
-            "(2, 0)"
+            "(1, 2)",
+            "(2, 0)",
+            "(0, 2)"
         ],
         "4194320": [
-            "(1, 2)",
-            "(2, 2)"
+            "(0, 3)",
+            "(3, 3)"
         ],
         "4194321": [
             "(2, 3)",
-            "(1, 0)"
+            "(2, 2)",
+            "(1, 0)",
+            "(3, 2)"
         ],
         "4194322": [
             "(1, 1)",
             "(2, 1)"
+        ],
+        "4194325": [
+            "(0, 1)",
+            "(3, 1)"
         ]
     },
     "grid": [
@@ -518,19 +523,19 @@
                     "y": 2
                 },
                 "part": {
-                    "orientation": 0,
+                    "orientation": 2,
                     "starting_inventory": {
                         "amount": 0,
                         "max_amount": 0,
                         "type": "<null>"
                     },
-                    "type": "Empty"
+                    "type": "Thruster"
                 },
                 "structure": {
                     "connections": [
                         true,
                         true,
-                        false,
+                        true,
                         false
                     ],
                     "type": "Debug"
@@ -542,7 +547,7 @@
                     "y": 2
                 },
                 "part": {
-                    "orientation": 0,
+                    "orientation": 1,
                     "starting_inventory": {
                         "amount": 0,
                         "max_amount": 0,
@@ -554,7 +559,7 @@
                     "connections": [
                         true,
                         true,
-                        true,
+                        false,
                         true
                     ],
                     "type": "Debug"
@@ -566,7 +571,7 @@
                     "y": 2
                 },
                 "part": {
-                    "orientation": 0,
+                    "orientation": 3,
                     "starting_inventory": {
                         "amount": 0,
                         "max_amount": 0,
@@ -578,7 +583,7 @@
                     "connections": [
                         true,
                         true,
-                        true,
+                        false,
                         true
                     ],
                     "type": "Debug"
@@ -590,19 +595,19 @@
                     "y": 2
                 },
                 "part": {
-                    "orientation": 0,
+                    "orientation": 2,
                     "starting_inventory": {
                         "amount": 0,
                         "max_amount": 0,
                         "type": "<null>"
                     },
-                    "type": "Empty"
+                    "type": "Thruster"
                 },
                 "structure": {
                     "connections": [
                         true,
                         false,
-                        false,
+                        true,
                         true
                     ],
                     "type": "Debug"
@@ -766,16 +771,16 @@
                         "max_amount": 0,
                         "type": "<null>"
                     },
-                    "type": "Empty"
+                    "type": "Thruster"
                 },
                 "structure": {
                     "connections": [
-                        false,
+                        true,
                         false,
                         false,
                         false
                     ],
-                    "type": "Empty"
+                    "type": "Debug"
                 }
             },
             {
@@ -790,16 +795,16 @@
                         "max_amount": 0,
                         "type": "<null>"
                     },
-                    "type": "Thruster"
+                    "type": "Empty"
                 },
                 "structure": {
                     "connections": [
-                        true,
-                        true,
+                        false,
+                        false,
                         false,
                         false
                     ],
-                    "type": "Debug"
+                    "type": "Empty"
                 }
             },
             {
@@ -814,16 +819,16 @@
                         "max_amount": 0,
                         "type": "<null>"
                     },
-                    "type": "Thruster"
+                    "type": "Empty"
                 },
                 "structure": {
                     "connections": [
-                        true,
                         false,
                         false,
-                        true
+                        false,
+                        false
                     ],
-                    "type": "Debug"
+                    "type": "Empty"
                 }
             },
             {
@@ -838,16 +843,16 @@
                         "max_amount": 0,
                         "type": "<null>"
                     },
-                    "type": "Empty"
+                    "type": "Thruster"
                 },
                 "structure": {
                     "connections": [
-                        false,
+                        true,
                         false,
                         false,
                         false
                     ],
-                    "type": "Empty"
+                    "type": "Debug"
                 }
             },
             {

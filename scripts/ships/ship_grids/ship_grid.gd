@@ -84,6 +84,7 @@ class CollisionPolygon:
 var soft_body: GridSoftBody
 var factory: GridFactory
 var bullets: Array[Bullet] = []
+var sprites_by_module = {}
 
 var width: int
 var height: int
@@ -101,6 +102,8 @@ func _init(modules: ModuleMatrix, connections: ConnectionMatrix, starting_factor
 	factory = GridFactory.new(starting_factory_state)
 	collider = CollisionPolygon.new([])
 
+func _ready() -> void:
+	add_module_sprites()
 
 func _process(_delta: float) -> void:
 	queue_redraw()
@@ -117,7 +120,8 @@ func _draw() -> void:
 			draw_line(to_draw[i - 1].value, to_draw[i].value, Color.INDIAN_RED)
 		draw_line(to_draw[to_draw.size() - 1].value, to_draw[0].value, Color.INDIAN_RED)
 
-	draw_polyline(boundary_poly, Color.INDIAN_RED, 3)
+	if boundary_poly.size() > 1:
+		draw_polyline(boundary_poly, Color.INDIAN_RED, 3)
 
 	for point in debug_draw_colliding:
 		draw_circle(point, 5.0, Color.RED)
@@ -207,8 +211,6 @@ func find_bounding() -> Array[SharedVector]:
 	return to_draw
 
 func recurse_find_bounding(cur_mod: Vector2i, prefer_dir: int, level: int, stop_cond: ModuleCorner, to_draw: Array[SharedVector]) -> void:
-	#if level > 2:
-	#	return
 	# think of prefer_dir as up for convenience
 	# in reality, it's just the direction ccw of where we came from
 	assert(soft_body.modules.at_index(cur_mod).exists, "Module does not exist, and this shouldn't happen.")
@@ -660,3 +662,78 @@ func is_gun(index: Vector2i) -> bool:
 		if optional_part.exists:
 			return optional_part.part.type == GridFactory.FactoryPartState.Type.GUN
 	return false
+
+func add_module_sprites() -> void:
+	for x in soft_body.modules.height:
+		for y in soft_body.modules.width:
+			var module_index = Vector2i(x, y)
+			if not soft_body.modules.in_range(module_index):
+				continue
+
+			var optional_module = soft_body.modules.at(x, y)
+			if optional_module.exists:
+				var module = optional_module.module
+				var position = module.phys_position
+				var scale = Vector2(1.5, 1.5)
+				var orientation = factory.modules.at(x, y).part.orientation
+				var rotation = module.phys_rotation.get_value() # - rotation
+				var combined_rotation = rotation + Dir.to_angle(orientation)
+				if is_thruster(Vector2i(x, y)):
+					# Add sprite for thruster
+					var thruster_sprite = Sprite2D.new()
+					thruster_sprite.texture = preload("res://assets/images/thrusters.png")
+					thruster_sprite.position = position
+					thruster_sprite.scale = scale
+					thruster_sprite.rotation = combined_rotation
+					add_child(thruster_sprite)
+					sprites_by_module[module_index] = thruster_sprite
+				elif is_gun(Vector2i(x, y)):
+					# Add sprite for gun
+					var gun_sprite = Sprite2D.new()
+					gun_sprite.texture = preload("res://assets/images/gun.png")
+					gun_sprite.position = position
+					gun_sprite.scale = scale
+					gun_sprite.rotation = combined_rotation
+					add_child(gun_sprite)
+					sprites_by_module[module_index] = gun_sprite
+					
+
+func update_sprites() -> void:
+	for module_index in sprites_by_module.keys():
+		# Retrieve the sprite and corresponding module
+		var sprite = sprites_by_module[module_index]
+		#var grid = grids[0] # Adjust if you have multiple grids
+		if not soft_body.modules.in_range(module_index):
+			continue
+		var optional_module = soft_body.modules.at(module_index.x, module_index.y)
+		var optional_part = factory.modules.at(module_index.x, module_index.y)
+		
+		if optional_module.exists and optional_part.exists:
+			var module = optional_module.module
+			var part = optional_part.part
+
+			# don't ask me why this works
+			var orientation_angle = Dir.to_angle(Dir._clockwise_dirs[Dir.reverse(part.orientation)])
+			var desired_angle = -module.phys_rotation.get_norm().value - orientation_angle
+			var vec = Vector2.RIGHT.rotated(desired_angle)
+			var angle = -vec.angle_to(Vector2.RIGHT)
+			angle += PI
+
+			var action_on = part.action_is_on
+
+			sprite.position = module.global_position
+			sprite.rotation = angle
+
+			match part.type:
+				GridFactory.FactoryPartState.Type.GUN:
+					match action_on:
+						true:
+							sprite.texture = preload("res://assets/images/gun_fired.png")
+						false:
+							sprite.texture = preload("res://assets/images/gun.png")
+				GridFactory.FactoryPartState.Type.THRUSTER:
+					match action_on:
+						true:
+							sprite.texture = preload("res://assets/images/thrusters_fired.png")
+						false:
+							sprite.texture = preload("res://assets/images/thrusters.png")

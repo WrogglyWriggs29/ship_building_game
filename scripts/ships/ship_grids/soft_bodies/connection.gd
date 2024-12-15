@@ -30,10 +30,10 @@ func _init(_type, _dzl, _kl, _bfl, _dza, _ka, _bta) -> void:
 
 static func basic_spring(scale) -> Connection:
     var dzl = 0.0
-    var kl = 8.0
-    var bf = 100.0
+    var kl = 9.0
+    var bf = 170.0
 
     var dza = 0.0
     var ka = 6000.0
-    var bt = 3000.0
+    var bt = 4500.0
     return Connection.new(Type.BASIC_SPRING, dzl, kl, bf, dza, ka, bt)

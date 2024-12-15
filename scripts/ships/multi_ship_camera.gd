@@ -67,7 +67,7 @@ func large_enough(grid: ShipGrid) -> bool:
 	var w = grid.width
 	var h = grid.height
 
-	if w + h <= 2:
+	if w + h <= 4:
 		return false
 	
 	return true
