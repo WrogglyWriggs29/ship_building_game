@@ -117,7 +117,7 @@ Isabel: Created the gist of the UI elements and graphics seen throughout the men
 Created an outer space like themed map to fit the theme of the game. This includes things like the planets and asteroids which can be collided with.
 
 
-#### Combat  (Sam Herring), (Calvin Yee), (Harshana Somas)
+#### Combat  (Sam Herring), (Calvin Yee), (Harshana Somas), (Qixiang Fan)
 
 
 Early into the game development process, Qixiang made a 2-player demo scene that allowed for split screen control, shared keybindings, and dynamic camera updates \- all components which we wanted to implement in the final version of the combat. Due to some limitations with the ship complexity, our final iteration was unable to capture all of these elements, specifically the split-screen mechanic, and we opted for a slightly easier shared-screen combat system with a single dynamic camera. In other areas, such as the combat and movement, we applied a much more complex system of mechanics via forces acting on the soft-body sim as opposed to a flat damage-health interaction.
@@ -136,9 +136,13 @@ Calvin/Sam: Wrote the final script for our combat scene, with Sam utilizing Hars
 Sound effect:
 
 [Module selection Click](https://opengameart.org/content/16-button-clicks) - Free for non commercial use
+
 [Menu Selection Click](https://opengameart.org/content/menu-selection-click) - Free for non commercial use
+
 [Imapct](https://opengameart.org/content/2-high-quality-explosions) - Free for non commercial use
+
 [Projectile](https://opengameart.org/content/4-projectile-launches) - Free for non commercial use
+
 [Gun Sound Effects](https://opengameart.org/content/space-laser) - Free for non commercial use  
 
 The background music comes from an anime OST I like so much:  
@@ -176,7 +180,7 @@ Some of the parts of the game developed by the team were not able to be incorpor
 
 
 
-Qixiang Fan - Initial Combat Scene  
+Qixiang Fan - Initial Combat Scene
 When designing combat scenes, I tried to balance the two-player control and the gameplay experience. I create two [input mapping](/data/input\_mappings) scripts to manage two-player control.   
 https://github.com/user-attachments/assets/73ba99bc-4d00-43b2-b63e-dde833e5793a  
 My [movement system](/scenes/player/player.gd) allows two people to control two ships to move and fire projectiles to cause damage. I created a split-screen display mode, using separate viewports and cameras for each player to ensure that the experience of any player is not affected by the limitations of the shared camera. This design also solves the challenge of playing two players simultaneously on a single screen. I also set up two control systems and keyboard bindings. Player 1 controls ship 1 through wasd and uses the space key to fire projectiles. Player 2 controls ship2 with the arrow key and uses the enter key to fire projectiles. In order to achieve the goal of combat on the same PC, I created two viewports with two cameras loaded separately, and the two split-screen viewports share the same 2D map. The camera will follow the two players separately.  
